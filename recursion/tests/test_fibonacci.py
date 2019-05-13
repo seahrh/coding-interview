@@ -11,3 +11,7 @@ class TestFibonacci(unittest.TestCase):
 
     def test_7th_fib_number(self):
         self.assertEqual(fib(7), 8)
+
+
+if __name__ == '__main__':
+    unittest.main()
