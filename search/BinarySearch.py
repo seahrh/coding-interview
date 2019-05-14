@@ -1,3 +1,6 @@
+from math import fabs
+
+
 def search(arr, key):
     if len(arr) == 0:
         raise ValueError('arr must not be empty')
@@ -40,3 +43,23 @@ def search_array_with_empty_strings(arr, key):
         if key < arr[mid]:
             end = mid - 1
     return -1
+
+
+def nearest(arr, key):
+    if len(arr) == 0:
+        raise ValueError('arr must not be empty')
+    begin = 0
+    end = len(arr) - 1
+    res = 0
+    while begin <= end:
+        mid = int((end - begin) / 2 + begin)  # avoid integer overflow
+        if arr[mid] == key:
+            return mid
+        if fabs(arr[mid] - key) < fabs(arr[res] - key):
+            res = mid
+        if key > arr[mid]:
+            begin = mid + 1
+            continue
+        if key < arr[mid]:
+            end = mid - 1
+    return res
