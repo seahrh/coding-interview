@@ -26,3 +26,40 @@ def largest_sum(arr):
         elif _sum < 0:
             _sum = 0
     return _max
+
+
+# Facebook interview question round 1 (Nov 2016)
+# --------------------------------------------------
+#
+# Question: Given a sequence of positive integers A and an integer T,
+# return whether there is a *continuous sequence* of A that sums up to exactly T.
+# Example [23, 5, 4, 7, 2, 11], 20. Return True because 7 + 2 + 11 = 20
+# [1, 3, 5, 23, 2], 8. Return True because 3 + 5 = 8
+# [1, 3, 5, 23, 2], 7 Return False because no sequence in this array adds up to 7
+#
+# Note: We are looking for an O(N) solution. There is an obvious O(N^2)
+# solution which is a good starting point but is not the final solution we are looking for.
+
+
+def sequence_sum_equals(arr, target):
+    # Keep growing the window to the right until sum exceeds target.
+    # Then shrink the window from the left, checking for target at each step.
+    # Solution based on @url https://www.careercup.com/question?id=6305076727513088
+    # This takes O(n) time and O(1) space.
+    if len(arr) == 0:
+        raise ValueError('arr must not be empty')
+    if target < 1:
+        raise ValueError('target must be a positive number')
+    # let beg be the beginning index of the window
+    _sum = 0
+    beg = 0
+    for v in arr:
+        _sum += v
+        if _sum == target:
+            return True
+        while _sum > target:
+            _sum -= arr[beg]
+            if _sum == target:
+                return True
+            beg += 1
+    return False
