@@ -13,13 +13,19 @@ def is_anagram(s, t):
         return False
     num_chars = 128
     counts = [0] * num_chars
+    uniques = 0
     for c in s:
         cp = ord(c)
+        if counts[cp] == 0:
+            uniques += 1
         counts[cp] += 1
     for c in t:
         cp = ord(c)
         if counts[cp] == 0:
             return False
         counts[cp] -= 1
-    # check non-zero counts remaining
-    return sum(counts) == 0
+        if counts[cp] == 0:
+            uniques -= 1
+            if uniques == 0:  # all chars accounted for
+                return True
+    return False
