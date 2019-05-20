@@ -12,14 +12,10 @@ def lomuto_partition(arr, lo, hi):
     j = lo
     while j < hi:  # no need to cover the last element
         if arr[j] <= pivot:
-            tmp = arr[j]
-            arr[j] = arr[i]
-            arr[i] = tmp
+            arr[i], arr[j] = arr[j], arr[i]
             i += 1
         j += 1
-    tmp = arr[i]
-    arr[i] = pivot
-    arr[hi] = tmp
+    arr[i], arr[j] = arr[j], arr[i]
     return i - 1, i + 1
 
 
