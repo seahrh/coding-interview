@@ -43,8 +43,19 @@ def hoare_partition(arr, lo, hi, pivot_fn):
 
 def middle_element_as_pivot(arr, lo, hi):
     # By convention, move the pivot to the last element by swapping
-    i = int((hi - lo) / 2 + lo)
-    arr[i], arr[hi] = arr[hi], arr[i]
+    mid = int((hi - lo) / 2 + lo)
+    arr[mid], arr[hi] = arr[hi], arr[mid]
+    return arr[hi]
+
+
+def median_of_three_pivot(arr, lo, hi):
+    mid = int((hi - lo) / 2 + lo)
+    if arr[mid] < arr[lo]:
+        arr[mid], arr[lo] = arr[lo], arr[mid]
+    if arr[hi] < arr[lo]:
+        arr[lo], arr[hi] = arr[hi], arr[lo]
+    if arr[mid] < arr[hi]:
+        arr[mid], arr[hi] = arr[hi], arr[mid]
     return arr[hi]
 
 
@@ -57,7 +68,7 @@ def _quicksort(arr, lo, hi, partition_fn, pivot_fn):
         _quicksort(arr, first_index_of_right_partition, hi, partition_fn, pivot_fn)
 
 
-def quicksort(arr, partition_fn=lomuto_partition, pivot_fn=middle_element_as_pivot):
+def quicksort(arr, partition_fn=lomuto_partition, pivot_fn=median_of_three_pivot):
     if len(arr) == 0:
         raise ValueError('arr must not be empty')
     _quicksort(arr, 0, len(arr) - 1, partition_fn, pivot_fn)
