@@ -1,5 +1,7 @@
-# Quicksort is a comparison in-place sort.
-# It is not a stable sort.
+# Characteristics of Quicksort
+# Worst case takes O(n^2) time but mergesort takes less time O(n lg n).
+# In-place
+# Not a stable sort like mergesort
 
 
 def lomuto_partition(arr, lo, hi, pivot_fn):
