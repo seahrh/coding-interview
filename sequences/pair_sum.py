@@ -1,15 +1,16 @@
 # Find pairs of elements from an array whose sum equals a given number. The
-# array can contain any integer, including zero and negative numbers. The array
-# elements are unique.
+# array can contain any integer, including zero and negative numbers.
+# Return indices of pairs
 
 
 def pairs(arr, summ):
-    # Convert the array into a hashtable where the key is the value of the
-    # array element, and the value is the index of the array element. Makes two
-    # passes through the array, first to build the hashtable, second to check
-    # whether the other sum operand exists.
-    #
-    # This takes O(n) time and O(n) space.
+    """Convert the array into a hashtable where the key is the value of the
+    array element, and the value is the index of the array element. Makes two
+    passes through the array, first to build the hashtable, second to check
+    whether the other sum operand exists.
+
+    This takes O(n) time and O(n) space.
+    """
     if len(arr) == 0:
         raise ValueError('arr must not be empty')
     indices = dict()
@@ -25,3 +26,22 @@ def pairs(arr, summ):
             else:
                 res.add((i, k))
     return res
+
+
+# Same problem as above but now duplicate integers can exist.
+# Return True if pair is found, False otherwise.
+#
+# Based on https://youtu.be/XKu_SEDAykw
+
+def has_pair_sum(arr, summ):
+    """Build a set to store the complements. If complement exists, then the pair is found.
+
+    This takes O(n) time and O(n) space."""
+    if len(arr) == 0:
+        raise ValueError('arr must not be empty')
+    complements = set()
+    for v in arr:
+        if v in complements:
+            return True
+        complements.add(summ - v)
+    return False
