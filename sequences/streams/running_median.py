@@ -22,23 +22,25 @@ class RunningMedian:
     before adding it to the heap ("taking the inverse").
     """
 
-    min_heap = []
-    max_heap = []
+    def __init__(self):
+        self.min_heap = []
+        self.max_heap = []
 
-    def add(self, i):
+    def add(self, *values):
         """Maintains invariant that len(max_heap) >= len(min_heap)"""
-        if len(self.max_heap) == len(self.min_heap):
-            if len(self.min_heap) and i > self.min_heap[0]:
-                j = heapq.heappushpop(self.min_heap, i)
-                heapq.heappush(self.max_heap, j * -1)
+        for v in values:
+            if len(self.max_heap) == len(self.min_heap):
+                if len(self.min_heap) and v > self.min_heap[0]:
+                    u = heapq.heappushpop(self.min_heap, v)
+                    heapq.heappush(self.max_heap, u * -1)
+                else:
+                    heapq.heappush(self.max_heap, v * -1)
             else:
-                heapq.heappush(self.max_heap, i * -1)
-        else:
-            if i < self.max_heap[0]:
-                j = heapq.heappushpop(self.max_heap, i * -1) * -1
-                heapq.heappush(self.min_heap, j)
-            else:
-                heapq.heappush(self.min_heap, i)
+                if v < self.max_heap[0]:
+                    u = heapq.heappushpop(self.max_heap, v * -1) * -1
+                    heapq.heappush(self.min_heap, u)
+                else:
+                    heapq.heappush(self.min_heap, v)
 
     def median(self):
         # maxHeap is always at least as big as minHeap.
