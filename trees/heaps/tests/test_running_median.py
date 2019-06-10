@@ -1,5 +1,5 @@
 import unittest
-from sequences.streams.running_median import *
+from trees.heaps.running_median import *
 
 
 class TestRunningMedian(unittest.TestCase):
