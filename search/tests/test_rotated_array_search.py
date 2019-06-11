@@ -47,5 +47,25 @@ class TestRotatedArraySearch(unittest.TestCase):
         self.assertEqual(find(arr, 11), -1)
 
 
+class TestRotatedArraySearchMinimum(unittest.TestCase):
+    def test_when_array_is_empty_then_raise_error(self):
+        self.assertRaises(ValueError, index_of_min, [])
+
+    def test_when_array_is_length_one(self):
+        self.assertEqual(index_of_min([1]), 0)
+
+    def test_when_array_is_length_two(self):
+        self.assertEqual(index_of_min([2, 1]), 1)
+
+    def test_when_array_is_length_three(self):
+        self.assertEqual(index_of_min([3, 1, 2]), 1)
+        self.assertEqual(index_of_min([2, 3, 1]), 2)
+
+    def test_when_array_is_length_four(self):
+        self.assertEqual(index_of_min([4, 1, 2, 3]), 1)
+        self.assertEqual(index_of_min([3, 4, 1, 2]), 2)
+        self.assertEqual(index_of_min([2, 3, 4, 1]), 3)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -36,3 +36,23 @@ def find(arr, key):
             else:
                 hi = mid - 1
     return -1
+
+
+# Find index_of_min element in a sorted but rotated array.
+
+
+def index_of_min(arr):
+    """Look for min in the unsorted partition.
+    This takes O(lg n) time and O(1) space.
+    """
+    if len(arr) == 0:
+        raise ValueError('arr must not be empty')
+    lo = 0
+    hi = len(arr) - 1
+    while arr[lo] > arr[hi]:
+        mid = int(lo / 2 + hi / 2)
+        if arr[lo] <= arr[mid]:  # right partition is unsorted
+            lo = mid + 1  # offset required to avoid infinite loop
+        else:  # left partition is unsorted
+            hi = mid
+    return lo
