@@ -1,5 +1,5 @@
 import unittest
-from sets.count_elements_in_ranges import *
+from sequences.count_elements_in_ranges import *
 
 
 class TestCountElementsInRanges(unittest.TestCase):
