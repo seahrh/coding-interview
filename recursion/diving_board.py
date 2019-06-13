@@ -8,14 +8,30 @@ exactly K planks of wood. Write a method to generate all possible lengths for th
 
 def all_lengths_rec(k, shorter, longer):
     """Recursive solution
-    O(k) time and O(2^k) space (to store the result)
+    O(k) time and O(k) space (to store the result)
     """
     if k < 1:
         raise ValueError('k must not be less than 1')
     if k == 1:
         return {shorter, longer}
     res = set()
-    for l in all_lengths_rec(k - 1, shorter, longer):  #
+    for l in all_lengths_rec(k - 1, shorter, longer):
         res.add(l + shorter)
         res.add(l + longer)
+    return res
+
+
+def all_lengths(k, shorter, longer):
+    """Iterative solution
+    We just need to go through all unique sets of K planks (sets, not orders!).
+    There are only K ways of picking K planks if we only have two possible types:
+    {O of type A, K of type B}, {1 of type A, K -1 of type B}, {2 of type A, K - 2 of type B}, ...
+    O(k) time and O(k) space (to store the result)
+    """
+    if k < 1:
+        raise ValueError('k must not be less than 1')
+    res = set()
+    for n_shorter in range(k + 1):
+        _len = n_shorter * shorter + (k - n_shorter) * longer
+        res.add(_len)
     return res
