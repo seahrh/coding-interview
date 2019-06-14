@@ -59,3 +59,45 @@ def sequence_sum_equals(arr, target):
                 return True
             lo += 1
     return False
+
+
+# Sum Swap: Given two arrays of integers, find a pair of values (one value from each array) that you
+# can swap to give the two arrays the same sum.
+# EXAMPLE
+# Input:{4, 1, 2, 1, 1, 2} and {3, 6, 3, 3}
+# Output: {1, 3}
+#
+# (16.21, p521)
+
+
+def sum_swap(a, b):
+    """Return values to swap, None otherwise.
+    Solve: sumA - a + b = sumB + a - b
+    a - b = (sumA - sumB) / 2
+    Since the inputs are integers only, the difference must also be an even number
+    in order to get a valid pair.
+    Go through the smaller array and add all complements to a set.
+    Go through the other array to check if complement exists.
+    O(A + B) time and O(min(A, B)) space."""
+    if len(a) == 0:
+        raise ValueError('array a must not be empty')
+    if len(b) == 0:
+        raise ValueError('array b must not be empty')
+    # swap the arrays such `a` is always the smaller array
+    if len(b) < len(a):
+        tmp = b
+        b = a
+        a = tmp
+    sum_a = sum(a)
+    sum_b = sum(b)
+    # exit if difference is odd; sums cannot be balanced!
+    if (sum_a - sum_b) % 2 != 0:
+        return None
+    diff = int((sum_a - sum_b) / 2)
+    complements = set()
+    for v in a:
+        complements.add(v - diff)
+    for v in b:
+        if v in complements:
+            return diff + v, v
+    return None
