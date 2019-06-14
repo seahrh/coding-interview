@@ -55,5 +55,25 @@ class TestSumSwap(unittest.TestCase):
         self.assertEqual(sum_swap([4, 1, 2, 1, 1, 2], [3, 6, 3, 3]), (6, 4))
 
 
+class TestSumSwapSorted(unittest.TestCase):
+    def test_given_empty_arrays(self):
+        self.assertRaises(ValueError, sum_swap_sorted, [], [1])
+        self.assertRaises(ValueError, sum_swap_sorted, [1], [])
+
+    def test_given_either_array_of_length_one(self):
+        self.assertEqual(sum_swap_sorted([1], [1]), (1, 1))
+        self.assertEqual(sum_swap_sorted([1], [2]), None)
+        self.assertEqual(sum_swap_sorted([2], [2, 4]), (2, 4))
+
+    def test_given_either_array_of_length_two(self):
+        self.assertEqual(sum_swap_sorted([1, 2], [1, 2]), (1, 1))
+        self.assertEqual(sum_swap_sorted([2, 4], [1, 3]), (2, 1))
+        self.assertEqual(sum_swap_sorted([1, 2], [1, 3]), None)
+        self.assertEqual(sum_swap_sorted([1, 2], [1, 3, 5]), (2, 5))
+
+    def test_given_example(self):
+        self.assertEqual(sum_swap_sorted([1, 1, 1, 2, 2, 4], [3, 3, 3, 6]), (1, 3))
+
+
 if __name__ == '__main__':
     unittest.main()

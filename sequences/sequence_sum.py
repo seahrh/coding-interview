@@ -68,6 +68,7 @@ def sequence_sum_equals(arr, target):
 # Output: {1, 3}
 #
 # (16.21, p521)
+# If the arrays are sorted, find a solution that takes O(1) space.
 
 
 def sum_swap(a, b):
@@ -100,4 +101,29 @@ def sum_swap(a, b):
     for v in b:
         if v in complements:
             return diff + v, v
+    return None
+
+
+def sum_swap_sorted(a, b):
+    """O(A + B) time and O(1) space."""
+    if len(a) == 0:
+        raise ValueError('array a must not be empty')
+    if len(b) == 0:
+        raise ValueError('array b must not be empty')
+    sum_a = sum(a)
+    sum_b = sum(b)
+    # exit if difference is odd; sums cannot be balanced!
+    if (sum_a - sum_b) % 2 != 0:
+        return None
+    target = int((sum_a - sum_b) / 2)
+    i = 0
+    j = 0
+    while i < len(a) and j < len(b):
+        diff = a[i] - b[j]
+        if diff == target:
+            return a[i], b[j]
+        if diff > target:
+            j += 1
+        else:
+            i += 1
     return None
