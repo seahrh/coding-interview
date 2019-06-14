@@ -1,34 +1,34 @@
 # Find pairs of elements from an array whose sum equals a given number. The
-# array can contain any integer, including zero and negative numbers.
-# Return indices of pairs
+# array can contain any integer, including zero, negative numbers and duplicates.
+# Return all pairs.
+from collections import defaultdict
 
 
-def pairs(arr, summ):
-    """Convert the array into a hashtable where the key is the value of the
-    array element, and the value is the index of the array element. Makes two
-    passes through the array, first to build the hashtable, second to check
-    whether the other sum operand exists.
+def pair_sum(arr, summ):
+    """Returns a set of pairs (therefore no duplicate pairs).
+    Builds a hash table where key is a complement and value is the number of times
+    that this complement can be added to a valid pair.
+    Requires only one pass because addition is commutative
+    i.e. order of operands does not matter.
 
     This takes O(n) time and O(n) space.
     """
-    if len(arr) == 0:
-        raise ValueError('arr must not be empty')
-    indices = dict()
-    for i, j in enumerate(arr):
-        indices[j] = i
     res = set()
-    for i, j in enumerate(arr):
-        target = summ - j
-        k = indices.get(target)
-        if k is not None and i != k:  # other number in the pair must not be self
-            if k < i:
-                res.add((k, i))
+    unpaired_count = defaultdict(int)
+    for v in arr:
+        complement = summ - v
+        if unpaired_count[v] > 0:  # current value is a matching complement
+            if v < complement:
+                res.add((v, complement))
             else:
-                res.add((i, k))
+                res.add((complement, v))
+            unpaired_count[v] -= 1
+            continue
+        unpaired_count[complement] += 1
     return res
 
 
-# Same problem as above but now duplicate integers can exist.
+# Same problem as above but simpler:
 # Return True if pair is found, False otherwise.
 #
 # Based on https://youtu.be/XKu_SEDAykw
