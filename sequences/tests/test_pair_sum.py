@@ -19,6 +19,25 @@ class TestPairSum(unittest.TestCase):
         self.assertSetEqual(pair_sum(arr=[2, -1, 3, -2, 1, -3, 0], summ=-1), {(-3, 2), (-2, 1), (-1, 0)})
 
 
+class TestPairSumSorted(unittest.TestCase):
+    def test_given_empty_array_then_return_empty_set(self):
+        self.assertSetEqual(pair_sum_sorted(arr=[], summ=1), set())
+
+    def test_when_array_length_is_one_then_return_empty_set(self):
+        self.assertSetEqual(pair_sum_sorted(arr=[1], summ=1), set())
+
+    def test_single_pair_found(self):
+        self.assertSetEqual(pair_sum_sorted(arr=[1, 2], summ=3), {(1, 2)})
+        self.assertSetEqual(pair_sum_sorted(arr=[-3, -2, -1, 0, 1, 2, 3], summ=4), {(1, 3)})
+        self.assertSetEqual(pair_sum_sorted(arr=[-3, -2, -1, 0, 1, 2, 3], summ=-5), {(-3, -2)})
+
+    def test_many_pairs_found(self):
+        self.assertSetEqual(pair_sum_sorted(
+            arr=[-3, -2, -1, 0, 1, 2, 3], summ=2), {(0, 2), (-1, 3)})
+        self.assertSetEqual(pair_sum_sorted(
+            arr=[-3, -2, -1, 0, 1, 2, 3], summ=-1), {(-3, 2), (-2, 1), (-1, 0)})
+
+
 class TestHasPairSum(unittest.TestCase):
     def test_when_array_length_is_one_then_not_found(self):
         self.assertEqual(has_pair_sum(arr=[1], summ=1), False)
