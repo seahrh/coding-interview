@@ -24,3 +24,16 @@ def shuffle_rec(cards, index):
     cards[k] = cards[index]
     cards[index] = tmp
     return cards
+
+
+def shuffle(cards):
+    """The array has two partitions: shuffled (left) and unshuffled (right).
+    Initially the shuffled region is empty. Move from left to right.
+    """
+    res = list(cards)
+    for i in range(len(res)):
+        k = randint(0, i)
+        tmp = res[k]
+        res[k] = res[i]
+        res[i] = tmp
+    return res

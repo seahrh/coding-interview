@@ -28,5 +28,28 @@ class TestShuffleRecursive(unittest.TestCase):
             (1, 2, 3), (3, 2, 1), (1, 3, 2), (2, 3, 1), (3, 1, 2), (2, 1, 3)})
 
 
+class TestShuffle(unittest.TestCase):
+    def test_given_empty_array_then_return_same_array(self):
+        self.assertListEqual(shuffle(cards=[]), [])
+
+    def test_given_array_of_length_one_then_return_same_array(self):
+        self.assertListEqual(shuffle(cards=[1]), [1])
+
+    def test_given_array_of_length_two(self):
+        permutations = set()
+        for _ in range(10):
+            permutations.add(tuple(shuffle(cards=[1, 2])))
+        self.assertEqual(len(permutations), 2)
+        self.assertSetEqual(permutations, {(1, 2), (2, 1)})
+
+    def test_given_array_of_length_three(self):
+        permutations = set()
+        for _ in range(40):
+            permutations.add(tuple(shuffle(cards=[1, 2, 3])))
+        self.assertEqual(len(permutations), 6)
+        self.assertSetEqual(permutations, {
+            (1, 2, 3), (3, 2, 1), (1, 3, 2), (2, 3, 1), (3, 1, 2), (2, 1, 3)})
+
+
 if __name__ == '__main__':
     unittest.main()
