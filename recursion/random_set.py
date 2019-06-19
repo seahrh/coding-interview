@@ -28,3 +28,15 @@ def pick_rec(arr, m, index):
     if k < m:  # k must not equal m, else index out of bounds
         res[k] = arr[index]
     return res
+
+
+def pick(arr, m):
+    """O(n - m) time and O(m) space."""
+    if m > len(arr):
+        raise ValueError('not enough items to fill all m slots')
+    res = arr[:m]
+    for i in range(m, len(arr)):
+        k = randint(0, i)
+        if k < m:  # k must not equal m, else index out of bounds
+            res[k] = arr[i]
+    return res

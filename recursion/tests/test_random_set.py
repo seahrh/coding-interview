@@ -12,7 +12,8 @@ class TestRandomSetRecursive(unittest.TestCase):
     def test_given_array_of_length_two_and_m_is_smaller(self):
         chosen = set()
         for _ in range(10):
-            chosen.add(*pick_rec(arr=[0, 1], m=1, index=1))
+            for v in pick_rec(arr=[0, 1], m=1, index=1):
+                chosen.add(v)
         self.assertEqual(0 in chosen, True)
         self.assertEqual(1 in chosen, True)
 
@@ -20,6 +21,38 @@ class TestRandomSetRecursive(unittest.TestCase):
         chosen = set()
         for _ in range(20):
             for v in pick_rec(arr=list(range(10)), m=5, index=9):
+                chosen.add(v)
+        self.assertEqual(0 in chosen, True)
+        self.assertEqual(1 in chosen, True)
+        self.assertEqual(2 in chosen, True)
+        self.assertEqual(3 in chosen, True)
+        self.assertEqual(4 in chosen, True)
+        self.assertEqual(5 in chosen, True)
+        self.assertEqual(6 in chosen, True)
+        self.assertEqual(7 in chosen, True)
+        self.assertEqual(8 in chosen, True)
+        self.assertEqual(9 in chosen, True)
+
+
+class TestRandomSet(unittest.TestCase):
+    def test_given_array_too_small_to_fill_set(self):
+        self.assertRaises(ValueError, pick, [1], 2)
+
+    def test_given_array_of_length_one_and_m_equals_one(self):
+        self.assertEqual(pick(arr=[0], m=1), [0])
+
+    def test_given_array_of_length_two_and_m_is_smaller(self):
+        chosen = set()
+        for _ in range(10):
+            for v in pick(arr=[0, 1], m=1):
+                chosen.add(v)
+        self.assertEqual(0 in chosen, True)
+        self.assertEqual(1 in chosen, True)
+
+    def test_given_array_of_length_10_and_m_is_smaller(self):
+        chosen = set()
+        for _ in range(20):
+            for v in pick(arr=list(range(10)), m=5):
                 chosen.add(v)
         self.assertEqual(0 in chosen, True)
         self.assertEqual(1 in chosen, True)
