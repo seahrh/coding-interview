@@ -15,14 +15,11 @@ Output: John (27), Kris (36)
 
 (17.7, p553)
 """
+from collections import namedtuple
 from graphs.graph import *
 
 
-class Node:
-    def __init__(self, name, freq, is_visited=False):
-        self.name = name
-        self.freq = freq
-        self.is_visited = is_visited
+Node = namedtuple('Node', 'name freq')
 
 
 def _graph(names, synonyms):
@@ -37,20 +34,17 @@ def _graph(names, synonyms):
     return g
 
 
-def _component_sum(graph, node):
-    res = node.freq
-    node.is_visited = True
-    for n in graph.adjacent(node):
-        res += n.freq
-        n.is_visited = True
-    return res
-
-
 def merge(names, synonyms):
+    """Solution: equivalence classes as disconnected graph components."""
     res = []
     g = _graph(names, synonyms)
+    visited = set()
     for n in g.nodes():
-        if n.is_visited:
+        if n in visited:
             continue
-        res.append((n.name, _component_sum(g, n)))
+        _sum = 0
+        for c in g.component(n):
+            _sum += c.freq
+            visited.add(c)
+        res.append((n.name, _sum))
     return res

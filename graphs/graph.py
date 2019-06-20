@@ -45,5 +45,19 @@ class Graph:
     def adjacent(self, node):
         return self._graph[node]
 
-    def __str__(self):
+    def component(self, node, visited=None):
+        """O(n) time and O(n) space, where n is the size of the component."""
+        if node not in self._graph:
+            return set()
+        if visited is None:
+            visited = set()
+        if node in visited:
+            return set()
+        res = {node}
+        visited.add(node)
+        for n in self.adjacent(node):
+            res = res.union(self.component(n, visited))
+        return res
+
+    def __repr__(self):
         return '{}({})'.format(self.__class__.__name__, dict(self._graph))
