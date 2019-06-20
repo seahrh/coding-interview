@@ -35,7 +35,18 @@ def _graph(names, synonyms):
 
 
 def merge(names, synonyms):
-    """Solution: equivalence classes as disconnected graph components."""
+    """Solution: equivalence classes as disconnected graph components.
+
+    Reading in the data is linear with respect to the size of the data,
+    so it takes 0 (B + P) time, where B is the number of baby names and
+    P is the number of pairs of synonyms.
+    This is because we only do a constant amount of work per piece of input data.
+    To compute the frequencies, each edge gets "touched" exactly once across all of the graph searches and
+    each node gets touched exactly once to check if it's been visited. The time of this part is 0 (B + P) .
+    Therefore, the total time of the algorithm is 0 (B + P).
+    We know we cannot do better than this since we must at least read in the B + P pieces of data.
+    O(B) space to hold the `visited` set. Worst case: no names are synonyms.
+    """
     res = []
     g = _graph(names, synonyms)
     visited = set()

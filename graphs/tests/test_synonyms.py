@@ -3,7 +3,22 @@ from graphs.synonyms import *
 
 
 class TestSynonyms(unittest.TestCase):
-    def test_given_example_1(self):
+    def test_given_empty_names_and_synonyms_then_return_empty_list(self):
+        names = []
+        synonyms = []
+        self.assertListEqual(merge(names, synonyms), [])
+
+    def test_given_empty_synonyms(self):
+        names = [('John', 15)]
+        synonyms = []
+        self.assertListEqual(merge(names, synonyms), [('John', 15)])
+
+    def test_given_all_names_belong_to_same_synonym_group(self):
+        names = [('John', 15), ('Jon', 1)]
+        synonyms = [('Jon', 'John')]
+        self.assertListEqual(merge(names, synonyms), [('John', 16)])
+
+    def test_given_example(self):
         names = [('John', 15), ('Jon', 12), ('Chris', 13), ('Kris', 4), ('Christopher', 19)]
         synonyms = [('Jon', 'John'), ('John', 'Johnny'), ('Chris', 'Kris'), ('Chris', 'Christopher')]
         self.assertListEqual(merge(names, synonyms), [('John', 27), ('Chris', 36)])
