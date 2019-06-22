@@ -14,7 +14,7 @@ class TestShuffleRecursive(unittest.TestCase):
 
     def test_given_array_of_length_two(self):
         permutations = set()
-        for _ in range(10):
+        for _ in range(20):
             permutations.add(tuple(shuffle_rec(cards=[1, 2], index=1)))
         self.assertEqual(len(permutations), 2)
         self.assertSetEqual(permutations, {(1, 2), (2, 1)})
@@ -37,7 +37,7 @@ class TestShuffle(unittest.TestCase):
 
     def test_given_array_of_length_two(self):
         permutations = set()
-        for _ in range(10):
+        for _ in range(20):
             permutations.add(tuple(shuffle(cards=[1, 2])))
         self.assertEqual(len(permutations), 2)
         self.assertSetEqual(permutations, {(1, 2), (2, 1)})
