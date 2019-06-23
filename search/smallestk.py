@@ -9,7 +9,7 @@ Assumptions
 SOLUTION
 1. Sorting (e.g. heapsort) takes O(n lg n) time and O(1) space.
 2. Max heap takes O(n lg k) time and O(k) space.
-3. Median selection algorithm takes O(n) time.
+3. Selection rank algorithm takes O(n) time.
 """
 from collections import namedtuple
 
@@ -52,3 +52,27 @@ def median_of_three(arr, lo, hi):
     if arr[mid] <= arr[lo] <= arr[hi] or arr[hi] <= arr[lo] <= arr[mid]:
         return arr[lo]
     return arr[hi]
+
+
+def _rank(arr, k, lo, hi, pivot_fn):
+    pivot = pivot_fn(arr, lo, hi)
+    pr = _partition(arr, lo, hi, pivot)
+    # search portion of array
+    if k <= pr.left_size:
+        return _rank(arr, k, lo, lo + pr.left_size - 1, pivot_fn)
+    if k <= pr.left_size + pr.mid_size:
+        return pivot  # middle partition contains only pivot values
+    return _rank(arr,
+                 k=k - pr.left_size - pr.mid_size,
+                 lo=lo + pr.left_size + pr.mid_size,
+                 hi=hi,
+                 pivot_fn=pivot_fn)
+
+
+def rank(arr, k, pivot_fn=median_of_three):
+    """Return the kth value from the array, where k starts from 1."""
+    if k < 1:
+        raise ValueError('k must be greater than or equals 1')
+    if k > len(arr):
+        raise ValueError('k must not be greater than the array length')
+    return _rank(arr, k, 0, len(arr) - 1, pivot_fn)

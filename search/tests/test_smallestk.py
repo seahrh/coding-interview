@@ -21,5 +21,33 @@ class TestMedianOfThree(unittest.TestCase):
         self.assertEqual(median_of_three([30, 10, 20], lo=0, hi=2), 20)
 
 
+class TestRank(unittest.TestCase):
+    def test_given_k_is_less_than_1_then_raise_error(self):
+        self.assertRaises(ValueError, rank, [1], 0)
+
+    def test_given_k_is_greater_than_array_length_then_raise_error(self):
+        self.assertRaises(ValueError, rank, [1], 2)
+
+    def test_given_array_of_length_one(self):
+        self.assertEqual(rank([1], k=1), 1)
+
+    def test_given_array_of_length_two(self):
+        self.assertEqual(rank([2, 1], k=1), 1)
+        self.assertEqual(rank([2, 1], k=2), 2)
+
+    def test_given_array_of_length_three(self):
+        self.assertEqual(rank([3, 2, 1], k=1), 1)
+        self.assertEqual(rank([3, 2, 1], k=2), 2)
+        self.assertEqual(rank([3, 2, 1], k=3), 3)
+
+    def test_given_array_with_duplicates(self):
+        self.assertEqual(rank([3, 1, 1], k=1), 1)
+        self.assertEqual(rank([3, 1, 1], k=2), 1)
+        self.assertEqual(rank([3, 1, 1], k=3), 3)
+        self.assertEqual(rank([3, 3, 3], k=1), 3)
+        self.assertEqual(rank([3, 3, 3], k=2), 3)
+        self.assertEqual(rank([3, 3, 3], k=3), 3)
+
+
 if __name__ == '__main__':
     unittest.main()
