@@ -10,6 +10,9 @@ SOLUTION
 1. Sorting (e.g. heapsort) takes O(n lg n) time and O(1) space.
 2. Max heap takes O(n lg k) time and O(k) space.
 3. Selection rank algorithm takes O(n) time and O(n) space because depth of call stack.
+4. If range of values is known, hash table can be used where items are placed in their respective
+interval buckets. This takes O(n) time and O(n) space.
+
 """
 from collections import namedtuple
 
