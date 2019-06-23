@@ -49,5 +49,33 @@ class TestRank(unittest.TestCase):
         self.assertEqual(rank([3, 3, 3], k=3), 3)
 
 
+class TestSmallest(unittest.TestCase):
+    def test_given_k_is_less_than_1_then_raise_error(self):
+        self.assertRaises(ValueError, smallest, [1], 0)
+
+    def test_given_k_is_greater_than_array_length_then_raise_error(self):
+        self.assertRaises(ValueError, smallest, [1], 2)
+
+    def test_given_array_of_length_one(self):
+        self.assertListEqual(smallest([1], k=1), [1])
+
+    def test_given_array_of_length_two(self):
+        self.assertListEqual(smallest([2, 1], k=1), [1])
+        self.assertListEqual(smallest([2, 1], k=2), [1, 2])
+
+    def test_given_array_of_length_three(self):
+        self.assertListEqual(smallest([3, 2, 1], k=1), [1])
+        self.assertListEqual(smallest([3, 2, 1], k=2), [1, 2])
+        self.assertListEqual(smallest([3, 2, 1], k=3), [1, 2, 3])
+
+    def test_given_array_with_duplicates(self):
+        self.assertListEqual(smallest([3, 1, 1], k=1), [1])
+        self.assertListEqual(smallest([3, 1, 1], k=2), [1, 1])
+        self.assertListEqual(smallest([3, 1, 1], k=3), [1, 1, 3])
+        self.assertListEqual(smallest([3, 3, 3], k=1), [3])
+        self.assertListEqual(smallest([3, 3, 3], k=2), [3, 3])
+        self.assertListEqual(smallest([3, 3, 3], k=3), [3, 3, 3])
+
+
 if __name__ == '__main__':
     unittest.main()

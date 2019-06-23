@@ -9,7 +9,7 @@ Assumptions
 SOLUTION
 1. Sorting (e.g. heapsort) takes O(n lg n) time and O(1) space.
 2. Max heap takes O(n lg k) time and O(k) space.
-3. Selection rank algorithm takes O(n) time.
+3. Selection rank algorithm takes O(n) time and O(n) space because depth of call stack.
 """
 from collections import namedtuple
 
@@ -18,6 +18,9 @@ PartitionResult = namedtuple('PartitionResult', 'left_size mid_size')
 
 
 def _partition(arr, lo, hi, pivot):
+    """Divide the array into three partitions: less than the pivot, equal to the pivot
+    and greater than the pivot.
+    """
     head = lo  # head of middle partition
     tail = hi  # tail of middle partition
     i = lo  # current item for evaluation
@@ -56,8 +59,8 @@ def median_of_three(arr, lo, hi):
 
 def _rank(arr, k, lo, hi, pivot_fn):
     pivot = pivot_fn(arr, lo, hi)
-    pr = _partition(arr, lo, hi, pivot)
-    # search portion of array
+    pr = _partition(arr, lo, hi, pivot)  # O(n) time
+    # search portion of array: average O(lg n) time, worst O(n) time if poor choice of pivot.
     if k <= pr.left_size:
         return _rank(arr, k, lo, lo + pr.left_size - 1, pivot_fn)
     if k <= pr.left_size + pr.mid_size:
@@ -71,8 +74,31 @@ def _rank(arr, k, lo, hi, pivot_fn):
 
 def rank(arr, k, pivot_fn=median_of_three):
     """Return the kth value from the array, where k starts from 1."""
-    if k < 1:
-        raise ValueError('k must be greater than or equals 1')
-    if k > len(arr):
-        raise ValueError('k must not be greater than the array length')
+    if not 1 <= k <= len(arr):
+        raise ValueError('k must be in the range from 1 to array length, inclusive.')
     return _rank(arr, k, 0, len(arr) - 1, pivot_fn)
+
+
+def smallest(arr, k):
+    """
+    Since there are duplicates, there could be more than k items that are less than
+    or equals to the kth item. First, copy only the items that are less than the kth item,
+    then fill up the remaining space with the kth item.
+
+    :param arr:
+    :param k: k in the range from 1 to array length, inclusive.
+    :return: array containing k smallest items
+    """
+    if not 1 <= k <= len(arr):
+        raise ValueError('k must be in the range from 1 to array length, inclusive.')
+    threshold = rank(arr, k)
+    res = []
+    for v in arr:
+        if len(res) == k:
+            break
+        if v < threshold:
+            res.append(v)
+    # Any room left is for elements equal to the threshold. Copy them in.
+    while len(res) < k:
+        res.append(threshold)
+    return res
