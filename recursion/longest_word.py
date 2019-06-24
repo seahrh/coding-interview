@@ -8,7 +8,8 @@ Assume
 
 (17.15, p583)
 SOLUTION: DP with memoization to cache the results.
-
+O(W lg W + WC) time, where W is number of words and C is number of characters.
+O(W + C) space: memo table and depth of call stack
 """
 
 
@@ -22,7 +23,7 @@ def _is_composed(word, is_original, memo):
     """
     if not is_original and word in memo:
         return memo[word]
-    for i in range(1, len(word)):
+    for i in range(1, len(word)):  # O(C) time
         left = word[:i]
         right = word[i:]
         if left in memo and memo[left] is True and _is_composed(right, False, memo):
@@ -36,8 +37,8 @@ def longest_word(words):
     for word in words:
         memo[word] = True
     # start with longest word first, so sort in descending length
-    words.sort(key=len, reverse=True)
-    for word in words:
+    words.sort(key=len, reverse=True)  # O(W lg W) time, sort in-place
+    for word in words:  # O(WC) time
         if _is_composed(word, is_original=True, memo=memo):
             return word
     return None
