@@ -11,7 +11,7 @@ class TestRandomSetRecursive(unittest.TestCase):
 
     def test_given_array_of_length_two_and_m_is_smaller(self):
         chosen = set()
-        for _ in range(10):
+        for _ in range(20):
             for v in pick_rec(arr=[0, 1], m=1, index=1):
                 chosen.add(v)
         self.assertEqual(0 in chosen, True)
