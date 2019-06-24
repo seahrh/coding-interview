@@ -21,6 +21,12 @@ Appointment i + 2 is a possibility (but not necessarily the best choice).
 Memo table is an array that maps index of bookings to max-minutes.
 O(N) time: call stack is a lopsided tree, branching all the way down to the left. Hence linear.
 O(N) space: memo table, depth of call stack
+
+2. Iterative in O(N) time and O(1) space.
+Values in the memo table are used for a short amount of time.
+Once we are several elements past an index, we never use that element's index again.
+Replace the memo table with 2 pointers.
+Walk backward through the array: "What is the best set that starts with [i]?"
 """
 
 
@@ -37,3 +43,16 @@ def _max_minutes_rec(bookings, index, memo):
 def max_minutes_rec(bookings):
     memo = [0] * len(bookings)
     return _max_minutes_rec(bookings, 0, memo)
+
+
+def max_minutes(bookings):
+    """Iterative solution"""
+    one_away = 0
+    two_away = 0
+    for i in range(len(bookings) - 1, -1, -1):
+        best_with = bookings[i] + two_away
+        best_without = one_away
+        curr = max(best_with, best_without)
+        two_away = one_away
+        one_away = curr
+    return one_away
