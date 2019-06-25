@@ -7,6 +7,19 @@ Input: DAMP, LIKE
 Output: DAMP -> LAMP -> LIMP -> LIME -> LIKE
 
 (17.22, p613)
+SOLUTION
+Prefer BFS to DFS. Both algorithms have similar runtimes if few paths exist. However, if there
+are many paths, BFS tends to be faster (imagine DFS as a long windy walk).
+
+BFS from two ends, sweeping one level at a time (a pass over all adjacent neighbours).
+Both BFS will eventually meet (collide) if a path exists.
+Search from two ends because BFS spans out very quickly.
+
+Let E be the maximum number of edges that a node can have i.e. maximum #words that are at edit
+distance 1 away from the given word. D is the length of the path between source and destination
+words. W is the number of words in the dictionary and L is the length of the longest word.
+O(E^(D/2)) time
+O(DE + WL) space
 """
 from collections import defaultdict, namedtuple, deque
 
@@ -15,7 +28,7 @@ def _wildcards(word, symbol='_'):
     """Return list of wildcards associated with word."""
     res = []
     for i in range(len(word)):
-        res.append(word[:i] + symbol + word[i + 1:])
+        res.append(word[:i] + symbol + word[i + 1:])  # O(L) space
     return res
 
 
@@ -26,7 +39,7 @@ def _wildcard_map(words):
     res = defaultdict(list)
     for word in words:
         for wildcard in _wildcards(word):
-            res[wildcard].append(word)
+            res[wildcard].append(word)  # O(WL) space
     return res
 
 
@@ -100,7 +113,7 @@ def transform(from_word, to_word, words):
         raise ValueError('Both words must have equal length')
     if to_word not in words or from_word not in words:
         return []
-    wmap = _wildcard_map(words)
+    wmap = _wildcard_map(words)  # O(WL) space
     src = BreadthFirstSearch(from_word)
     dest = BreadthFirstSearch(to_word)
     while not src.is_finished() and not dest.is_finished():
