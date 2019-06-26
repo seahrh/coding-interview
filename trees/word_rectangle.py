@@ -72,17 +72,18 @@ def _rectangle(length, height, word_groups, tries):
     if length not in word_groups or height not in word_groups:
         return None
     if height not in tries:
-        tries[height] = Trie(word_groups[height])
+        tries[height] = Trie(*word_groups[height])  # expand list of words
     return _build(length, height, word_groups, tries, rectangle=[])
 
 
 def _build(length, height, word_groups, tries, rectangle):
-    #print('_build(rectangle={})'.format(rectangle))
+    #print('_build(l={}, h={}, r={})'.format(length, height, rectangle))
     if len(rectangle) == height:  # base case: rectangle built up to full height
         if _validate_columns(rectangle, word_groups[height]):
             return rectangle
         return None
     if len(rectangle) != 0 and not _validate_partial_columns(rectangle, tries[height]):
+        #print('_validate_partial_columns=False')
         return None
     for word in word_groups[length]:
         taller = list(rectangle)
@@ -95,7 +96,7 @@ def _build(length, height, word_groups, tries, rectangle):
 
 def largest_word_rectangle(words):
     max_len = _max_length(words)  # O(W) time
-    lwmap = _group_by_length(words)  # O(W) time
+    word_groups = _group_by_length(words)  # O(W) time
     tries = {}
     max_area = max_len * max_len
     for area in range(max_area, 0, -1):
@@ -104,7 +105,7 @@ def largest_word_rectangle(words):
                 continue
             height = area / length
             if height <= max_len:
-                res = _rectangle(length, height, word_groups=lwmap, tries=tries)
+                res = _rectangle(length, height, word_groups=word_groups, tries=tries)
                 if res is not None:
                     return res
     return []
