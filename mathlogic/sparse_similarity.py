@@ -1,0 +1,79 @@
+"""
+Sparse Similarity: The similarity of two documents (each with distinct words) is defined to be the
+size of the intersection divided by the size of the union. For example, if the documents consist of
+integers, the similarity of {1, 5, 3} and {1, 7, 2, 3} is e. 4, because the intersection has size
+2 and the union has size 5.
+We have a long list of documents (with distinct values and each with an associated 10) where the
+similarity is believed to be "sparse:'That is, any two arbitrarily selected documents are very likely to
+have similarity O. Design an algorithm that returns a list of pairs of document IDs and the associated
+similarity.
+Print only the pairs with similarity greater than zero. Empty documents should not be printed at all. For
+simplicity, you may assume each document is represented as an array of distinct integers.
+EXAMPLE
+Input:
+13: {14, 15, 100, 9, 3}
+16: {32, 1, 9, 3, 5}
+19: {15, 29, 2, 6, 8, 7}
+24: {7, 10}
+Output:
+ID1, ID2, SIMILARITY
+13, 19, 0.1
+13, 16, 0.25
+19, 24, 0.1428
+
+(17.26, p631)
+SOLUTION
+
+Let D be number of documents and W be the maximum number of words in a document.
+P is the number of pairs with similarity greater than zero.
+Given that the problem stated sparseness, P << D
+O(DW + PW) time
+O(PW) space
+"""
+from collections import namedtuple, defaultdict
+
+
+Document = namedtuple('Document', 'id words')
+
+Pair = namedtuple('Pair', 'd1 d2 sim')
+
+
+def jaccard_similarity(d1, d2):
+    """This takes O(W) time and O(1) space."""
+    intersection = len(d1.words.intersect(d2.words))
+    # ok to do the following because there are no duplicate words in a document.
+    union = len(d1.words) + len(d2.words) - intersection
+    return float(intersection / union)
+
+
+def _inverted_index(documents):
+    res = defaultdict(set)  # O(PW) space
+    for d in documents:  # O(DW) time
+        for w in d.words:
+            res[w].add(d)
+    return res
+
+
+def _signature(id1, id2):
+    if id2 < id1:
+        id1, id2 = id2, id1
+    return '{},{}'.format(id1, id2)
+
+
+def positive_similarity(documents):
+    index = _inverted_index(documents)  # O(DW) time
+    candidates = set()  # O(P) space
+    for documents in index.values():  # O(PW) time
+        candidates = candidates.union(documents)
+    res = []
+    seen = set()  # O(P) space
+    for d1 in candidates:  # O(PW) time
+        for d2 in candidates:
+            if d1.id == d2.id:
+                continue
+            signature = _signature(d1.id, d2.id)
+            if signature in seen:
+                continue
+            seen.add(signature)
+            res.append(Pair(d1=d1.id, d2=d2.id, sim=jaccard_similarity(d1, d2)))
+    return res
