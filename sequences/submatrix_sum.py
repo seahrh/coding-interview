@@ -4,6 +4,14 @@ submatrix with the largest possible sum.
 
 (17.24, p623)
 SOLUTION
+For each row, find the contiguous sequence of columns that give the max sum.
+Between the top edge (row) and bottom edge (row) of the submatrix,
+sum the values column-wise. This gives a 1D array to find max subsequence sum
+in O(n) time.
+
+Let R be number of rows and C be number of columns of the matrix.
+O(R^2C) time
+O(C) space: store the cumulative column sums
 """
 from collections import namedtuple
 import sys
@@ -42,13 +50,13 @@ def max_submatrix(matrix):
     rows = len(matrix)
     cols = len(matrix[0])
     best = None
-    for trow in range(rows):  # top row
+    for trow in range(rows):  # top row O(R^2C) time
         cumulative_col_sum = [0] * cols
-        for brow in range(trow, rows):  # bottom row
-            for col in range(cols):
+        for brow in range(trow, rows):  # bottom row O(RC) time
+            for col in range(cols):  # O(C) time
                 # adds up column-wise, collapses into a single row!
                 cumulative_col_sum[col] += matrix[brow][col]
-            best_range = _max_subarray(cumulative_col_sum)
+            best_range = _max_subarray(cumulative_col_sum)  # O(C) time
             if best is None or best.sum < best_range.sum:
                 best = Submatrix(
                     top_left=Cell(row=trow, col=best_range.lo),
