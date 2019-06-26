@@ -23,12 +23,12 @@ ID1, ID2, SIMILARITY
 
 (17.26, p631)
 SOLUTION
-
+Inverted index maps from word to list of containing documents.
 Let D be number of documents and W be the maximum number of words in a document.
 P is the number of pairs with similarity greater than zero.
 Given that the problem stated sparseness, P << D
 O(DW + PW) time
-O(PW) space
+O(PW + D) space
 """
 from collections import namedtuple, defaultdict
 
@@ -38,11 +38,11 @@ Document = namedtuple('Document', 'id words')
 Pair = namedtuple('Pair', 'd1 d2 sim')
 
 
-def jaccard_similarity(d1, d2):
+def jaccard_similarity(left, right):
     """This takes O(W) time and O(1) space."""
-    intersection = len(d1.words.intersect(d2.words))
+    intersection = len(left.intersection(right))
     # ok to do the following because there are no duplicate words in a document.
-    union = len(d1.words) + len(d2.words) - intersection
+    union = len(left) + len(right) - intersection
     return float(intersection / union)
 
 
@@ -50,7 +50,7 @@ def _inverted_index(documents):
     res = defaultdict(set)  # O(PW) space
     for d in documents:  # O(DW) time
         for w in d.words:
-            res[w].add(d)
+            res[w].add(d.id)
     return res
 
 
@@ -62,18 +62,23 @@ def _signature(id1, id2):
 
 def positive_similarity(documents):
     index = _inverted_index(documents)  # O(DW) time
+    dmap = {}
+    for d in documents:  # O(D) time, O(D) space
+        dmap[d.id] = d
     candidates = set()  # O(P) space
-    for documents in index.values():  # O(PW) time
-        candidates = candidates.union(documents)
+    for dids in index.values():  # O(PW) time
+        candidates = candidates.union(dids)
     res = []
     seen = set()  # O(P) space
     for d1 in candidates:  # O(PW) time
         for d2 in candidates:
-            if d1.id == d2.id:
+            if d1 == d2:
                 continue
-            signature = _signature(d1.id, d2.id)
+            signature = _signature(d1, d2)
             if signature in seen:
                 continue
             seen.add(signature)
-            res.append(Pair(d1=d1.id, d2=d2.id, sim=jaccard_similarity(d1, d2)))
+            sim = jaccard_similarity(dmap[d1].words, dmap[d2].words)
+            if sim > 0:
+                res.append(Pair(d1=d1, d2=d2, sim=sim))
     return res
