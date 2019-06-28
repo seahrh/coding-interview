@@ -1,5 +1,5 @@
 import unittest
-from sorts.subsort import *
+from sequences.subsort import *
 
 
 class TestSubSort(unittest.TestCase):
