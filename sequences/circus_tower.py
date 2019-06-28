@@ -13,19 +13,7 @@
 from collections import namedtuple
 from functools import cmp_to_key
 
-Person = namedtuple('Person', ['h', 'w'])
-
-
-def _person_in_descending_order_cmp(left, right):
-    if left.h > right.h:
-        return -1
-    if left.h < right.h:
-        return 1
-    if left.w > right.w:
-        return -1
-    if left.w < right.w:
-        return 1
-    return 0
+Person = namedtuple('Person', 'height weight')
 
 
 def tower_length(persons):
@@ -42,20 +30,19 @@ def tower_length(persons):
 
     Solution takes O(n lg n) time and O(n) space.
     """
-    # O(1) space: sort in place
-    persons.sort(key=cmp_to_key(_person_in_descending_order_cmp))
-    res = 0
+    persons.sort(reverse=True)  # O(1) space: sort in place
+    _max = 0
     tmp = []  # O(n) space
     for p in persons:  # O(n) time
         if len(tmp) == 0:
             tmp.append(p)
             continue
-        if p.h < tmp[-1].h and p.w < tmp[-1].w:
+        if p.height < tmp[-1].height and p.weight < tmp[-1].weight:
             tmp.append(p)
             continue
-        if len(tmp) > res:
-            res = len(tmp)
-        tmp = [p]
-    if len(tmp) > res:
-        res = len(tmp)
-    return res
+        if len(tmp) > _max:
+            _max = len(tmp)
+        tmp = [p]  # reset sequence
+    if len(tmp) > _max:
+        _max = len(tmp)
+    return _max
