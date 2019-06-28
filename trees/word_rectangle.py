@@ -7,27 +7,7 @@ rows must be the same length and all columns must be the same height.
 (17.25, p629)
 """
 from collections import defaultdict
-
-
-class Trie:
-    def __init__(self, *words, terminator='$'):
-        self.root = {}
-        self.terminator = terminator
-        for w in words:
-            curr = self.root
-            for c in w:
-                curr = curr.setdefault(c, {})
-            curr[self.terminator] = self.terminator
-
-    def contains(self, word):
-        curr = self.root
-        if len(word) == 0:
-            return self.terminator in curr
-        for c in word:
-            if c not in curr:
-                return False
-            curr = curr[c]
-        return True
+from trees.trie import Trie
 
 
 def _max_length(words):
@@ -63,7 +43,7 @@ def _validate_columns(matrix, words):
 def _validate_partial_columns(matrix, trie):
     for i in range(len(matrix[0])):
         word = _column_word(matrix, i)
-        if not trie.contains(word):
+        if word not in trie:
             return False
     return True
 
@@ -72,7 +52,7 @@ def _rectangle(length, height, word_groups, tries):
     if length not in word_groups or height not in word_groups:
         return None
     if height not in tries:
-        tries[height] = Trie(*word_groups[height])  # expand list of words
+        tries[height] = Trie(word_groups[height])  # expand list of words
     return _build(length, height, word_groups, tries, rectangle=[])
 
 

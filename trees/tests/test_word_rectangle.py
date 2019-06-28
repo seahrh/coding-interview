@@ -22,15 +22,5 @@ class TestWordRectangle(unittest.TestCase):
         ), [['x', 'y', 'z'], ['y', 'x', 'z'], ['z', 'z', 'x']])
 
 
-class TestTrie(unittest.TestCase):
-    def test_given_words_of_length_two_only(self):
-        t = Trie('ab', 'aa')
-        self.assertEqual(t.contains('ab'), True)
-        self.assertEqual(t.contains('aa'), True)
-        self.assertEqual(t.contains('ac'), False)
-        self.assertEqual(t.contains('a'), True)
-        self.assertEqual(t.contains('b'), False)
-
-
 if __name__ == '__main__':
     unittest.main()
