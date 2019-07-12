@@ -45,4 +45,12 @@ def from_int(value):
     return res
 
 
-
+def add(a, b):
+    res = None
+    while a is not None:
+        res = Num(res)
+        a = a.prev
+    while b is not None:
+        res = Num(res)
+        b = b.prev
+    return res
