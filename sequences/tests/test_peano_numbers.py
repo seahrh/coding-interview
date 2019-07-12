@@ -26,6 +26,19 @@ class TestPeanoNumbers(unittest.TestCase):
         # 2 + 2 = 4
         self.assertEqual(add(a=Num(Num(None)), b=Num(Num(None))), Num(Num(Num(Num(None)))))
 
+    def test_subtract(self):
+        # smallest peano number is zero
+        self.assertEqual(subtract(a=None, b=None), None)
+        self.assertEqual(subtract(a=None, b=Num(None)), None)
+        self.assertEqual(subtract(a=Num(None), b=Num(Num(None))), None)
+        # 1 - 0 = 1
+        self.assertEqual(subtract(a=Num(None), b=None), Num(None))
+        # 2 - 1 = 1
+        self.assertEqual(subtract(a=Num(Num(None)), b=Num(None)), Num(None))
+        # 4 - 2 = 2
+        self.assertEqual(subtract(
+            a=Num(Num(Num(Num(None)))), b=Num(Num(None))), Num(Num(None)))
+
 
 if __name__ == '__main__':
     unittest.main()

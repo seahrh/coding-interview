@@ -54,3 +54,13 @@ def add(a, b):
         res = Num(res)
         b = b.prev
     return res
+
+
+def subtract(a, b):
+    res = a
+    while b is not None:
+        if res is None:
+            break
+        res = res.prev
+        b = b.prev
+    return res
