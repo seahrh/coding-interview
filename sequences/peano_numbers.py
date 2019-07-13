@@ -64,3 +64,10 @@ def subtract(a, b):
         res = res.prev
         b = b.prev
     return res
+
+
+def multiply(a, b):
+    res = None
+    for _ in range(to_int(a)):
+        res = add(res, b)
+    return res
