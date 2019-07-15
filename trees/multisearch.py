@@ -2,18 +2,30 @@
 Multi Search: Given a string b and an array of smaller strings T, design a method to search b for
 each small string in T.
 
+Return a hash table where the key is a small string T and the value is an array of indexes
+where T can be found in b.
+
 (17.17, p589)
+SOLUTION
+1. Use big string to construct a suffix tree.
+2. Use small strings to construct a trie (prefix tree).
 """
 from collections import defaultdict
-from pprint import pprint
+from trees.trie import *
 
 
 def multisearch(big, smalls):
     res = defaultdict(list)
-    trie = Trie()
+    maxlen = len(big)
+    trie = Trie(smalls)
+    return res
+
+
+def multisearch_with_bstrie(big, smalls):
+    res = defaultdict(list)
+    trie = BigStringTrie()
     for i in range(len(big)):
         trie.insert(big[i:], i)  # insert suffix
-    #pprint('trie={}'.format(repr(trie)))
     for s in smalls:
         indexes = trie.search(s)
         _normalize(indexes, len(s))  # adjust to starting index
@@ -28,10 +40,10 @@ def _normalize(indexes, delta):
         indexes[i] = indexes[i] - delta
 
 
-class TrieNode:
+class BigStringTrieNode:
     def __init__(self, terminator):
         self.value = None
-        self.children = {}  # map from character to TrieNode
+        self.children = {}  # map from character to BigStringTrieNode
         self.indexes = []
         self.terminator = terminator
 
@@ -60,7 +72,7 @@ class TrieNode:
         if self.value in self.children:
             child = self.children[self.value]
         else:
-            child = TrieNode(terminator=self.terminator)
+            child = BigStringTrieNode(terminator=self.terminator)
             self.children[self.value] = child
         remainder = string[1:]
         child.insert(remainder, index + 1)
@@ -69,9 +81,9 @@ class TrieNode:
         return '{}({})'.format(self.__class__.__name__, self.__dict__)
 
 
-class Trie:
+class BigStringTrie:
     def __init__(self, string=None, terminator='*'):
-        self.root = TrieNode(terminator=terminator)
+        self.root = BigStringTrieNode(terminator=terminator)
         if string is not None:
             self.root.insert(string, 0)
 
