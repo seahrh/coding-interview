@@ -30,6 +30,20 @@ class Trie:
             node = node.children[c]
         return True
 
+    def prefixes(self, string):
+        """Returns the words in the trie that are prefixes of the input string.
+        This takes O(m) time and O(m) space, where m is length of input string.
+        """
+        res = []
+        node = self.root
+        for i, c in enumerate(string):
+            if node.end_of_word:
+                res.append(string[:i])
+            if c not in node.children:
+                break
+            node = node.children[c]
+        return res
+
     def add(self, word):
         node = self.root  # reset to root for each word
         for c in word:
