@@ -2,7 +2,13 @@
 Trie (prefix tree) implementation: nested hash tables.
 If the charset is fixed, hash tables can be replaced with arrays.
 Trie is used for prefix and whole-string matching.
-Constructing a trie takes O(nm) time,
+With the following adjustment, trie can also be used for substring matching!
+Find substrings in longer string B.
+Match all suffixes of B against the trie.
+Time O(NM + BM), O(NM) to construct the trie, O(BM) to find substrings.
+
+
+Constructing a trie takes O(nm) time and O(nm) space,
 where n is the number of words and m is the length of the longest word.
 Based on https://www.youtube.com/watch?v=AXjmTQ8LEoI
 
@@ -37,11 +43,11 @@ class Trie:
         res = []
         node = self.root
         for i, c in enumerate(string):
-            if node.end_of_word:
-                res.append(string[:i])
             if c not in node.children:
                 break
             node = node.children[c]
+            if node.end_of_word:
+                res.append(string[:i + 1])  # includes the ith char!
         return res
 
     def add(self, word):

@@ -42,7 +42,7 @@ class TestTrie(unittest.TestCase):
         self.assertEqual('ac' in t, False)
         self.assertEqual('zz' in t, False)
 
-    def test_given_example(self):
+    def test_given_example_1(self):
         t = Trie(['i', 'is', 'pp', 'ms'])
         self.assertEqual('i' in t, True)
         self.assertEqual('is' in t, True)
@@ -53,12 +53,19 @@ class TestTrie(unittest.TestCase):
         self.assertEqual('s' in t, False)
         self.assertEqual('z' in t, False)
 
-    def test_prefixes(self):
+    def test_prefixes_1(self):
         t = Trie(['i', 'is', 'pp', 'ms'])
         self.assertListEqual(t.prefixes('isppms'), ['i', 'is'])
         self.assertListEqual(t.prefixes('ppmsis'), ['pp'])
         self.assertListEqual(t.prefixes('msppis'), ['ms'])
         self.assertListEqual(t.prefixes('zzis'), [])
+
+    def test_prefixes_2(self):
+        t = Trie(['b', 'i', 's', 'a'])
+        self.assertListEqual(t.prefixes('bibs'), ['b'])
+        self.assertListEqual(t.prefixes('ibs'), ['i'])
+        self.assertListEqual(t.prefixes('bs'), ['b'])
+        self.assertListEqual(t.prefixes('s'), ['s'])
 
 
 if __name__ == '__main__':

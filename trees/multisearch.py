@@ -7,18 +7,43 @@ where T can be found in b.
 
 (17.17, p589)
 SOLUTION
-1. Use big string to construct a suffix tree.
+Let B be the length of the big string and T be the number of smaller strings.
+M is the length of the longest string in T.
+
+
+1. Use suffixes of big string to construct a special trie
+that requires bookkeeping the indexes of suffixes.
+Time O(B^2 + TM), O(B^2) to construct the trie and O(TM) searches
+Better solution: see 2nd approach!
+
+
 2. Use small strings to construct a trie (prefix tree).
+Is T a prefix of the suffix of B? Match all suffixes of B against the trie.
+Time O(TM + BM)
+Space O(T + B + TM)
+
 """
 from collections import defaultdict
 from trees.trie import *
 
 
+# 2nd approach: Use small strings to construct a trie
+
+
 def multisearch(big, smalls):
-    res = defaultdict(list)
-    maxlen = len(big)
-    trie = Trie(smalls)
+    res = defaultdict(list)  # O(T + B) space
+    trie = Trie([s for s in smalls if len(s) <= len(big)])  # O(TM) time, O(TM) space
+    for i in range(len(big)):  # O(BM) time
+        prefixes = trie.prefixes(big[i:])  # O(M) time, O(T) space
+        for p in prefixes:  # O(M) time
+            res[p].append(i)
+    for s in smalls:  # O(T) time
+        if s not in res:
+            res[s] = []
     return res
+
+
+# 1st approach: Use suffixes of big string to construct a special trie
 
 
 def multisearch_with_bstrie(big, smalls):
