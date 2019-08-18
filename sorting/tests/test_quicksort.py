@@ -1,5 +1,5 @@
 import unittest
-from sorts.quicksort import *
+from sorting.quicksort import *
 
 
 class TestQuicksort(unittest.TestCase):
