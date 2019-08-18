@@ -1,5 +1,5 @@
 import unittest
-from search.smallestk import *
+from searching.smallestk import *
 
 
 class TestMedianOfThree(unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from search.rotated_array_search import *
+from searching.rotated_array_search import *
 
 
 class TestRotatedArraySearch(unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from search.sorted_matrix_search import *
+from searching.sorted_matrix_search import *
 
 
 class TestSortedMatrixSearch(unittest.TestCase):
