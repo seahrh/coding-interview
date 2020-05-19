@@ -1,72 +1,67 @@
-import unittest
 from trees.trie import *
 
 
-class TestTrie(unittest.TestCase):
+class TestTrie:
     def test_tree_constructor_then_add_words(self):
         t = Trie(['ab', 'aa'])
         t.add('ac')
-        self.assertEqual('aa' in t, True)
-        self.assertEqual('ab' in t, True)
-        self.assertEqual('ac' in t, True)
-        self.assertEqual('ad' in t, False)
-        self.assertEqual('d' in t, False)
+        assert 'aa' in t
+        assert 'ab' in t
+        assert 'ac' in t
+        assert 'ad' not in t
+        assert 'd' not in t
 
     def test_remove_given_only_one_word(self):
         t = Trie(['a'])
-        self.assertEqual('a' in t, True)
+        assert 'a' in t
         t.remove('a')
-        self.assertEqual('a' in t, False)
+        assert 'a' not in t
         t = Trie(['abc'])
-        self.assertEqual('abc' in t, True)
+        assert 'abc' in t
         t.remove('abc')
-        self.assertEqual('abc' in t, False)
+        assert 'abc' not in t
 
     def test_remove_given_word_that_does_not_exist_then_do_nothing(self):
         t = Trie(['abc'])
         t.remove('abd')
-        self.assertEqual('abc' in t, True)
-        self.assertEqual('abd' in t, False)
+        assert 'abc' in t
+        assert 'abd' not in t
 
     def test_tree_constructor_then_remove_everything(self):
         t = Trie(['ab', 'aa', 'ac'])
-        self.assertEqual('aa' in t, True)
-        self.assertEqual('ab' in t, True)
-        self.assertEqual('ac' in t, True)
-        self.assertEqual('zz' in t, False)
+        assert 'aa' in t
+        assert 'ab' in t
+        assert 'ac' in t
+        assert 'zz' not in t
         t.remove('ab')
         t.remove('aa')
         t.remove('ac')
-        self.assertEqual('aa' in t, False)
-        self.assertEqual('ab' in t, False)
-        self.assertEqual('ac' in t, False)
-        self.assertEqual('zz' in t, False)
+        assert 'aa' not in t
+        assert 'ab' not in t
+        assert 'ac' not in t
+        assert 'zz' not in t
 
     def test_given_example_1(self):
         t = Trie(['i', 'is', 'pp', 'ms'])
-        self.assertEqual('i' in t, True)
-        self.assertEqual('is' in t, True)
-        self.assertEqual('pp' in t, True)
-        self.assertEqual('ms' in t, True)
-        self.assertEqual('p' in t, True)
-        self.assertEqual('m' in t, True)
-        self.assertEqual('s' in t, False)
-        self.assertEqual('z' in t, False)
+        assert 'i' in t
+        assert 'is' in t
+        assert 'pp' in t
+        assert 'ms' in t
+        assert 'p' in t
+        assert 'm' in t
+        assert 's' not in t
+        assert 'z' not in t
 
     def test_prefixes_1(self):
         t = Trie(['i', 'is', 'pp', 'ms'])
-        self.assertListEqual(t.prefixes('isppms'), ['i', 'is'])
-        self.assertListEqual(t.prefixes('ppmsis'), ['pp'])
-        self.assertListEqual(t.prefixes('msppis'), ['ms'])
-        self.assertListEqual(t.prefixes('zzis'), [])
+        assert t.prefixes('isppms') == ['i', 'is']
+        assert t.prefixes('ppmsis') == ['pp']
+        assert t.prefixes('msppis') == ['ms']
+        assert t.prefixes('zzis') == []
 
     def test_prefixes_2(self):
         t = Trie(['b', 'i', 's', 'a'])
-        self.assertListEqual(t.prefixes('bibs'), ['b'])
-        self.assertListEqual(t.prefixes('ibs'), ['i'])
-        self.assertListEqual(t.prefixes('bs'), ['b'])
-        self.assertListEqual(t.prefixes('s'), ['s'])
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert t.prefixes('bibs') == ['b']
+        assert t.prefixes('ibs') == ['i']
+        assert t.prefixes('bs') == ['b']
+        assert t.prefixes('s') == ['s']
