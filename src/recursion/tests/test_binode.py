@@ -1,21 +1,21 @@
-import unittest
 from recursion.binode import *
 
 
-class TestBinode(unittest.TestCase):
-    def assert_doubly_linked_list(self, head, expected_list):
+class TestBinode:
+    @staticmethod
+    def assert_doubly_linked_list(head, expected_list):
         a = []
         node = head
         while node is not None:
             a.append(node.key)
             node = node.right
-        self.assertEqual(a, expected_list)
+        assert a == expected_list
         while node is not None:
-            self.assertEqual(a.pop(), node.key)
+            assert a.pop() == node.key
             node = node.left
 
     def test_given_empty_tree_then_return_none(self):
-        self.assertEqual(BiNode.as_linked_list(None), None)
+        assert BiNode.as_linked_list(None) is None
 
     def test_given_tree_of_size_one_then_return_root(self):
         head = BiNode.as_linked_list(BiNode(key=20, left=None, right=None))
@@ -41,7 +41,3 @@ class TestBinode(unittest.TestCase):
                    left=BiNode(key=20, left=BiNode(key=10, left=BiNode(key=0)), right=BiNode(key=30)),
                    right=BiNode(key=50, right=BiNode(key=60))))
         self.assert_doubly_linked_list(head, [0, 10, 20, 30, 40, 50, 60])
-
-
-if __name__ == '__main__':
-    unittest.main()

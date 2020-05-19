@@ -68,4 +68,4 @@ def remove(string):
             else:
                 right += 1
     _remove(res, string, 0, left, right, 0, '')
-    return list(res)
+    return res
