@@ -30,7 +30,7 @@ from typing import NamedTuple, Optional
 from datastructures.linked_list import *
 
 
-class CacheItem(NamedTuple):
+class Item(NamedTuple):
     key: str
     value: str
 
@@ -48,7 +48,7 @@ class LruCache:
             node: LinkedListNode = self.map[key]
             self.use_ordering.remove(node)
             self.use_ordering.append_left(node)
-            data: CacheItem = node.data
+            data: Item = node.data
             return data.value
         return None
 
@@ -57,6 +57,6 @@ class LruCache:
         if len(self.map) == self.capacity and key not in self.map:
             node = self.use_ordering.pop()
             del self.map[node.data.key]
-        node = LinkedListNode(data=CacheItem(key, value))
+        node = LinkedListNode(data=Item(key, value))
         self.map[key] = node
         self.use_ordering.append_left(node)
