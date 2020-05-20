@@ -1,5 +1,5 @@
 import pytest
-from recursion.shuffle import *
+from permutations.shuffle import *
 
 
 class TestShuffleRecursive:
