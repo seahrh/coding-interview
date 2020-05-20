@@ -14,6 +14,10 @@ class LinkedListNode:
 
 
 class LinkedList:
+    """Custom implementation for LRU cache problem to remove node in O(1) time.
+    Because python collections.deque remove operation takes O(n) time (removing first instance of value).
+    """
+
     def __init__(self):
         self.head: Optional[LinkedListNode] = None
         self.tail: Optional[LinkedListNode] = None
@@ -23,6 +27,7 @@ class LinkedList:
         return self.len
 
     def remove(self, node):
+        """Remove node in O(1) time."""
         if node.prev is not None:
             node.prev.next = node.next
         if node.next is not None:
