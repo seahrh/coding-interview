@@ -1,5 +1,5 @@
 import pytest
-from permutations.lru_cache import *
+from datastructures.lru_cache import *
 
 
 class TestLruCache:
