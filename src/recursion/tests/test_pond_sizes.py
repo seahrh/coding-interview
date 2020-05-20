@@ -30,8 +30,8 @@ class TestPondSizes:
         assert pond_sizes([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]) == [10]
 
     def test_given_example(self):
-        assert pond_sizes(
-            [[0, 2, 1, 0],
-             [0, 1, 0, 1],
-             [1, 1, 0, 1],
-             [0, 1, 0, 1]]) == [2, 4, 1]
+        assert pond_sizes([[0, 2, 1, 0], [0, 1, 0, 1], [1, 1, 0, 1], [0, 1, 0, 1]]) == [
+            2,
+            4,
+            1,
+        ]

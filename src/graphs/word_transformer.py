@@ -24,11 +24,11 @@ O(DE + WL) space
 from collections import defaultdict, namedtuple, deque
 
 
-def _wildcards(word, symbol='_'):
+def _wildcards(word, symbol="_"):
     """Return list of wildcards associated with word."""
     res = []
     for i in range(len(word)):
-        res.append(word[:i] + symbol + word[i + 1:])  # O(L) space
+        res.append(word[:i] + symbol + word[i + 1 :])  # O(L) space
     return res
 
 
@@ -55,7 +55,7 @@ def _neighbours(word, wildcard_map):
     return res
 
 
-Node = namedtuple('Node', 'word prev')
+Node = namedtuple("Node", "word prev")
 
 
 def _path(node, from_head=True):
@@ -110,7 +110,7 @@ def _search_level(wildcard_map, primary, secondary):
 
 def transform(from_word, to_word, words):
     if len(from_word) != len(to_word):
-        raise ValueError('Both words must have equal length')
+        raise ValueError("Both words must have equal length")
     if to_word not in words or from_word not in words:
         return []
     wmap = _wildcard_map(words)  # O(WL) space

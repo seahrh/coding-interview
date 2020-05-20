@@ -30,13 +30,13 @@ from collections import namedtuple
 from sequences.linked_list import *
 
 
-CacheItem = namedtuple('CacheItem', 'key value')
+CacheItem = namedtuple("CacheItem", "key value")
 
 
 class LruCache:
     def __init__(self, capacity):
         if capacity < 1:
-            raise ValueError('capacity must be a positive integer')
+            raise ValueError("capacity must be a positive integer")
         self.capacity = capacity
         self.map = {}
         self.use_ordering = LinkedList()

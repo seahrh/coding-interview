@@ -2,7 +2,6 @@ from sorting.quicksort import *
 
 
 class TestQuicksort:
-
     def test_array_of_length_one_with_lomuto_partition_scheme(self):
         arr = [1]
         quicksort(arr=arr, partition_fn=lomuto_partition)

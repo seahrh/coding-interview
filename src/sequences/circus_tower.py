@@ -13,7 +13,7 @@
 from collections import namedtuple
 from functools import cmp_to_key
 
-Person = namedtuple('Person', 'height weight')
+Person = namedtuple("Person", "height weight")
 
 
 def tower_length(persons):

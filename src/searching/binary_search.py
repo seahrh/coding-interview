@@ -3,7 +3,7 @@ from math import fabs
 
 def search(arr, key):
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     lo = 0
     hi = len(arr) - 1
     while lo <= hi:
@@ -22,18 +22,18 @@ def search_array_with_empty_strings(arr, key):
     # Search a sorted array of strings which is interspersed with empty strings.
     # [CTCI Q9.5]
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     lo = 0
     hi = len(arr) - 1
     while lo <= hi:
         # ensure there is something at the end
-        while lo <= hi and arr[hi] == '':
+        while lo <= hi and arr[hi] == "":
             hi -= 1
         if hi < lo:
             return -1
         mid = int((hi - lo) / 2 + lo)  # avoid integer overflow
         # Keep going right until a non-empty string is found
-        while arr[mid] == '':
+        while arr[mid] == "":
             mid += 1
         if arr[mid] == key:
             return mid
@@ -47,7 +47,7 @@ def search_array_with_empty_strings(arr, key):
 
 def nearest(arr, key):
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     lo = 0
     hi = len(arr) - 1
     res = 0

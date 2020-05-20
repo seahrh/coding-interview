@@ -11,7 +11,7 @@ def all_lengths_rec(k, shorter, longer):
     O(k) time and O(k) space (to store the result)
     """
     if k < 1:
-        raise ValueError('k must not be less than 1')
+        raise ValueError("k must not be less than 1")
     if k == 1:
         return {shorter, longer}
     res = set()
@@ -29,7 +29,7 @@ def all_lengths(k, shorter, longer):
     O(k) time and O(k) space (to store the result)
     """
     if k < 1:
-        raise ValueError('k must not be less than 1')
+        raise ValueError("k must not be less than 1")
     res = set()
     for n_shorter in range(k + 1):
         _len = n_shorter * shorter + (k - n_shorter) * longer

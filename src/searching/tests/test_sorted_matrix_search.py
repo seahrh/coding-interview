@@ -19,11 +19,7 @@ class TestSortedMatrixSearch:
         assert find([[1, 2], [3, 4]], 30) == -1
 
     def test_when_matrix_is_3x3(self):
-        matrix = [
-            [10, 20, 30],
-            [40, 50, 60],
-            [70, 80, 90]
-        ]
+        matrix = [[10, 20, 30], [40, 50, 60], [70, 80, 90]]
         assert find(matrix, 10) == (0, 0)
         assert find(matrix, 20) == (0, 1)
         assert find(matrix, 30) == (0, 2)
@@ -40,7 +36,7 @@ class TestSortedMatrixSearch:
             [10, 20, 30, 40],
             [50, 60, 70, 80],
             [90, 100, 110, 120],
-            [130, 140, 150, 160]
+            [130, 140, 150, 160],
         ]
         assert find(matrix, 10) == (0, 0)
         assert find(matrix, 20) == (0, 1)
@@ -62,7 +58,6 @@ class TestSortedMatrixSearch:
 
 
 class TestSortedMatrixBinarySearch:
-
     def test_when_matrix_is_empty_then_raise_error(self):
         with pytest.raises(ValueError):
             binary_search([], 1)
@@ -80,11 +75,7 @@ class TestSortedMatrixBinarySearch:
         assert binary_search(matrix, 11) is None
 
     def test_when_matrix_is_3x3(self):
-        matrix = [
-            [10, 20, 30],
-            [40, 50, 60],
-            [70, 80, 90]
-        ]
+        matrix = [[10, 20, 30], [40, 50, 60], [70, 80, 90]]
         assert binary_search(matrix, 10) == Cell(0, 0)
         assert binary_search(matrix, 20) == Cell(0, 1)
         assert binary_search(matrix, 30) == Cell(0, 2)
@@ -101,7 +92,7 @@ class TestSortedMatrixBinarySearch:
             [10, 20, 30, 40],
             [50, 60, 70, 80],
             [90, 100, 110, 120],
-            [130, 140, 150, 160]
+            [130, 140, 150, 160],
         ]
         assert binary_search(matrix, 10) == Cell(0, 0)
         assert binary_search(matrix, 20) == Cell(0, 1)

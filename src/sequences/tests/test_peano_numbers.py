@@ -45,4 +45,6 @@ class TestPeanoNumbers:
         assert multiply(a=Num(None), b=Num(None)) == Num(None)
         assert multiply(a=Num(Num(None)), b=Num(Num(None))) == Num(Num(Num(Num(None))))
         # 2 * 3 = 6
-        assert multiply(a=Num(Num(None)), b=Num(Num(Num(None)))) == Num(Num(Num(Num(Num(Num(None))))))
+        assert multiply(a=Num(Num(None)), b=Num(Num(Num(None)))) == Num(
+            Num(Num(Num(Num(Num(None)))))
+        )

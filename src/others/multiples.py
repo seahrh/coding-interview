@@ -24,7 +24,7 @@ import sys
 
 def kth_multiple(k):
     if k < 1:
-        raise ValueError('k must be a positive integer')
+        raise ValueError("k must be a positive integer")
     res = 1
     q3 = deque()
     q5 = deque()

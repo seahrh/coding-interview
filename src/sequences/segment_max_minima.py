@@ -16,11 +16,11 @@ def segment(x, arr):
     # Slide the segment window to the right, one element at a time.
     # This takes O(n) time and O(1) space
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     if x == 0:
-        raise ValueError('x must be a positive number')
+        raise ValueError("x must be a positive number")
     if x > len(arr):
-        raise ValueError('x must not be greater than the array length')
+        raise ValueError("x must not be greater than the array length")
     _max = -sys.maxsize
     for i, v in enumerate(arr):
         if i + x - 1 < len(arr):  # segment fits in the array

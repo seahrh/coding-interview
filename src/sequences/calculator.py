@@ -13,11 +13,11 @@ from enum import Enum
 
 
 class Operator(Enum):
-    ADD = '+'
-    SUBTRACT = '-'
-    MULTIPLY = '*'
-    DIVIDE = '/'
-    NOOP = ''
+    ADD = "+"
+    SUBTRACT = "-"
+    MULTIPLY = "*"
+    DIVIDE = "/"
+    NOOP = ""
 
     @staticmethod
     def parse(string):
@@ -70,7 +70,7 @@ def _collapse(future_top, operand_stack, operator_stack):
 
 def calculate(string):
     if len(string.strip()) < 6:
-        raise ValueError('Expression must have at least one operator and two operands')
+        raise ValueError("Expression must have at least one operator and two operands")
     operand_stack = []
     operator_stack = []
     for term in string.split():

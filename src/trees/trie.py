@@ -47,7 +47,7 @@ class Trie:
                 break
             node = node.children[c]
             if node.end_of_word:
-                res.append(string[:i + 1])  # includes the ith char!
+                res.append(string[: i + 1])  # includes the ith char!
         return res
 
     def add(self, word):

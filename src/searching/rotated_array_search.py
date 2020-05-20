@@ -46,7 +46,7 @@ def index_of_min(arr):
     This takes O(lg n) time and O(1) space.
     """
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     lo = 0
     hi = len(arr) - 1
     while arr[lo] > arr[hi]:

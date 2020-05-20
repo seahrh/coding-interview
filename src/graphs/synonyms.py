@@ -19,7 +19,7 @@ from collections import namedtuple
 from graphs.graph import *
 
 
-Node = namedtuple('Node', 'name freq')
+Node = namedtuple("Node", "name freq")
 
 
 def _graph(names, synonyms):

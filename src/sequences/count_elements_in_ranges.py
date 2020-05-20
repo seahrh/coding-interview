@@ -13,9 +13,9 @@ def count(nums, ranges):
     """Build a set from ranges, then loop nums to increment counter.
     Time O(n + p)"""
     if len(nums) == 0:
-        raise ValueError('nums must not be empty')
+        raise ValueError("nums must not be empty")
     if len(ranges) == 0:
-        raise ValueError('ranges must not be empty')
+        raise ValueError("ranges must not be empty")
     s = set()
     for r in ranges:  # O(p)
         s.update(range(r[0], r[1] + 1))

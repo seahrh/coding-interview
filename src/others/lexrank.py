@@ -40,7 +40,7 @@ from searching.binary_search import search
 
 def rank(string):
     if len(string) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     sorted_chars = sorted(string)  # O(n lg n)
     res = 1  # add all smaller strings in following loop
     for i, c in enumerate(string):

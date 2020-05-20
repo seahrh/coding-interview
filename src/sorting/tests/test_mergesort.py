@@ -2,7 +2,6 @@ from sorting.mergesort import *
 
 
 class TestMergesort:
-
     def test_array_of_length_one(self):
         arr = [1]
         mergesort(arr)

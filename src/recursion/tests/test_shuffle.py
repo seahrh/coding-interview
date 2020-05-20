@@ -24,7 +24,13 @@ class TestShuffleRecursive:
         for _ in range(80):
             permutations.add(tuple(shuffle_rec(cards=[1, 2, 3], index=2)))
         assert permutations == {
-            (1, 2, 3), (3, 2, 1), (1, 3, 2), (2, 3, 1), (3, 1, 2), (2, 1, 3)}
+            (1, 2, 3),
+            (3, 2, 1),
+            (1, 3, 2),
+            (2, 3, 1),
+            (3, 1, 2),
+            (2, 1, 3),
+        }
 
 
 class TestShuffle:
@@ -45,4 +51,10 @@ class TestShuffle:
         for _ in range(80):
             permutations.add(tuple(shuffle(cards=[1, 2, 3])))
         assert permutations == {
-            (1, 2, 3), (3, 2, 1), (1, 3, 2), (2, 3, 1), (3, 1, 2), (2, 1, 3)}
+            (1, 2, 3),
+            (3, 2, 1),
+            (1, 3, 2),
+            (2, 3, 1),
+            (3, 1, 2),
+            (2, 1, 3),
+        }

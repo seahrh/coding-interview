@@ -9,7 +9,7 @@ counts for both 1908 and 1909.
 from collections import namedtuple, defaultdict
 
 
-Person = namedtuple('Person', 'yob yod')
+Person = namedtuple("Person", "yob yod")
 
 
 def year_with_most_people_alive(people):

@@ -19,10 +19,10 @@ class TestShortestSupersequence:
 
     def test_given_example_1(self):
         assert shortest_supersequence(
-            [7, 5, 9, 8, 2, 1, 3, 5, 7, 9, 1, 1, 5, 8, 8, 9, 7],
-            includes={1, 5, 9}) == Range(7, 10)
+            [7, 5, 9, 8, 2, 1, 3, 5, 7, 9, 1, 1, 5, 8, 8, 9, 7], includes={1, 5, 9}
+        ) == Range(7, 10)
 
     def test_given_result_covers_the_whole_array(self):
         assert shortest_supersequence(
-            [1, 2, 3, 4, 5, 6, 7, 8],
-            includes={1, 8}) == Range(0, 7)
+            [1, 2, 3, 4, 5, 6, 7, 8], includes={1, 8}
+        ) == Range(0, 7)

@@ -20,7 +20,7 @@ def pick_rec(arr, m, index):
     if index + 1 == m:  # base case
         return arr[:m]
     if index + 1 < m:
-        raise ValueError('not enough items to fill all m slots')
+        raise ValueError("not enough items to fill all m slots")
     res = pick_rec(arr, m, index - 1)
     # let k be an index of the result set
     # any item in result set has equal chance of being replaced
@@ -33,7 +33,7 @@ def pick_rec(arr, m, index):
 def pick(arr, m):
     """O(n - m) time and O(m) space."""
     if m > len(arr):
-        raise ValueError('not enough items to fill all m slots')
+        raise ValueError("not enough items to fill all m slots")
     res = arr[:m]
     for i in range(m, len(arr)):
         k = randint(0, i)

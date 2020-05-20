@@ -25,7 +25,9 @@ def _pond_size(land, i, j):
         for dj in range(-1, 2):
             if di == 0 and dj == 0:
                 continue
-            size += _pond_size(land, i + di, j + dj)  # O(mn) space if all cells have water
+            size += _pond_size(
+                land, i + di, j + dj
+            )  # O(mn) space if all cells have water
     return size
 
 

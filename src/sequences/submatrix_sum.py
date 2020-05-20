@@ -17,16 +17,16 @@ from collections import namedtuple
 import sys
 
 
-Cell = namedtuple('Cell', 'row col')
+Cell = namedtuple("Cell", "row col")
 
-Range = namedtuple('Range', 'lo hi sum')
+Range = namedtuple("Range", "lo hi sum")
 
-Submatrix = namedtuple('Submatrix', 'top_left bottom_right sum')
+Submatrix = namedtuple("Submatrix", "top_left bottom_right sum")
 
 
 def _max_subarray(arr):
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     _max = -sys.maxsize
     _sum = 0
     lo = 0
@@ -46,7 +46,7 @@ def _max_subarray(arr):
 
 def max_submatrix(matrix):
     if len(matrix) == 0 or len(matrix[0]) == 0:
-        raise ValueError('matrix must not be empty')
+        raise ValueError("matrix must not be empty")
     rows = len(matrix)
     cols = len(matrix[0])
     best = None
@@ -61,6 +61,6 @@ def max_submatrix(matrix):
                 best = Submatrix(
                     top_left=Cell(row=trow, col=best_range.lo),
                     bottom_right=Cell(row=brow, col=best_range.hi),
-                    sum=best_range.sum
+                    sum=best_range.sum,
                 )
     return best

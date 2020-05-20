@@ -20,7 +20,7 @@ def find(matrix, key):
     :return: index of the element if found, otherwise -1
     """
     if len(matrix) == 0:
-        raise ValueError('matrix must not be empty')
+        raise ValueError("matrix must not be empty")
     rows = len(matrix)
     cols = len(matrix[0])
     i = 0
@@ -35,7 +35,7 @@ def find(matrix, key):
     return -1
 
 
-Cell = namedtuple('Cell', 'row col')
+Cell = namedtuple("Cell", "row col")
 
 
 def _in_bounds(matrix, cell):
@@ -104,10 +104,10 @@ def _binary_search(matrix, origin, dest, key):
 
 def binary_search(matrix, key):
     if len(matrix) == 0:
-        raise ValueError('matrix must not be empty')
+        raise ValueError("matrix must not be empty")
     return _binary_search(
         matrix=matrix,
         origin=Cell(0, 0),
         dest=Cell(len(matrix) - 1, len(matrix[0]) - 1),
-        key=key
+        key=key,
     )

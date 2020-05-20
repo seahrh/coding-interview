@@ -27,17 +27,17 @@ from collections import namedtuple
 import sys
 
 
-ParseResult = namedtuple('ParseResult', 'n_invalid parsed')
+ParseResult = namedtuple("ParseResult", "n_invalid parsed")
 
 
-def _split(dictionary, text, start, memo, separator=' '):
+def _split(dictionary, text, start, memo, separator=" "):
     if start >= len(text):  # base case
-        return ParseResult(n_invalid=0, parsed='')
+        return ParseResult(n_invalid=0, parsed="")
     if memo[start] is not None:
         return memo[start]
     _min = sys.maxsize
     parsed = None
-    partial = ''
+    partial = ""
     for i in range(start, len(text)):  # O(n) time
         partial += text[i]
         n_invalid = 0 if partial in dictionary else len(partial)
@@ -57,6 +57,6 @@ def _split(dictionary, text, start, memo, separator=' '):
     return memo[start]
 
 
-def split(dictionary, text, separator=' '):
+def split(dictionary, text, separator=" "):
     res = _split(dictionary, text, 0, memo=[None] * len(text), separator=separator)
     return None if res is None else res.parsed.strip()

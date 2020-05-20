@@ -23,21 +23,26 @@ class TestBinode:
 
     def test_given_empty_right_subtree(self):
         head = BiNode.as_linked_list(
-            BiNode(key=20,
-                   left=BiNode(key=10, left=None, right=None),
-                   right=None))
+            BiNode(key=20, left=BiNode(key=10, left=None, right=None), right=None)
+        )
         self.assert_doubly_linked_list(head, [10, 20])
 
     def test_given_empty_left_subtree(self):
         head = BiNode.as_linked_list(
-            BiNode(key=20,
-                   left=None,
-                   right=BiNode(key=30, left=None, right=None)))
+            BiNode(key=20, left=None, right=BiNode(key=30, left=None, right=None))
+        )
         self.assert_doubly_linked_list(head, [20, 30])
 
     def test_given_example(self):
         head = BiNode.as_linked_list(
-            BiNode(key=40,
-                   left=BiNode(key=20, left=BiNode(key=10, left=BiNode(key=0)), right=BiNode(key=30)),
-                   right=BiNode(key=50, right=BiNode(key=60))))
+            BiNode(
+                key=40,
+                left=BiNode(
+                    key=20,
+                    left=BiNode(key=10, left=BiNode(key=0)),
+                    right=BiNode(key=30),
+                ),
+                right=BiNode(key=50, right=BiNode(key=60)),
+            )
+        )
         self.assert_doubly_linked_list(head, [0, 10, 20, 30, 40, 50, 60])

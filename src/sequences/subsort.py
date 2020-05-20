@@ -39,7 +39,7 @@ def subsort(arr):
     Shrink left and right partitions until left < middle < right.
     O(n) time and O(1) space."""
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     tail = len(arr) - 1
     left_hi = _last_index_of_left_partition(arr)
     if left_hi == tail:  # array already sorted

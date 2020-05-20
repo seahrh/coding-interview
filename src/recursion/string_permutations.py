@@ -13,7 +13,7 @@ def permutate_without_duplicates(remainder):
     """
     res = []
     if len(remainder) == 0:  # base case
-        res.append('')
+        res.append("")
         return res
     head = remainder[0]
     partials = permutate_without_duplicates(remainder[1:])

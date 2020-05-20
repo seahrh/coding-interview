@@ -8,7 +8,7 @@ def remove_duplicates(s):
     # assume UTF-8 ASCII charset only
     num_chars = 128
     is_present = [False] * num_chars
-    res = ''
+    res = ""
     for c in s:
         cp = ord(c)
         if is_present[cp] is False:

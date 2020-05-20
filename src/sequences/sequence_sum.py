@@ -17,7 +17,7 @@ def largest_sum(arr):
     effectively picking the smallest negative number.
     This takes O(n) time and O(1) space."""
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     _max = -sys.maxsize
     _sum = 0
     for i in arr:
@@ -46,7 +46,7 @@ def sequence_sum_equals(arr, target):
     This takes O(n) time and O(1) space.
     """
     if target < 1:
-        raise ValueError('target must be a positive number')
+        raise ValueError("target must be a positive number")
     _sum = 0
     lo = 0  # beginning index of the window
     for v in arr:
@@ -81,9 +81,9 @@ def sum_swap(a, b):
     Go through the other array to check if complement exists.
     O(A + B) time and O(min(A, B)) space."""
     if len(a) == 0:
-        raise ValueError('array a must not be empty')
+        raise ValueError("array a must not be empty")
     if len(b) == 0:
-        raise ValueError('array b must not be empty')
+        raise ValueError("array b must not be empty")
     # swap the arrays such `a` is always the smaller array
     if len(b) < len(a):
         tmp = b
@@ -107,9 +107,9 @@ def sum_swap(a, b):
 def sum_swap_sorted(a, b):
     """O(A + B) time and O(1) space."""
     if len(a) == 0:
-        raise ValueError('array a must not be empty')
+        raise ValueError("array a must not be empty")
     if len(b) == 0:
-        raise ValueError('array b must not be empty')
+        raise ValueError("array b must not be empty")
     sum_a = sum(a)
     sum_b = sum(b)
     # exit if difference is odd; sums cannot be balanced!

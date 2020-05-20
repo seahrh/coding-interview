@@ -17,7 +17,7 @@ def factorial_zeroes(n):
     while 25 contributes two (because 25 = 5 * 5).
     """
     if n < 0:
-        raise ValueError('factorial is undefined for negative numbers')
+        raise ValueError("factorial is undefined for negative numbers")
     count = 0
     i = 5
     while int(n / i) > 0:

@@ -6,7 +6,10 @@ class TestLongestWord:
         assert longest_word([]) is None
 
     def test_given_example_1(self):
-        assert longest_word(['ab', 'a', 'b', 'abba']) == 'abba'
+        assert longest_word(["ab", "a", "b", "abba"]) == "abba"
 
     def test_given_example_2(self):
-        assert longest_word(['spellingbeetest', 'test', 'spelling', 'bee']) == 'spellingbeetest'
+        assert (
+            longest_word(["spellingbeetest", "test", "spelling", "bee"])
+            == "spellingbeetest"
+        )

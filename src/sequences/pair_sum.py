@@ -70,12 +70,13 @@ def pair_sum_sorted(arr, summ):
 #
 # Based on https://youtu.be/XKu_SEDAykw
 
+
 def has_pair_sum(arr, summ):
     """Build a set to store the complements. If complement exists, then the pair is found.
 
     This takes O(n) time and O(n) space."""
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     complements = set()
     for v in arr:
         if v in complements:

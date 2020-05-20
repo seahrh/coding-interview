@@ -11,6 +11,7 @@ using an immutable Num class where each list represents a positive integer.
 
 class Num:
     """Given class definition - do not change!"""
+
     def __init__(self, prev):
         self._prev = prev
 

@@ -16,9 +16,9 @@ def smallest_difference(a, b):
     Thus overall runtime is 0 (A log A + B log B) and O(1) space.
     """
     if len(a) == 0:
-        raise ValueError('array a must not be empty')
+        raise ValueError("array a must not be empty")
     if len(b) == 0:
-        raise ValueError('array b must not be empty')
+        raise ValueError("array b must not be empty")
     a.sort()  # sort in-place
     b.sort()
     i = 0

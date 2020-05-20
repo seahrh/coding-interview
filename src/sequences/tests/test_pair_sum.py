@@ -15,7 +15,11 @@ class TestPairSum:
 
     def test_many_pairs_found(self):
         assert pair_sum(arr=[2, -1, 3, -2, 1, -3, 0], summ=2) == {(0, 2), (-1, 3)}
-        assert pair_sum(arr=[2, -1, 3, -2, 1, -3, 0], summ=-1) == {(-3, 2), (-2, 1), (-1, 0)}
+        assert pair_sum(arr=[2, -1, 3, -2, 1, -3, 0], summ=-1) == {
+            (-3, 2),
+            (-2, 1),
+            (-1, 0),
+        }
 
 
 class TestPairSumSorted:
@@ -31,8 +35,15 @@ class TestPairSumSorted:
         assert pair_sum_sorted(arr=[-3, -2, -1, 0, 1, 2, 3], summ=-5) == {(-3, -2)}
 
     def test_many_pairs_found(self):
-        assert pair_sum_sorted(arr=[-3, -2, -1, 0, 1, 2, 3], summ=2) == {(0, 2), (-1, 3)}
-        assert pair_sum_sorted(arr=[-3, -2, -1, 0, 1, 2, 3], summ=-1) == {(-3, 2), (-2, 1), (-1, 0)}
+        assert pair_sum_sorted(arr=[-3, -2, -1, 0, 1, 2, 3], summ=2) == {
+            (0, 2),
+            (-1, 3),
+        }
+        assert pair_sum_sorted(arr=[-3, -2, -1, 0, 1, 2, 3], summ=-1) == {
+            (-3, 2),
+            (-2, 1),
+            (-1, 0),
+        }
 
 
 class TestHasPairSum:

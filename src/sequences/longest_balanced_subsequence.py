@@ -33,7 +33,7 @@ def _deltas(arr, is_left, is_right):
         elif is_right(v):
             d -= 1
         else:
-            raise ValueError('char does not belong to any group')
+            raise ValueError("char does not belong to any group")
         res.append(d)
     return res
 
@@ -50,7 +50,9 @@ def _longest_match(deltas):
         if d in _map:
             i = _map[d] + 1
             distance = index - i + 1
-            if (res is None and distance > 0) or (res is not None and distance > res[1] - res[0]):
+            if (res is None and distance > 0) or (
+                res is not None and distance > res[1] - res[0]
+            ):
                 res = (i, index + 1)
             continue
         _map[d] = index
@@ -67,4 +69,4 @@ def longest_balanced_subsequence(arr, is_left, is_right):
     indices = _longest_match(_deltas(arr, is_left, is_right))
     if indices is None:
         return None
-    return arr[indices[0]:indices[1]]
+    return arr[indices[0] : indices[1]]

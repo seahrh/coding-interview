@@ -65,12 +65,13 @@ def _quicksort(arr, lo, hi, partition_fn, pivot_fn):
     # Base case: array of length one
     if lo < hi:
         last_index_of_left_partition, first_index_of_right_partition = partition_fn(
-            arr=arr, lo=lo, hi=hi, pivot_fn=pivot_fn)
+            arr=arr, lo=lo, hi=hi, pivot_fn=pivot_fn
+        )
         _quicksort(arr, lo, last_index_of_left_partition, partition_fn, pivot_fn)
         _quicksort(arr, first_index_of_right_partition, hi, partition_fn, pivot_fn)
 
 
 def quicksort(arr, partition_fn=lomuto_partition, pivot_fn=median_of_three_pivot):
     if len(arr) == 0:
-        raise ValueError('arr must not be empty')
+        raise ValueError("arr must not be empty")
     _quicksort(arr, 0, len(arr) - 1, partition_fn, pivot_fn)

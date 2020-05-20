@@ -33,9 +33,9 @@ O(PW + D) space
 from collections import namedtuple, defaultdict
 
 
-Document = namedtuple('Document', 'id words')
+Document = namedtuple("Document", "id words")
 
-Pair = namedtuple('Pair', 'd1 d2 sim')
+Pair = namedtuple("Pair", "d1 d2 sim")
 
 
 def jaccard_similarity(left, right):
@@ -57,7 +57,7 @@ def _inverted_index(documents):
 def _signature(id1, id2):
     if id2 < id1:
         id1, id2 = id2, id1
-    return '{},{}'.format(id1, id2)
+    return "{},{}".format(id1, id2)
 
 
 def positive_similarity(documents):

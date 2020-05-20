@@ -24,10 +24,10 @@ import heapq
 import sys
 
 
-Node = namedtuple('Node', 'index key')
+Node = namedtuple("Node", "index key")
 
 
-Range = namedtuple('Range', 'lo hi')
+Range = namedtuple("Range", "lo hi")
 
 
 def _location_map(arr, includes):

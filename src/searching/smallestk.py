@@ -17,7 +17,7 @@ interval buckets. This takes O(n) time and O(n) space.
 from collections import namedtuple
 
 
-PartitionResult = namedtuple('PartitionResult', 'left_size mid_size')
+PartitionResult = namedtuple("PartitionResult", "left_size mid_size")
 
 
 def _partition(arr, lo, hi, pivot):
@@ -68,17 +68,19 @@ def _rank(arr, k, lo, hi, pivot_fn):
         return _rank(arr, k, lo, lo + pr.left_size - 1, pivot_fn)
     if k <= pr.left_size + pr.mid_size:
         return pivot  # middle partition contains only pivot values
-    return _rank(arr,
-                 k=k - pr.left_size - pr.mid_size,
-                 lo=lo + pr.left_size + pr.mid_size,
-                 hi=hi,
-                 pivot_fn=pivot_fn)
+    return _rank(
+        arr,
+        k=k - pr.left_size - pr.mid_size,
+        lo=lo + pr.left_size + pr.mid_size,
+        hi=hi,
+        pivot_fn=pivot_fn,
+    )
 
 
 def rank(arr, k, pivot_fn=median_of_three):
     """Return the kth value from the array, where k starts from 1."""
     if not 1 <= k <= len(arr):
-        raise ValueError('k must be in the range from 1 to array length, inclusive.')
+        raise ValueError("k must be in the range from 1 to array length, inclusive.")
     return _rank(arr, k, 0, len(arr) - 1, pivot_fn)
 
 
@@ -93,7 +95,7 @@ def smallest(arr, k):
     :return: array containing k smallest items
     """
     if not 1 <= k <= len(arr):
-        raise ValueError('k must be in the range from 1 to array length, inclusive.')
+        raise ValueError("k must be in the range from 1 to array length, inclusive.")
     threshold = rank(arr, k)
     res = []
     for v in arr:

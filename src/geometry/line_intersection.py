@@ -16,7 +16,9 @@ class Point:
         return self.x == other.x and self.y == other.y
 
     def is_between(self, p1, p2):
-        return min(p1.x, p2.x) <= self.x <= max(p1.x, p2.x) and min(p1.y, p2.y) <= self.y <= max(p1.y, p2.y)
+        return min(p1.x, p2.x) <= self.x <= max(p1.x, p2.x) and min(
+            p1.y, p2.y
+        ) <= self.y <= max(p1.y, p2.y)
 
 
 class Line:

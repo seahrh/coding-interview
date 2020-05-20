@@ -26,7 +26,7 @@ def _group_by_length(words):
 
 
 def _column_word(matrix, index):
-    res = ''
+    res = ""
     for row in range(len(matrix)):
         res += matrix[row][index]
     return res
@@ -57,13 +57,13 @@ def _rectangle(length, height, word_groups, tries):
 
 
 def _build(length, height, word_groups, tries, rectangle):
-    #print('_build(l={}, h={}, r={})'.format(length, height, rectangle))
+    # print('_build(l={}, h={}, r={})'.format(length, height, rectangle))
     if len(rectangle) == height:  # base case: rectangle built up to full height
         if _validate_columns(rectangle, word_groups[height]):
             return rectangle
         return None
     if len(rectangle) != 0 and not _validate_partial_columns(rectangle, tries[height]):
-        #print('_validate_partial_columns=False')
+        # print('_validate_partial_columns=False')
         return None
     for word in word_groups[length]:
         taller = list(rectangle)

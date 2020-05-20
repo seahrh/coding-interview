@@ -15,7 +15,7 @@ def shuffle_rec(cards, index):
     O(n) time and O(n) space.
     """
     if index < 0:
-        raise ValueError('index must not be negative number')
+        raise ValueError("index must not be negative number")
     if index == 0:
         return cards
     shuffle_rec(cards, index - 1)

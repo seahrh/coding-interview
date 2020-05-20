@@ -5,10 +5,10 @@
 
 def is_anagram(s, t):
     # This takes O(s + t) time and O(1) space.
-    if s == '':
-        raise ValueError('s must not be empty')
-    if t == '':
-        raise ValueError('t must not be empty')
+    if s == "":
+        raise ValueError("s must not be empty")
+    if t == "":
+        raise ValueError("t must not be empty")
     if len(s) != len(t):
         return False
     num_chars = 128

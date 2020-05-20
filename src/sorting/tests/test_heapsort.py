@@ -2,7 +2,6 @@ from sorting.heapsort import *
 
 
 class TestHeapsort:
-
     def test_array_of_length_one(self):
         arr = [1]
         heapsort(arr)

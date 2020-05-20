@@ -30,7 +30,7 @@ def has_won(board):
     """Check rows, columns and diagonals to see if game is won.
     Time O(n), Space O(1) since generators are used"""
     if len(board) < 3 or len(board[0]) < 3:
-        raise ValueError('board dimensions must not be less than 3')
+        raise ValueError("board dimensions must not be less than 3")
     n = len(board)
     # check diagonals first since there are only two
     diagonal_down = (board[i][i] for i in range(n))  # generator

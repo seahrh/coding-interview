@@ -103,11 +103,11 @@ class BigStringTrieNode:
         child.insert(remainder, index + 1)
 
     def __repr__(self):
-        return '{}({})'.format(self.__class__.__name__, self.__dict__)
+        return "{}({})".format(self.__class__.__name__, self.__dict__)
 
 
 class BigStringTrie:
-    def __init__(self, string=None, terminator='*'):
+    def __init__(self, string=None, terminator="*"):
         self.root = BigStringTrieNode(terminator=terminator)
         if string is not None:
             self.root.insert(string, 0)
