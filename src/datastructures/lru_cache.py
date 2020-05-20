@@ -26,11 +26,13 @@ Updating Most Recently Used:
 Eviction:
     Remove tail of linked list. Get key from linked list node and remove key from hash table.
 """
-from collections import namedtuple
+from typing import NamedTuple, Optional
 from datastructures.linked_list import *
 
 
-CacheItem = namedtuple("CacheItem", "key value")
+class CacheItem(NamedTuple):
+    key: str
+    value: str
 
 
 class LruCache:
@@ -41,15 +43,17 @@ class LruCache:
         self.map = {}
         self.use_ordering = LinkedList()
 
-    def get(self, key):
+    def get(self, key: str) -> Optional[str]:
         if key in self.map:
-            node = self.map[key]
+            node: LinkedListNode = self.map[key]
             self.use_ordering.remove(node)
             self.use_ordering.append_left(node)
-            return node.data.value
+            data: CacheItem = node.data
+            return data.value
         return None
 
-    def put(self, key, value):
+    def put(self, key: str, value: str) -> None:
+        # eviction if cache is full
         if len(self.map) == self.capacity and key not in self.map:
             node = self.use_ordering.pop()
             del self.map[node.data.key]

@@ -1,5 +1,13 @@
+from typing import Optional, Any
+
+
 class LinkedListNode:
-    def __init__(self, data, prev_node=None, next_node=None):
+    def __init__(
+        self,
+        data: Any,
+        prev_node: Optional["LinkedListNode"] = None,
+        next_node: Optional["LinkedListNode"] = None,
+    ):
         self.prev = prev_node
         self.next = next_node
         self.data = data
@@ -7,8 +15,8 @@ class LinkedListNode:
 
 class LinkedList:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.head: Optional[LinkedListNode] = None
+        self.tail: Optional[LinkedListNode] = None
         self.len = 0
 
     def __len__(self):
