@@ -7,4 +7,5 @@ install:
   - pip install ."[tests]"
 # command to run tests
 script:
+  - mypy src
   - pytest -v
