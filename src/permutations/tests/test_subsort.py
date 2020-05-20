@@ -1,5 +1,5 @@
 import pytest
-from sequences.subsort import *
+from permutations.subsort import *
 
 
 class TestSubSort:

@@ -1,5 +1,5 @@
 import pytest
-from sequences.calculator import *
+from permutations.calculator import *
 
 
 class TestCalculator:

@@ -1,5 +1,5 @@
 import pytest
-from sequences.pattern_matching import *
+from permutations.pattern_matching import *
 
 
 class TestPatternMatching:

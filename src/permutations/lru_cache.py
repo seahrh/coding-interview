@@ -27,7 +27,7 @@ Eviction:
     Remove tail of linked list. Get key from linked list node and remove key from hash table.
 """
 from collections import namedtuple
-from sequences.linked_list import *
+from permutations.linked_list import *
 
 
 CacheItem = namedtuple("CacheItem", "key value")

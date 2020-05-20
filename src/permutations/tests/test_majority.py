@@ -1,4 +1,4 @@
-from sequences.majority import *
+from permutations.majority import *
 
 
 class TestMajority:

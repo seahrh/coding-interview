@@ -1,5 +1,5 @@
 import pytest
-from sequences.sequence_sum import *
+from permutations.sequence_sum import *
 
 
 class TestLargestSum:

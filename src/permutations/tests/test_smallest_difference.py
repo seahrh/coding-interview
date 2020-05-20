@@ -1,5 +1,5 @@
 import pytest
-from sequences.smallest_difference import *
+from permutations.smallest_difference import *
 
 
 class TestSmallestDifference:

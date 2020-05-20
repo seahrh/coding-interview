@@ -1,4 +1,4 @@
-from sequences.pair_sum import *
+from permutations.pair_sum import *
 
 
 class TestPairSum:

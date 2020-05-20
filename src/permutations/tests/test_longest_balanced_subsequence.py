@@ -1,5 +1,5 @@
 import pytest
-from sequences.longest_balanced_subsequence import *
+from permutations.longest_balanced_subsequence import *
 
 
 class TestLongestBalancedSubsequence:

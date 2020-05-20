@@ -1,5 +1,5 @@
 import pytest
-from sequences.tictactoe import *
+from permutations.tictactoe import *
 
 
 class TestTicTacToe:

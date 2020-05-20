@@ -1,4 +1,4 @@
-from sequences.duplicates import *
+from permutations.duplicates import *
 
 
 class TestDuplicates:

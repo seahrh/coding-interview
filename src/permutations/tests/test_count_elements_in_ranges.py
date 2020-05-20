@@ -1,4 +1,4 @@
-from sequences.count_elements_in_ranges import *
+from permutations.count_elements_in_ranges import *
 
 
 class TestCountElementsInRanges:

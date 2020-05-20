@@ -1,4 +1,4 @@
-from sequences.living_people import *
+from permutations.living_people import *
 
 
 class TestLivingPeople:

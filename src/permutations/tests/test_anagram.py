@@ -1,4 +1,4 @@
-from sequences.anagram import *
+from permutations.anagram import *
 
 
 class TestAnagram:
