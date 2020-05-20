@@ -1,25 +1,20 @@
-import unittest
 from sequences.anagram import *
 
 
-class TestAnagram(unittest.TestCase):
+class TestAnagram:
     def test_strings_of_length_one(self):
-        self.assertEqual(is_anagram('a', 'a'), True)
-        self.assertEqual(is_anagram('a', 'b'), False)
+        assert is_anagram('a', 'a')
+        assert not is_anagram('a', 'b')
 
     def test_strings_of_unequal_lengths(self):
-        self.assertEqual(is_anagram('a', 'ab'), False)
+        assert not is_anagram('a', 'ab')
 
     def test_when_strings_are_anagram_then_return_true(self):
-        self.assertEqual(is_anagram('test', 'sett'), True)
-        self.assertEqual(is_anagram('listen', 'silent'), True)
-        self.assertEqual(is_anagram('anagram', 'nagaram'), True)
-        self.assertEqual(is_anagram('dusty', 'study'), True)
-        self.assertEqual(is_anagram('night', 'thing'), True)
+        assert is_anagram('test', 'sett')
+        assert is_anagram('listen', 'silent')
+        assert is_anagram('anagram', 'nagaram')
+        assert is_anagram('dusty', 'study')
+        assert is_anagram('night', 'thing')
 
     def test_when_strings_are_not_anagram_then_return_false(self):
-        self.assertEqual(is_anagram('test', 'sets'), False)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert not is_anagram('test', 'sets')

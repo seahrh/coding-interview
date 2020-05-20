@@ -1,31 +1,28 @@
-import unittest
+import pytest
 from sequences.pattern_matching import *
 
 
-class TestPatternMatching(unittest.TestCase):
+class TestPatternMatching:
     def test_given_empty_pattern_then_raise_error(self):
-        self.assertRaises(ValueError, matches, '', 'value')
+        with pytest.raises(ValueError):
+            matches(pattern='', value='value')
 
     def test_given_empty_value_then_return_false(self):
-        self.assertEqual(matches(pattern='a', value=''), False)
+        assert not matches(pattern='a', value='')
 
     def test_given_single_pattern_a_then_return_true(self):
-        self.assertEqual(matches(pattern='a', value='value'), True)
+        assert matches(pattern='a', value='value')
 
     def test_given_single_pattern_b_then_return_true(self):
-        self.assertEqual(matches(pattern='b', value='value'), True)
+        assert matches(pattern='b', value='value')
 
     def test_given_example(self):
         value = 'catcatgocatgo'
-        self.assertEqual(matches(pattern='aabab', value=value), True)
-        self.assertEqual(matches(pattern='aab', value=value), True)
-        self.assertEqual(matches(pattern='abb', value=value), True)
-        self.assertEqual(matches(pattern='ab', value=value), True)
-        self.assertEqual(matches(pattern='a', value=value), True)
-        self.assertEqual(matches(pattern='b', value=value), True)
-        self.assertEqual(matches(pattern='aba', value=value), False)
-        self.assertEqual(matches(pattern='aaba', value=value), False)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert matches(pattern='aabab', value=value)
+        assert matches(pattern='aab', value=value)
+        assert matches(pattern='abb', value=value)
+        assert matches(pattern='ab', value=value)
+        assert matches(pattern='a', value=value)
+        assert matches(pattern='b', value=value)
+        assert not matches(pattern='aba', value=value)
+        assert not matches(pattern='aaba', value=value)
