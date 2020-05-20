@@ -4,24 +4,25 @@ There are two types of planks, one of length shorter and one of length longer. Y
 exactly K planks of wood. Write a method to generate all possible lengths for the diving board.
 (16.11, p497)
 """
+from typing import Set
 
 
-def all_lengths_rec(k, shorter, longer):
+def all_lengths_rec(k: int, shorter: int, longer: int) -> Set[int]:
     """Recursive solution
     O(k) time and O(k) space (to store the result)
     """
     if k < 1:
         raise ValueError("k must not be less than 1")
-    if k == 1:
+    if k == 1:  # base case
         return {shorter, longer}
     res = set()
-    for l in all_lengths_rec(k - 1, shorter, longer):
-        res.add(l + shorter)
-        res.add(l + longer)
+    for _len in all_lengths_rec(k - 1, shorter, longer):
+        res.add(_len + shorter)
+        res.add(_len + longer)
     return res
 
 
-def all_lengths(k, shorter, longer):
+def all_lengths(k: int, shorter: int, longer: int) -> Set[int]:
     """Iterative solution
     We just need to go through all unique sets of K planks (sets, not orders!).
     There are only K ways of picking K planks if we only have two possible types:
