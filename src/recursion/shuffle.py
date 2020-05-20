@@ -16,13 +16,11 @@ def shuffle_rec(cards, index):
     """
     if index < 0:
         raise ValueError("index must not be negative number")
-    if index == 0:
+    if index == 0:  # base case
         return cards
     shuffle_rec(cards, index - 1)
     k = randint(0, index)
-    tmp = cards[k]
-    cards[k] = cards[index]
-    cards[index] = tmp
+    cards[k], cards[index] = cards[index], cards[k]
     return cards
 
 
@@ -33,7 +31,5 @@ def shuffle(cards):
     res = list(cards)
     for i in range(len(res)):
         k = randint(0, i)
-        tmp = res[k]
-        res[k] = res[i]
-        res[i] = tmp
+        res[k], res[i] = res[i], res[k]
     return res
