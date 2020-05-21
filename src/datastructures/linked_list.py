@@ -1,26 +1,25 @@
 from typing import Optional, Any
 
 
-class LinkedListNode:
-    def __init__(
-        self,
-        data: Any,
-        prev_node: Optional["LinkedListNode"] = None,
-        next_node: Optional["LinkedListNode"] = None,
-    ):
-        self.prev = prev_node
-        self.next = next_node
-        self.data = data
-
-
-class LinkedList:
-    """Custom implementation for LRU cache problem to remove node in O(1) time.
+class DLinkedList:
+    """Custom implementation of doubly linked list for LRU cache problem to remove node in O(1) time.
     Because python collections.deque remove operation takes O(n) time (removing first instance of value).
     """
 
+    class Node:
+        def __init__(
+            self,
+            data: Any,
+            prev_node: Optional["DLinkedList.Node"] = None,
+            next_node: Optional["DLinkedList.Node"] = None,
+        ):
+            self.prev = prev_node
+            self.next = next_node
+            self.data = data
+
     def __init__(self):
-        self.head: Optional[LinkedListNode] = None
-        self.tail: Optional[LinkedListNode] = None
+        self.head: Optional[DLinkedList.Node] = None
+        self.tail: Optional[DLinkedList.Node] = None
         self.len = 0
 
     def __len__(self):

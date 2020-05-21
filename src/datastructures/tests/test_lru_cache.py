@@ -7,7 +7,7 @@ class TestLruCache:
         with pytest.raises(ValueError):
             LruCache(capacity=0)
 
-    def test_read_and_write_of_many_items(self):
+    def test_get_and_put(self):
         cache = LruCache(capacity=10)
         cache.put("k1", "v1")
         cache.put("k2", "v2")
