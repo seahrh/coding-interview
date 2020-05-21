@@ -9,8 +9,9 @@ from typing import List
 
 
 def fib_rec(n: int) -> int:
-    """There are 2 branches per call, and we go as deep as N, therefore exponential time (2^N).
-    O(n) space: recursive call stack.
+    """
+    Time (2^N): There are 2 branches per call, and the call tree goes as deep as N, so exponential time.
+    Space O(N): recursive call stack.
     """
     if n < 1:
         raise ValueError("n must not be less than 1")
@@ -23,6 +24,12 @@ def fib_rec(n: int) -> int:
 
 
 def fib_memo(n: int) -> int:
+    """There is no meaningful branching, because only the left-side calls do computation.
+    The right-side calls find what they are looking for in the cache and immediately return.
+
+    Time O(N)
+    Space O(N): size of cache, recursive call stack
+    """
     if n < 1:
         raise ValueError("n must not be less than 1")
     # base cases fib(1) and fib(2)
