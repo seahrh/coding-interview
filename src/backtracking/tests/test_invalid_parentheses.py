@@ -1,4 +1,4 @@
-from recursion.remove_invalid_parentheses import *
+from backtracking.invalid_parentheses import *
 
 
 class TestRemoveInvalidParentheses:
