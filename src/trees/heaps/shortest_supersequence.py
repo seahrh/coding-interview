@@ -17,21 +17,27 @@ SOLUTION
 - Repeat until a queue is empty i.e. no more seqs can be found
 
 B is the length of the array and S is the size of the includes.
-O((B + S) lg S) time and O(B + S) space
+Time O((B + S) lg S)
+Space O(B + S)
 """
-from collections import defaultdict, deque, namedtuple
 import heapq
 import sys
+from collections import deque
+from typing import NamedTuple, Dict, Deque, List, Set, Optional
 
 
-Node = namedtuple("Node", "index key")
+class Node(NamedTuple):
+    index: int  # type: ignore
+    key: int
 
 
-Range = namedtuple("Range", "lo hi")
+class Range(NamedTuple):
+    lo: int
+    hi: int
 
 
-def _location_map(arr, includes):
-    res = defaultdict(deque)  # O(B) space
+def _location_map(arr: List[int], includes: Set[int]) -> Dict[int, Deque[int]]:
+    res: Dict[int, Deque[int]] = {}  # O(B) space
     # initialize empty linked list, in case include not found in array
     for i in includes:  # O(S) time
         res[i] = deque()
@@ -41,32 +47,32 @@ def _location_map(arr, includes):
     return res
 
 
-def _shortest_closure(location_map):
-    min_heap = []  # O(S) space
+def _shortest_closure(location_map: Dict[int, Deque[int]]) -> Optional[Range]:
+    min_heap: List[Node] = []  # O(S) space
     hi = -sys.maxsize
-    for key, indexes in location_map.items():  # O(S lg S) time
-        if len(indexes) == 0:
+    for key, indices in location_map.items():  # O(S lg S) time
+        if len(indices) == 0:
             return None
-        index = indexes.popleft()
-        heapq.heappush(min_heap, Node(index, key))  # O(lg S) time
+        index = indices.popleft()
+        heapq.heappush(min_heap, Node(index=index, key=key))  # O(lg S) time
         hi = max(hi, index)
     lo = min_heap[0].index
     best_lo = lo
     best_hi = hi
     while True:  # O(B lg S) time
         min_node = heapq.heappop(min_heap)  # O(lg S) time
-        indexes = location_map[min_node.key]
         lo = min_node.index
         if hi - lo < best_hi - best_lo:  # found shorter seq
             best_lo = lo
             best_hi = hi
-        if len(indexes) == 0:  # no more items, hence no more subseqs
+        indices = location_map[min_node.key]
+        if len(indices) == 0:  # no more items, hence no more subseqs
             break
-        index = indexes.popleft()
+        index = indices.popleft()
         hi = max(hi, index)
-        heapq.heappush(min_heap, Node(index, min_node.key))  # O(lg S) time
+        heapq.heappush(min_heap, Node(index=index, key=min_node.key))  # O(lg S) time
     return Range(best_lo, best_hi)
 
 
-def shortest_supersequence(arr, includes):
+def shortest_supersequence(arr: List[int], includes: Set[int]) -> Optional[Range]:
     return _shortest_closure(_location_map(arr, includes))
