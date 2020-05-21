@@ -1,4 +1,4 @@
-from trees.heaps.shortest_supersequence import *
+from heaps.shortest_supersequence import *
 
 
 class TestShortestSupersequence:

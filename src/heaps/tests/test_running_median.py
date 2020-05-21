@@ -1,4 +1,4 @@
-from trees.heaps.running_median import *
+from heaps.running_median import *
 
 
 class TestRunningMedian:
