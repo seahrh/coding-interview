@@ -45,3 +45,28 @@ def fib_memo(n: int) -> int:
         return memo[nth - 1]
 
     return _fib(n, _memo, _unknown)
+
+
+def fib(n: int) -> int:
+    """
+    Improved dynamic programming approach: reduce space to O(1) because recurrence requires
+    only the last 2 args and do not need the entire memo array.
+    
+    Time O(N)
+    Space O(1)
+    """
+    if n < 1:
+        raise ValueError("n must not be less than 1")
+    # base cases fib(1) and fib(2)
+    if n == 1:
+        return 0
+    if n == 2:
+        return 1
+    prev_2 = 0
+    prev_1 = 1
+    res = 0
+    for _ in range(2, n):
+        res = prev_2 + prev_1
+        prev_2 = prev_1
+        prev_1 = res
+    return res
