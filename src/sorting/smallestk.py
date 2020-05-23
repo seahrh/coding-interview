@@ -7,20 +7,22 @@ Assumptions
 - Modifying the array is allowed.
 
 SOLUTION
-1. Sorting (e.g. heapsort) takes O(n lg n) time and O(1) space.
-2. Max heap takes O(n lg k) time and O(k) space.
-3. Selection rank algorithm takes O(n) time and O(n) space because depth of call stack.
+1. Sorting (e.g. heapsort) takes O(N lg N) time and O(1) space.
+2. Max heap takes O(N lg K) time and O(K) space.
+3. Selection rank algorithm takes O(N) time and O(N) space because of recursive call stack.
 4. If range of values is known, hash table can be used where items are placed in their respective
-interval buckets. This takes O(n) time and O(n) space.
+interval buckets. This takes O(N) time and O(N) space.
 
 """
-from collections import namedtuple
+from typing import NamedTuple, List, Callable
 
 
-PartitionResult = namedtuple("PartitionResult", "left_size mid_size")
+class PartitionResult(NamedTuple):
+    left_size: int
+    mid_size: int
 
 
-def _partition(arr, lo, hi, pivot):
+def _partition(arr: List[int], lo: int, hi: int, pivot: int) -> PartitionResult:
     """Divide the array into three partitions: less than the pivot, equal to the pivot
     and greater than the pivot.
     """
@@ -45,9 +47,8 @@ def _partition(arr, lo, hi, pivot):
     return PartitionResult(left_size=head - lo, mid_size=tail - head + 1)
 
 
-def median_of_three(arr, lo, hi):
-    """Get the approximate median of three items
-    in the subarray specified by `lo` and `hi` indices, inclusive.
+def median_of_three(arr: List[int], lo: int, hi: int) -> int:
+    """Get the approximate median of three items in the subarray specified by `lo` and `hi` indices, inclusive.
     Given only one distinct item, return itself.
     Given two distinct items, return either item.
     Given three distinct items, return the one in the middle.
@@ -60,11 +61,12 @@ def median_of_three(arr, lo, hi):
     return arr[hi]
 
 
-def _rank(arr, k, lo, hi, pivot_fn):
-    pivot = pivot_fn(arr, lo, hi)
+def _rank(arr: List[int], k: int, lo: int, hi: int, pivot_fn: Callable) -> int:
+    pivot: int = pivot_fn(arr, lo, hi)
     pr = _partition(arr, lo, hi, pivot)  # O(n) time
     # search portion of array: average O(lg n) time, worst O(n) time if poor choice of pivot.
     if k <= pr.left_size:
+        # lo + pr.left_size - 1 because first element lo is already included.
         return _rank(arr, k, lo, lo + pr.left_size - 1, pivot_fn)
     if k <= pr.left_size + pr.mid_size:
         return pivot  # middle partition contains only pivot values
@@ -77,14 +79,14 @@ def _rank(arr, k, lo, hi, pivot_fn):
     )
 
 
-def rank(arr, k, pivot_fn=median_of_three):
+def rank(arr: List[int], k: int, pivot_fn: Callable = median_of_three) -> int:
     """Return the kth value from the array, where k starts from 1."""
     if not 1 <= k <= len(arr):
         raise ValueError("k must be in the range from 1 to array length, inclusive.")
     return _rank(arr, k, 0, len(arr) - 1, pivot_fn)
 
 
-def smallest(arr, k):
+def smallest(arr: List[int], k: int) -> List[int]:
     """
     Since there are duplicates, there could be more than k items that are less than
     or equals to the kth item. First, copy only the items that are less than the kth item,
@@ -97,7 +99,7 @@ def smallest(arr, k):
     if not 1 <= k <= len(arr):
         raise ValueError("k must be in the range from 1 to array length, inclusive.")
     threshold = rank(arr, k)
-    res = []
+    res: List[int] = []
     for v in arr:
         if len(res) == k:
             break

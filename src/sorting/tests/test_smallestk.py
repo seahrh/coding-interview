@@ -1,5 +1,5 @@
 import pytest
-from searching.smallestk import *
+from sorting.smallestk import *
 
 
 class TestMedianOfThree:
