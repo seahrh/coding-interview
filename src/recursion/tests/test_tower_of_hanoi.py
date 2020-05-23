@@ -1,7 +1,7 @@
 from recursion.tower_of_hanoi import *
 
 
-class TestTowerOfHanoiRecursive:
+class TestTowerOfHanoi:
     def test_move_1_disk(self):
         fs = [1]
         ts = []
