@@ -4,15 +4,26 @@ The robot starts from start position (0,0) and finds a path to end position (4, 
 In the maze, 0 is open path while 1 means wall (a robot cannot pass through wall)
 (heuristic is provided)
 
-example result:
-[[0, -1, -1, -1, -1, -1],
-[1, -1, -1, -1, -1, -1],
-[2, -1, -1, -1, -1, -1],
-[3, -1,  8, 10, 12, 14],
-[4,  5,  6,  7, -1, 15]]
+Example input:
+[
+    [0, 1, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0],
+]
+
+A* search
+===========
+One important aspect of A* is f = g + h.
+The f, g, and h variables are in our Node class and get calculated every time we create a new node.
+F is the total cost of the node.
+G is the distance between the current node and the start node.
+H is the heuristic — estimated distance from the current node to the end node.
+
 """
 from heapq import heappush, heappop
-from typing import NamedTuple, Optional, List, Set, Iterable, Tuple
+from typing import NamedTuple, Optional, List, Set, Iterable, Tuple, Callable
 
 
 class Position(NamedTuple):
@@ -62,11 +73,17 @@ class Node:
 
 def _path(tail: Node) -> List[Position]:
     res = []
-    curr = tail
+    curr: Optional[Node] = tail
     while curr is not None:
         res.append(curr.position)
         curr = curr.parent
     return res[::-1]
+
+
+def pythagorean_heuristic(start: Node, goal: Node) -> int:
+    return ((start.position.row - goal.position.row) ** 2) + (
+        (start.position.col - goal.position.col) ** 2
+    )
 
 
 def search(
@@ -75,14 +92,17 @@ def search(
     goal: Position,
     moves: Iterable[Position],
     walkable: int = 0,
+    heuristic: Callable = pythagorean_heuristic,
 ) -> List[Position]:
     """Returns a list of tuples as a path from the given start to the given end in the given maze"""
     start_node = Node(start)
     goal_node = Node(goal)
+    # first element is the f-score; 2nd element is the Node pointer to break ties.
     open_list: List[Tuple[int, int, Node]] = []
     closed_set: Set[Position] = set()
     heappush(open_list, (start_node.f, id(start_node), start_node))
     while len(open_list) > 0:
+        # get the node with the lowest f-score in the open list
         _, _, current_node = heappop(open_list)
         closed_set.add(current_node.position)
 
@@ -91,25 +111,13 @@ def search(
             return _path(current_node)
 
         children = current_node.neighbours(maze=maze, moves=moves, walkable=walkable)
-        # TODO continue here
         for child in children:
-
-            # Child is on the closed list
-            for closed_child in closed_list:
-                if child == closed_child:
-                    continue
-
+            if child.position in closed_set:
+                continue
             # Create the f, g, and h values
             child.g = current_node.g + 1
-            child.h = ((child.position[0] - goal_node.position[0]) ** 2) + (
-                (child.position[1] - goal_node.position[1]) ** 2
-            )
+            child.h = heuristic(current_node, goal_node)
             child.f = child.g + child.h
+            heappush(open_list, (child.f, id(child), child))
 
-            # Child is already in the open list
-            for open_node in open_list:
-                if child == open_node and child.g > open_node.g:
-                    continue
-
-            # Add the child to the open list
-            open_list.append(child)
+    return []  # path not found
