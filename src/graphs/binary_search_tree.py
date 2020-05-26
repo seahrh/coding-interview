@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Optional
+from typing import TypeVar, Generic, Optional, List
 
 T = TypeVar("T")  # Declare type variable
 
@@ -25,12 +25,14 @@ def binary_insert(root: Node, node: Node) -> None:
             binary_insert(root.right, node)
 
 
-def in_order_print(root: Optional[Node]) -> None:
+def in_order_traverse(root: Optional[Node]) -> List[Node]:
+    res: List[Node] = []
     if root is None:
-        return
-    in_order_print(root.left)
-    print(root.data)
-    in_order_print(root.right)
+        return res
+    res = res + in_order_traverse(root.left)
+    res.append(root)
+    res = res + in_order_traverse(root.right)
+    return res
 
 
 def pre_order_print(root: Optional[Node]) -> None:
