@@ -35,9 +35,11 @@ def in_order_traverse(root: Optional[Node]) -> List[Node]:
     return res
 
 
-def pre_order_print(root: Optional[Node]) -> None:
+def pre_order_traverse(root: Optional[Node]) -> List[Node]:
+    res: List[Node] = []
     if root is None:
-        return
-    print(root.data)
-    pre_order_print(root.left)
-    pre_order_print(root.right)
+        return res
+    res.append(root)
+    res += pre_order_traverse(root.left)
+    res += pre_order_traverse(root.right)
+    return res
