@@ -67,8 +67,8 @@ class Graph(Generic[T]):
 
 
 def bfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> List[T]:
-    """Returns the path of nodes visited in BFS.
-
+    """Returns the path of nodes visited in Breadth First Search.
+    Uses a queue to pick the next node to process.
     Time O(V + E)
     Space O(V)
     """
@@ -86,4 +86,27 @@ def bfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> 
             if neighbour not in discovered:
                 discovered.add(neighbour)
                 q.append(neighbour)
+    return res
+
+
+def dfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> List[T]:
+    """Returns the path of nodes visited in Depth First Search.
+    Uses a stack to pick the next node to process.
+    Time O(V + E)
+    Space O(V)
+    """
+    st: Deque[T] = deque()
+    discovered: Set[T] = set()
+    res: List[T] = []
+    st.append(start_node)
+    discovered.add(start_node)
+    while len(st) != 0:
+        curr = st.pop()
+        res.append(curr)
+        if process is not None:
+            process(curr)
+        for neighbour in graph.adjacent(curr):
+            if neighbour not in discovered:
+                discovered.add(neighbour)
+                st.append(neighbour)
     return res
