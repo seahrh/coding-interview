@@ -31,3 +31,29 @@ class TestPreOrderTraversal:
         binary_insert(root, Node(5))
         path = pre_order_traverse(root)
         assert [node.data for node in path] == [3, 1, 7, 5]
+
+
+class TestIsBinarySearchTree:
+    def test_is_binary_search_tree(self):
+        root = Node(1)
+        assert is_binary_search_tree(root)
+        root = Node(5, left=Node(3), right=Node(7))
+        assert is_binary_search_tree(root)
+        root = Node(
+            5,
+            left=Node(3, left=Node(1), right=Node(4)),
+            right=Node(7, left=Node(6), right=Node(9)),
+        )
+        assert is_binary_search_tree(root)
+        root = Node(
+            5,
+            left=Node(3, left=Node(1), right=Node(40)),
+            right=Node(7, left=Node(6), right=Node(9)),
+        )
+        assert not is_binary_search_tree(root)
+        root = Node(
+            5,
+            left=Node(3, left=Node(1), right=Node(4)),
+            right=Node(10, left=Node(6), right=Node(9)),
+        )
+        assert is_binary_search_tree(root)
