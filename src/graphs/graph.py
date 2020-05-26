@@ -1,12 +1,15 @@
-from collections import defaultdict
+from collections import defaultdict, deque
+from typing import TypeVar, Generic, DefaultDict, Set, List, Callable, Deque
+
+T = TypeVar("T")  # Declare type variable
 
 
-class Graph:
+class Graph(Generic[T]):
     """ Graph data structure, undirected by default. """
 
-    def __init__(self, directed=False):
-        self._graph = defaultdict(set)
-        self._directed = directed
+    def __init__(self, directed: bool = False):
+        self._graph: DefaultDict[T, Set[T]] = defaultdict(set)
+        self._directed: bool = directed
 
     def nodes(self):
         return self._graph.keys()
@@ -61,3 +64,26 @@ class Graph:
 
     def __repr__(self):
         return "{}({})".format(self.__class__.__name__, dict(self._graph))
+
+
+def bfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> List[T]:
+    """Returns the path of nodes visited in BFS.
+
+    Time O(V + E)
+    Space O(V)
+    """
+    q: Deque[T] = deque()
+    discovered: Set[T] = set()
+    res: List[T] = []
+    q.append(start_node)
+    discovered.add(start_node)
+    while len(q) != 0:
+        curr = q.popleft()
+        res.append(curr)
+        if process is not None:
+            process(curr)
+        for neighbour in graph.adjacent(curr):
+            if neighbour not in discovered:
+                discovered.add(neighbour)
+                q.append(neighbour)
+    return res
