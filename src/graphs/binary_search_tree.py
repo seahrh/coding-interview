@@ -29,9 +29,9 @@ def in_order_traverse(root: Optional[Node]) -> List[Node]:
     res: List[Node] = []
     if root is None:
         return res
-    res = res + in_order_traverse(root.left)
+    res += in_order_traverse(root.left)
     res.append(root)
-    res = res + in_order_traverse(root.right)
+    res += in_order_traverse(root.right)
     return res
 
 
