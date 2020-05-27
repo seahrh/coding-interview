@@ -33,6 +33,24 @@ class TestPreOrderTraversal:
         assert [node.data for node in path] == [3, 1, 7, 5]
 
 
+class TestMaxNode:
+    def test_single_node_tree(self):
+        root = Node(3)
+        assert max_node(root).data == 3
+
+    def test_tree_has_left_subtree_but_empty_right_subtree(self):
+        root = Node(3)
+        binary_insert(root, Node(1))
+        assert max_node(root).data == 3
+
+    def test_tree_has_both_left_and_right_subtrees(self):
+        root = Node(3)
+        binary_insert(root, Node(7))
+        binary_insert(root, Node(1))
+        binary_insert(root, Node(5))
+        assert max_node(root).data == 7
+
+
 class TestIsBinarySearchTree:
     def test_is_binary_search_tree(self):
         root = Node(1)

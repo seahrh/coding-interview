@@ -47,12 +47,12 @@ def pre_order_traverse(root: Optional[Node]) -> List[Node]:
     return res
 
 
-def _in_order_tail(root: Optional[Node]) -> Optional[Node]:
+def max_node(root: Optional[Node]) -> Optional[Node]:
     """Returns the last node of the in-order traversal path in the rooted tree."""
     if root is None:
         return None
     if root.right is not None:
-        return _in_order_tail(root.right)
+        return max_node(root.right)
     # ignore the left subtree
     return root
 
@@ -68,10 +68,10 @@ def is_binary_search_tree(root: Node) -> bool:
     """
     if root is None:
         raise ValueError("Tree must have a root")
-    left = _in_order_tail(root.left)
+    left = max_node(root.left)
     if left is not None and root.data < left.data:
         return False
-    right = _in_order_tail(root.right)
+    right = max_node(root.right)
     if right is not None and root.data > right.data:
         return False
     return True
