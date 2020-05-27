@@ -1,5 +1,16 @@
 from collections import defaultdict, deque
-from typing import TypeVar, Generic, DefaultDict, Set, List, Callable, Deque
+from typing import (
+    TypeVar,
+    Generic,
+    DefaultDict,
+    Set,
+    List,
+    Callable,
+    Deque,
+    KeysView,
+    Iterable,
+    Tuple,
+)
 
 T = TypeVar("T")  # Declare type variable
 
@@ -8,49 +19,52 @@ class Graph(Generic[T]):
     """ Graph data structure, undirected by default. """
 
     def __init__(self, directed: bool = False):
-        self._graph: DefaultDict[T, Set[T]] = defaultdict(set)
+        # adjacency list: using a Set instead of a List
+        # because we assume all vertices are distinct.
+        self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
         self._directed: bool = directed
 
-    def nodes(self):
-        return self._graph.keys()
+    def nodes(self) -> KeysView[T]:
+        return self._alist.keys()
 
-    def add_node(self, node):
+    def add_node(self, node: T) -> None:
         """ Add an unconnected node. This allows unconnected components. """
-        self._graph[node] = set()
+        self._alist[node] = set()
 
-    def add_edge(self, node1, node2):
+    def add_edge(self, node1: T, node2: T) -> None:
         """ Add connection between node1 and node2 """
-        self._graph[node1].add(node2)
+        self._alist[node1].add(node2)
         if not self._directed:
-            self._graph[node2].add(node1)
+            self._alist[node2].add(node1)
 
-    def add_nodes(self, nodes):
+    def add_nodes(self, nodes: Iterable[T]):
         for n in nodes:
             self.add_node(n)
 
-    def add_edges(self, edges):
+    def add_edges(self, edges: Iterable[Tuple[T, T]]):
         """ Add edges (list of tuple pairs) to graph """
         for node1, node2 in edges:
             self.add_edge(node1, node2)
 
-    def remove(self, node):
+    def remove(self, node: T) -> None:
         """ Remove all references to node """
-        for neighbours in self._graph.values():
+        for neighbours in self._alist.values():
             if node in neighbours:
                 neighbours.remove(node)
-        if node in self._graph:
-            del self._graph[node]
+        if node in self._alist:
+            del self._alist[node]
 
-    def is_adjacent(self, from_node, to_node):
+    def is_adjacent(self, from_node: T, to_node: T) -> bool:
         """ Is node1 directly connected to node2 """
-        return from_node in self._graph and to_node in self._graph[from_node]
+        return from_node in self._alist and to_node in self._alist[from_node]
 
-    def adjacent(self, node):
-        return self._graph[node]
+    def adjacent(self, node: T) -> Set[T]:
+        return self._alist[node]
 
-    def component(self, node: T, visited=None) -> Set[T]:
-        """O(n) time and O(n) space, where n is the size of the component."""
-        if node not in self._graph:
+    def component(self, node: T, visited: Set[T] = None) -> Set[T]:
+        """Returns all nodes in the same connected component as the input node.
+        O(n) time and O(n) space, where n is the size of the component."""
+        if node not in self._alist:
             return set()
         if visited is None:
             visited = set()
@@ -59,11 +73,11 @@ class Graph(Generic[T]):
         res = {node}
         visited.add(node)
         for n in self.adjacent(node):
-            res = res | self.component(n, visited)
+            res = res | self.component(n, visited)  # set union
         return res
 
     def __repr__(self):
-        return "{}({})".format(self.__class__.__name__, dict(self._graph))
+        return "{}({})".format(self.__class__.__name__, dict(self._alist))
 
 
 def bfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> List[T]:
