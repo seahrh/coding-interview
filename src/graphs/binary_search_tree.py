@@ -1,4 +1,5 @@
-from typing import TypeVar, Generic, Optional, List
+from collections import deque
+from typing import TypeVar, Generic, Optional, List, Deque
 
 T = TypeVar("T")  # Declare type variable
 
@@ -75,3 +76,33 @@ def is_binary_search_tree(root: Node) -> bool:
     if right is not None and root.data > right.data:
         return False
     return True
+
+
+def get_in_order(root: Node, index: int) -> Optional[Node]:
+    """Do in-order traversal of binary tree and return the ith node.
+    Because of index, traversal must be done iteratively instead of recursion.
+    Return None if index exceeds tree length.
+    Time O(N)
+    Space O(lg N)
+    - Size of stack
+    - Better than recursion O(N) because aux array not required to hold full path
+    """
+    if root is None:
+        raise ValueError("Tree must have a root")
+    if index < 1:
+        raise ValueError("Index starts from 1")
+    st: Deque[Node] = deque()
+    curr: Optional[Node] = root
+    length = 0
+    while len(st) != 0 or curr is not None:
+        if curr is not None:
+            st.append(curr)
+            curr = curr.left
+            continue
+        # traversed all nodes to the left
+        curr = st.pop()
+        length += 1
+        if length == index:
+            break
+        curr = curr.right
+    return curr
