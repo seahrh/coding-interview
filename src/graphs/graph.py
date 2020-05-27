@@ -48,7 +48,7 @@ class Graph(Generic[T]):
     def adjacent(self, node):
         return self._graph[node]
 
-    def component(self, node, visited=None):
+    def component(self, node: T, visited=None) -> Set[T]:
         """O(n) time and O(n) space, where n is the size of the component."""
         if node not in self._graph:
             return set()
@@ -59,7 +59,7 @@ class Graph(Generic[T]):
         res = {node}
         visited.add(node)
         for n in self.adjacent(node):
-            res = res.union(self.component(n, visited))
+            res = res | self.component(n, visited)
         return res
 
     def __repr__(self):
