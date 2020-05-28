@@ -1,5 +1,5 @@
 import pytest
-from permutations.calculator import *
+from datastructures.calculator import *
 
 
 class TestCalculator:
