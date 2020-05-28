@@ -61,7 +61,7 @@ class Graph(Generic[T]):
     def adjacent(self, node: T) -> Set[T]:
         return self._alist[node]
 
-    def component(self, node: T, visited: Set[T] = None) -> Set[T]:
+    def connected_component(self, node: T, visited: Set[T] = None) -> Set[T]:
         """Returns all nodes in the same connected component as the input node.
         O(n) time and O(n) space, where n is the size of the component."""
         if node not in self._alist:
@@ -73,7 +73,7 @@ class Graph(Generic[T]):
         res = {node}
         visited.add(node)
         for n in self.adjacent(node):
-            res = res | self.component(n, visited)  # set union
+            res = res | self.connected_component(n, visited)  # set union
         return res
 
     def __repr__(self):
