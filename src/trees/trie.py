@@ -8,35 +8,36 @@ Match all suffixes of B against the trie.
 Time O(NM + BM), O(NM) to construct the trie, O(BM) to find substrings.
 
 
-Constructing a trie takes O(nm) time and O(nm) space,
-where n is the number of words and m is the length of the longest word.
+N is the number of words and M is the length of the longest word.
+Constructing a trie takes O(NM) time and O(NM) space.
 Based on https://www.youtube.com/watch?v=AXjmTQ8LEoI
-
 """
+from typing import Dict, Iterable, List
 
 
-class TrieNode:
+class Node:
     def __init__(self):
-        self.children = {}
-        self.end_of_word = False
+        self.children: Dict[str, "Node"] = {}
+        self.end_of_word: bool = False
 
 
 class Trie:
-    def __init__(self, words):
-        self.root = TrieNode()
+    def __init__(self, words: Iterable[str]):
+        self.root: Node = Node()
         for w in words:
             self.add(w)
 
-    def __contains__(self, item):
-        """This takes O(m) time and O(1) space."""
+    def __contains__(self, prefix: str) -> bool:
+        """Returns True if prefix exists in the trie.
+        This takes O(m) time and O(1) space."""
         node = self.root
-        for c in item:
+        for c in prefix:
             if c not in node.children:
                 return False
             node = node.children[c]
         return True
 
-    def prefixes(self, string):
+    def prefixes(self, string: str) -> List[str]:
         """Returns the words in the trie that are prefixes of the input string.
         This takes O(m) time and O(m) space, where m is length of input string.
         """
@@ -50,11 +51,11 @@ class Trie:
                 res.append(string[: i + 1])  # includes the ith char!
         return res
 
-    def add(self, word):
-        node = self.root  # reset to root for each word
+    def add(self, word: str) -> None:
+        node = self.root  # start with the root
         for c in word:
             if c not in node.children:
-                node.children[c] = TrieNode()
+                node.children[c] = Node()
             node = node.children[c]
         node.end_of_word = True
 
