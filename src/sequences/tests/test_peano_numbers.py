@@ -1,4 +1,4 @@
-from permutations.peano_numbers import *
+from sequences.peano_numbers import *
 
 
 class TestPeanoNumbers:

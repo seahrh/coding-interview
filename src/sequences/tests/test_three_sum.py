@@ -1,4 +1,4 @@
-from permutations.three_sum import *
+from sequences.three_sum import *
 
 
 class TestThreeSum:

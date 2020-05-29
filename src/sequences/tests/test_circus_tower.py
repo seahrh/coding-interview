@@ -1,4 +1,4 @@
-from permutations.circus_tower import *
+from sequences.circus_tower import *
 
 
 class TestCircusTower:

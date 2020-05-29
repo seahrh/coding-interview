@@ -1,5 +1,5 @@
 import pytest
-from permutations.submatrix_sum import *
+from sequences.submatrix_sum import *
 
 
 class TestSubmatrixSum:

@@ -1,4 +1,4 @@
-from permutations.shortest_winter import *
+from sequences.shortest_winter import *
 
 
 class TestShortestWinter:

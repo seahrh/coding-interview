@@ -1,4 +1,4 @@
-from permutations.segment_max_minima import *
+from sequences.segment_max_minima import *
 
 
 class TestSegmentMaxMinima:
