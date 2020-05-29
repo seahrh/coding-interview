@@ -1,4 +1,4 @@
-from trees.word_rectangle import *
+from graphs.word_rectangle import *
 
 
 class TestWordRectangle:

@@ -7,7 +7,7 @@ rows must be the same length and all columns must be the same height.
 (17.25, p629)
 """
 from collections import defaultdict
-from trees.trie import Trie
+from graphs.trie import Trie
 
 
 def _max_length(words):

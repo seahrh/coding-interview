@@ -1,4 +1,4 @@
-from trees.multisearch import *
+from graphs.multisearch import *
 
 
 class TestMultiSearch:

@@ -1,4 +1,4 @@
-from trees.trie import *
+from graphs.trie import *
 
 
 class TestTrie:

@@ -24,7 +24,7 @@ Space O(T + B + TM)
 
 """
 from collections import defaultdict
-from trees.trie import *
+from graphs.trie import *
 
 
 # 2nd approach: Use small strings to construct a trie
