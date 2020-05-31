@@ -20,7 +20,7 @@ SUBSTRING MATCHING
 
 Based on https://www.youtube.com/watch?v=AXjmTQ8LEoI
 """
-from typing import Dict, Iterable, List
+from typing import Dict, Iterable, List, Optional
 
 
 class Node:
@@ -35,15 +35,20 @@ class Trie:
         for w in words:
             self.add(w)
 
-    def __contains__(self, prefix: str) -> bool:
-        """Returns True if prefix exists in the trie.
+    def _tail(self, prefix: str) -> Optional[Node]:
+        """Returns the last node of the prefix if prefix exists in the trie. Else return None.
         This takes O(m) time and O(1) space."""
         node = self.root
         for c in prefix:
             if c not in node.children:
-                return False
+                return None
             node = node.children[c]
-        return True
+        return node
+
+    def __contains__(self, prefix: str) -> bool:
+        """Returns True if prefix exists in the trie.
+        This takes O(m) time and O(1) space."""
+        return self._tail(prefix) is not None
 
     # TODO remove
     def prefixes(self, string: str) -> List[str]:
