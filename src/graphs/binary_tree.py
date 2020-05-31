@@ -13,19 +13,20 @@ class Node(Generic[T]):
         self.right: Optional["Node"] = right
 
 
-def binary_insert(root: Node, node: Node) -> None:
+def insert_bst(root: Node, node: Node) -> None:
+    """Add a node to a binary search tree."""
     if root is None:
         raise ValueError("Tree must have a root")
     if root.data > node.data:
         if root.left is None:
             root.left = node
         else:
-            binary_insert(root.left, node)
+            insert_bst(root.left, node)
     else:
         if root.right is None:
             root.right = node
         else:
-            binary_insert(root.right, node)
+            insert_bst(root.right, node)
 
 
 def in_order_traverse(root: Optional[Node]) -> List[Node]:
@@ -49,7 +50,7 @@ def pre_order_traverse(root: Optional[Node]) -> List[Node]:
 
 
 def max_node(root: Optional[Node]) -> Optional[Node]:
-    """Returns the last node of the in-order traversal path in the rooted tree."""
+    """Returns the last node of the in-order traversal path in the binary search tree."""
     if root is None:
         return None
     if root.right is not None:
