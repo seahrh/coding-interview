@@ -20,7 +20,7 @@ SUBSTRING MATCHING
 
 Based on https://www.youtube.com/watch?v=AXjmTQ8LEoI
 """
-from typing import Dict, Iterable, List, Optional
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 
 class Node:
@@ -49,6 +49,20 @@ class Trie:
         """Returns True if prefix exists in the trie.
         This takes O(m) time and O(1) space."""
         return self._tail(prefix) is not None
+
+    def words(self, prefix: str) -> Set[str]:
+        res: Set[str] = set()
+        root = self._tail(prefix)
+        if root is None:
+            return res
+        st: List[Tuple[str, Node]] = [(prefix, root)]
+        while len(st) != 0:
+            word, node = st.pop()
+            if node.end_of_word:
+                res.add(word)
+            for k, v in node.children.items():
+                st.append((word + k, v))
+        return res
 
     # TODO remove
     def prefixes(self, string: str) -> List[str]:

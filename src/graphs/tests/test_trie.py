@@ -40,3 +40,12 @@ class TestTrie:
         assert "ab" not in t
         assert "ac" not in t
         assert "zz" not in t
+
+
+class TestTrieWords:
+    def test_words(self):
+        t = Trie(["bane", "bag", "boa", "babe", "ball", "band", "boat", "ban"])
+        assert t.words("bo") == {"boa", "boat"}
+        assert t.words("ban") == {"bane", "band", "ban"}
+        assert t.words("bag") == {"bag"}
+        assert len(t.words("z")) == 0
