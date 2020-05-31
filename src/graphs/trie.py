@@ -1,15 +1,23 @@
 """
 Trie (prefix tree) implementation: nested hash tables.
 If the charset is fixed, hash tables can be replaced with arrays.
-Trie is used for prefix and whole-string matching.
-With the following adjustment, trie can also be used for substring matching!
-Find substrings in longer string B.
-Match all suffixes of B against the trie.
-Time O(NM + BM), O(NM) to construct the trie, O(BM) to find substrings.
-
-
+Pros: efficient prefix queries
+Cons: less space efficient than a set
+Trading space for time
 N is the number of words and M is the length of the longest word.
-Constructing a trie takes O(NM) time and O(NM) space.
+COSTS
+- Insert O(M)
+- Lookup O(M)
+- Space O(NM)
+
+SUBSTRING MATCHING
+- Besides prefix and whole-string matching, trie can also be used for substring matching.
+- Idea: prefix matching the suffixes of a word
+- First build a trie of suffixes. Generate all suffixes from each word, then add suffixes to the trie.
+- Given a substring, do a prefix match to check if it exists in the trie.
+- Substring matching in O(M) time
+- Build the trie in O(NM) time
+
 Based on https://www.youtube.com/watch?v=AXjmTQ8LEoI
 """
 from typing import Dict, Iterable, List
@@ -37,8 +45,9 @@ class Trie:
             node = node.children[c]
         return True
 
+    # TODO remove
     def prefixes(self, string: str) -> List[str]:
-        """Returns the words in the trie that are prefixes of the input string.
+        """Returns the words in the trie that share the same prefixes as the input string.
         This takes O(m) time and O(m) space, where m is length of input string.
         """
         res = []

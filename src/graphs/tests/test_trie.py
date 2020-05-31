@@ -40,28 +40,3 @@ class TestTrie:
         assert "ab" not in t
         assert "ac" not in t
         assert "zz" not in t
-
-    def test_given_example_1(self):
-        t = Trie(["i", "is", "pp", "ms"])
-        assert "i" in t
-        assert "is" in t
-        assert "pp" in t
-        assert "ms" in t
-        assert "p" in t
-        assert "m" in t
-        assert "s" not in t
-        assert "z" not in t
-
-    def test_prefixes_1(self):
-        t = Trie(["i", "is", "pp", "ms"])
-        assert t.prefixes("isppms") == ["i", "is"]
-        assert t.prefixes("ppmsis") == ["pp"]
-        assert t.prefixes("msppis") == ["ms"]
-        assert t.prefixes("zzis") == []
-
-    def test_prefixes_2(self):
-        t = Trie(["b", "i", "s", "a"])
-        assert t.prefixes("bibs") == ["b"]
-        assert t.prefixes("ibs") == ["i"]
-        assert t.prefixes("bs") == ["b"]
-        assert t.prefixes("s") == ["s"]
