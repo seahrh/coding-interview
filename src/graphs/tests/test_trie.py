@@ -49,3 +49,27 @@ class TestTrieWords:
         assert t.words("ban") == {"bane", "band", "ban"}
         assert t.words("bag") == {"bag"}
         assert len(t.words("z")) == 0
+
+
+class TestTrieFind:
+    def test_find(self):
+        t = Trie(["e"])
+        assert t.find("z") == set()
+        assert t.find("e") == {0}
+        t = Trie(["babe", "abe", "be", "e"])
+        assert t.find("z") == set()
+        assert t.find("e") == {3}
+        assert t.find("b") == {0, 2}
+        assert t.find("be") == {2}
+        assert t.find("ab") == {1}
+        assert t.find("abe") == {1}
+        assert t.find("babe") == {0}
+        word = "mississippi"
+        suffixes = [word[i:] for i in range(len(word))]
+        t = Trie(suffixes)
+        assert t.find("z") == set()
+        assert t.find("i") == {1, 4, 7, 10}
+        assert t.find("ip") == {7}
+        assert t.find("iss") == {1, 4}
+        assert t.find("miss") == {0}
+        assert t.find("si") == {3, 6}
