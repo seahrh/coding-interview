@@ -35,7 +35,7 @@ def _matches(pattern, value, main_size, alt_size, first_alt):
     return True
 
 
-def matches(pattern, value):
+def matches(pattern: str, value: str) -> bool:
     """O(VP) time and O(V) space, where V is size of `value` and P is size of `pattern`."""
     if len(pattern) == 0:
         raise ValueError("pattern must not be empty string")
