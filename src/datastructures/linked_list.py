@@ -1,4 +1,6 @@
-from typing import Optional, Any
+from typing import Optional, TypeVar, Generic
+
+T = TypeVar("T")
 
 
 class DLinkedList:
@@ -6,10 +8,10 @@ class DLinkedList:
     Because python collections.deque remove operation takes O(n) time (removing first instance of value).
     """
 
-    class Node:
+    class Node(Generic[T]):
         def __init__(
             self,
-            data: Any,
+            data: T,
             prev_node: Optional["DLinkedList.Node"] = None,
             next_node: Optional["DLinkedList.Node"] = None,
         ):
