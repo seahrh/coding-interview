@@ -12,14 +12,14 @@ class TestRandomSetRecursive:
 
     def test_given_array_of_length_two_and_m_is_smaller(self):
         chosen = set()
-        for _ in range(20):
+        for _ in range(40):
             for v in pick_rec(arr=[0, 1], m=1, index=1):
                 chosen.add(v)
         assert 0 in chosen and 1 in chosen
 
     def test_given_array_of_length_10_and_m_is_smaller(self):
         chosen = set()
-        for _ in range(20):
+        for _ in range(40):
             for v in pick_rec(arr=list(range(10)), m=5, index=9):
                 chosen.add(v)
         for i in range(10):
