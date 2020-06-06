@@ -6,6 +6,10 @@ V = TypeVar("V")
 
 
 def string_hash(key: K, capacity: int) -> int:
+    """Return hash value of given key.
+    Cast key to string representation.
+    Treat string as a sequence of ordinal values; weighted sum with position as weight.
+    """
     res = 0
     s = str(key)
     w = len(s)
