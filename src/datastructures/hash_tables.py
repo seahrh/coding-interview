@@ -1,3 +1,9 @@
+"""
+Implement hash table to store N items with fixed capacity M.
+What happens if N > M ?
+You are not allowed to use Dict and Set.
+Increase capacity (decrease load factor) to reduce risk of collision.
+"""
 from typing import TypeVar, Generic, List, NamedTuple, Optional
 
 # Declare type variables
@@ -31,22 +37,33 @@ class MyHashTable(Generic[K, V]):
         self._capacity = capacity
         self._hash = hash_fn
         # If Set is not allowed, use List of Lists
-        # If Set is allowed, use List of Sets
+        # If Set is allowed, use List of Sets (contains tuples of K, Entry)
         # Initialize empty collection in each slot
         self._table: List[List[Entry]] = [[] for _ in range(self._capacity)]
 
     def put(self, key: K, value: V) -> None:
-        """Insert in O(N) time. (worst case: all keys are hashed to the same slot)"""
+        """Insert takes O(N) time if risk of collision is high. Else O(1) time.
+        Speed up reads at the expense of writes;
+        Sort the entries array when the array grows. Insert now takes O(N lg N) time.
+        """
         i = self._hash(key, self._capacity)
-        es = []
-        for e in self._table[i]:
-            if key != e.key:
-                es.append(e)
-        es.append(Entry(key, value))
-        self._table[i] = es
+        e = Entry(key, value)
+        entries = self._table[i]
+        # overwrite key if it already exists
+        exists: bool = False
+        for j, entry in enumerate(entries):
+            if key == entry.key:
+                entries[j] = e
+                exists = True
+                break
+        if not exists:
+            entries.append(e)
 
     def get(self, key: K) -> Optional[V]:
-        """Search in O(N) time. (worst case: all keys are hashed to the same slot)"""
+        """Search takes O(N) time if risk of collision is high. Else O(1) time.
+        Search takes O(lg N) time if entries array is sorted.
+        But this means we need to sort the array each time it is updated.
+        """
         i = self._hash(key, self._capacity)
         for entry in self._table[i]:
             if key == entry.key:
