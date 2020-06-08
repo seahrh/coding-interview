@@ -1,33 +1,64 @@
-# Characteristics of Quicksort
-# Worst case takes O(n^2) time but mergesort takes less time O(n lg n).
-# In-place
-# Not a stable sort like mergesort
+"""
+QUICKSORT
+=============
+Quicksort worst case is slower than mergesort, O(N^2) vs O(N lg N).
+Worst case: array is already sorted, or poor choice of pivot.
+Quicksort takes less space than mergesort, O(lg N) vs O(N).
+In-place sort, hence not a stable sort like mergesort.
+"""
+from abc import ABCMeta, abstractmethod
+from typing import TypeVar, List, Any, Callable, Optional, Tuple
 
 
-def lomuto_partition(arr, lo, hi, pivot_fn):
-    # Return the last index of the left partition, and the first index of the right partition.
-    # Picks the last element as the pivot
-    # All elements less than or equals the pivot, move to the left by swapping
-    # i is the final position of the pivot
-    pivot = pivot_fn(arr, lo, hi)
+class Comparable(metaclass=ABCMeta):
+    @abstractmethod
+    def __gt__(self, other: Any) -> bool:
+        ...
+
+    @abstractmethod
+    def __lt__(self, other: Any) -> bool:
+        ...
+
+    @abstractmethod
+    def __le__(self, other: Any) -> bool:
+        ...
+
+
+T = TypeVar("T", bound=Comparable)
+
+
+def lomuto_partition(
+    arr: List[T], lo: int, hi: int, pivot_fn: Callable
+) -> Tuple[int, int]:
+    """Divides the array into two partitions:
+    Left partition contains all elements less than or equals the pivot, move to the left by swapping.
+    Return the last index of the left partition, and the first index of the right partition.
+    Picks the last element as the pivot.
+    p is the final position of the pivot.
+    """
+    pivot_fn(arr, lo, hi)
+    pivot = arr[hi]
+    p = lo
     i = lo
-    j = lo
-    while j < hi:  # no need to cover the last element
-        if arr[j] <= pivot:
-            arr[i], arr[j] = arr[j], arr[i]
-            i += 1
-        j += 1
-    arr[i], arr[j] = arr[j], arr[i]
-    return i - 1, i + 1
+    while i < hi:  # no need to cover the last element (pivot)
+        if arr[i] <= pivot:
+            arr[p], arr[i] = arr[i], arr[p]
+            p += 1
+        i += 1
+    arr[p], arr[i] = arr[i], arr[p]
+    return p - 1, p + 1  # exclude the pivot, else infinite recursion!
 
 
-def hoare_partition(arr, lo, hi, pivot_fn):
+def hoare_partition(
+    arr: List[T], lo: int, hi: int, pivot_fn: Callable
+) -> Tuple[int, int]:
     # Return the last index of the left partition, and the first index of the right partition.
     # Hoare's scheme is more efficient than Lomuto's partition scheme because
     # it does three times fewer swaps on average,
     # and it creates efficient partitions even when all values are equal.
     # Like Lomuto, Hoare's partitioning scheme also degrades to O(n^2) for already sorted arrays.
-    pivot = pivot_fn(arr, lo, hi)
+    pivot_fn(arr, lo, hi)
+    pivot = arr[hi]
     i = lo - 1
     j = hi + 1
     while True:
@@ -43,35 +74,35 @@ def hoare_partition(arr, lo, hi, pivot_fn):
         arr[i], arr[j] = arr[j], arr[i]
 
 
-def middle_element_as_pivot(arr, lo, hi):
-    # By convention, move the pivot to the last element by swapping
-    mid = int((hi - lo) / 2 + lo)
-    arr[mid], arr[hi] = arr[hi], arr[mid]
-    return arr[hi]
-
-
-def median_of_three_pivot(arr, lo, hi):
-    mid = int((hi - lo) / 2 + lo)
-    if arr[mid] < arr[lo]:
-        arr[mid], arr[lo] = arr[lo], arr[mid]
-    if arr[hi] < arr[lo]:
-        arr[lo], arr[hi] = arr[hi], arr[lo]
-    if arr[mid] < arr[hi]:
+def median_of_three(arr: List[T], lo: int = 0, hi: Optional[int] = None) -> None:
+    """Places median element in index hi."""
+    if hi is None:
+        hi = len(arr) - 1
+    mid = int(lo / 2 + hi / 2)
+    if arr[lo] <= arr[mid] <= arr[hi] or arr[hi] <= arr[mid] <= arr[lo]:
         arr[mid], arr[hi] = arr[hi], arr[mid]
-    return arr[hi]
+        return
+    if arr[mid] <= arr[lo] <= arr[hi] or arr[hi] <= arr[lo] <= arr[mid]:
+        arr[lo], arr[hi] = arr[hi], arr[lo]
+    # arr[hi] is the median; noop
 
 
-def _quicksort(arr, lo, hi, partition_fn, pivot_fn):
+def _quicksort(
+    arr: List[T], lo: int, hi: int, partition_fn: Callable, pivot_fn: Callable
+) -> None:
     # Base case: array of length one
-    if lo < hi:
-        last_index_of_left_partition, first_index_of_right_partition = partition_fn(
-            arr=arr, lo=lo, hi=hi, pivot_fn=pivot_fn
-        )
-        _quicksort(arr, lo, last_index_of_left_partition, partition_fn, pivot_fn)
-        _quicksort(arr, first_index_of_right_partition, hi, partition_fn, pivot_fn)
+    if lo >= hi:
+        return
+    left_tail, right_head = partition_fn(arr=arr, lo=lo, hi=hi, pivot_fn=pivot_fn)
+    _quicksort(arr, lo, left_tail, partition_fn, pivot_fn)
+    _quicksort(arr, right_head, hi, partition_fn, pivot_fn)
 
 
-def quicksort(arr, partition_fn=lomuto_partition, pivot_fn=median_of_three_pivot):
-    if len(arr) == 0:
-        raise ValueError("arr must not be empty")
+def quicksort(
+    arr: List[T],
+    partition_fn: Callable = lomuto_partition,
+    pivot_fn: Callable = median_of_three,
+) -> None:
+    if arr is None or len(arr) == 0:
+        raise ValueError("array must not be None or empty")
     _quicksort(arr, 0, len(arr) - 1, partition_fn, pivot_fn)

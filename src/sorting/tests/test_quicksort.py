@@ -1,6 +1,27 @@
 from sorting.quicksort import *
 
 
+class TestMedianOfThree:
+    # noinspection PyTypeChecker
+    def test_median_of_three(self):
+        a = [1]
+        median_of_three(a)
+        assert a[-1] == 1
+        a = [2, 1]
+        median_of_three(a)
+        assert a[-1] == 2
+        a = [2, 3, 1]
+        median_of_three(a)
+        assert a[-1] == 2
+        a = [2, 4, 1, 3]
+        median_of_three(a)
+        assert a[-1] == 3
+        a = [2, 4, 3, 1, 5]
+        median_of_three(a)
+        assert a[-1] == 3
+
+
+# noinspection PyTypeChecker
 class TestQuicksort:
     def test_array_of_length_one_with_lomuto_partition_scheme(self):
         arr = [1]
