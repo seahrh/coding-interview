@@ -1,22 +1,23 @@
-# Characteristics of mergesort
-# Mergesort takes O(n) space but quicksort takes less space O(lg n).
-# stable sort
-# not in-place
+"""
+MERGESORT
+============
+Mergesort takes more space than quicksort, O(N) vs O(lg N).
+Stable sort (not in-place)
+"""
+from abc import ABCMeta, abstractmethod
+from typing import TypeVar, List, Any
 
 
-def mergesort(arr):
-    # Base case: empty array or array of length 1
-    if len(arr) < 2:
-        return
-    mid = int(len(arr) / 2)
-    left = list(arr[:mid])
-    right = list(arr[mid:])
-    mergesort(left)
-    mergesort(right)
-    _merge(left, right, arr)
+class Comparable(metaclass=ABCMeta):
+    @abstractmethod
+    def __le__(self, other: Any) -> bool:
+        ...
 
 
-def _merge(left, right, arr):
+T = TypeVar("T", bound=Comparable)
+
+
+def _merge(left: List[T], right: List[T], arr: List[T]) -> None:
     i, j, k = 0, 0, 0
     while i < len(left) and j < len(right):
         if left[i] <= right[j]:
@@ -34,3 +35,15 @@ def _merge(left, right, arr):
         arr[k] = right[j]
         j += 1
         k += 1
+
+
+def mergesort(arr: List[T]) -> None:
+    # Base case: empty array or array of length 1
+    if len(arr) < 2:
+        return
+    mid = int(len(arr) / 2)
+    left = list(arr[:mid])
+    right = list(arr[mid:])
+    mergesort(left)
+    mergesort(right)
+    _merge(left, right, arr)
