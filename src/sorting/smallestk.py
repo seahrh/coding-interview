@@ -8,11 +8,10 @@ Assumptions
 
 SOLUTION
 1. Sorting (e.g. heapsort) takes O(N lg N) time and O(1) space.
-2. Max heap takes O(N lg K) time and O(K) space.
-3. Selection rank algorithm takes O(N) time and O(N) space because of recursive call stack.
+2. Heap takes O(N lg K) time and O(K) space. (although K can equal N)
+3. Selection rank algorithm takes O(N) time and O(N) space because recursive call stack.
 4. If range of values is known, hash table can be used where items are placed in their respective
 interval buckets. This takes O(N) time and O(N) space.
-
 """
 from typing import NamedTuple, List, Callable
 
@@ -42,8 +41,8 @@ def _partition(arr: List[int], lo: int, hi: int, pivot: int) -> PartitionResult:
             arr[tail], arr[i] = arr[i], arr[tail]
             tail -= 1
             continue
-        if arr[i] == pivot:
-            i += 1
+        # element i equals pivot
+        i += 1
     return PartitionResult(left_size=head - lo, mid_size=tail - head + 1)
 
 
