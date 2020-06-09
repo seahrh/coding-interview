@@ -17,7 +17,7 @@ If you refactor and prevent it from checking queens occupying the same row as ea
 it will still be brute force,
 but the possible board states drop from 16,777,216 to a little over 40,000 and has a time complexity of O(n!).
 """
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Tuple, Set
 import math
 
 
@@ -36,10 +36,10 @@ def _is_safe(q1: Position, q2: Position) -> bool:
     return True
 
 
-def _queens(n: int, partial: List[Position]) -> List[List[Position]]:
-    if len(partial) == n:  # found full solution
-        return [partial]
-    res: List[List[Position]] = []
+def _queens(n: int, partial: List[Position], result: Set[Tuple[Position, ...]]) -> None:
+    if len(partial) == n:  # base case: found full solution
+        result.add(tuple(partial))
+        return
     row = 0
     if len(partial) != 0:
         row = partial[-1].row + 1
@@ -50,12 +50,13 @@ def _queens(n: int, partial: List[Position]) -> List[List[Position]]:
             if not _is_safe(p, proposal):
                 is_safe = False
                 break
-        if is_safe:
-            res += _queens(n, partial=partial + [proposal])
-    return res
+        if is_safe:  # placement is safe, extend the solution
+            _queens(n, partial=partial + [proposal], result=result)
 
 
-def queens(n: int) -> List[List[Position]]:
+def queens(n: int) -> Set[Tuple[Position, ...]]:
     if n < 1:
         raise ValueError("n must not be less than 1")
-    return _queens(n, partial=[])
+    res: Set[Tuple[Position, ...]] = set()
+    _queens(n, partial=[], result=res)
+    return res
