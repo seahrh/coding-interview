@@ -11,9 +11,10 @@ Output 8 (the index of 5 in the array)
 
 (10.3, p410)
 """
+from typing import List
 
 
-def find(arr, key):
+def find(arr: List[int], key: int) -> int:
     """Modified version of binary search: one half of the array must be already sorted.
     Therefore check the sorted half to decide whether to search the left or right half.
     This takes O(lg n) time and O(1) space.
@@ -41,12 +42,12 @@ def find(arr, key):
 # Find index_of_min element in a sorted but rotated array.
 
 
-def index_of_min(arr):
+def index_of_min(arr: List[int]) -> int:
     """Look for min in the unsorted partition.
     This takes O(lg n) time and O(1) space.
     """
     if len(arr) == 0:
-        raise ValueError("arr must not be empty")
+        raise ValueError("array must not be empty")
     lo = 0
     hi = len(arr) - 1
     while arr[lo] > arr[hi]:
