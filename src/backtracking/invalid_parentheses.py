@@ -68,6 +68,7 @@ def _remove(
 
 def remove(s: str) -> Set[str]:
     res: Set[str] = set()
+    # number of left and right parentheses that can be dropped safely
     left = 0
     right = 0
     for c in s:
