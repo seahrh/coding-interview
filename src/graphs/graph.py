@@ -19,8 +19,7 @@ class Graph(Generic[T]):
     """ Graph data structure, undirected by default. """
 
     def __init__(self, directed: bool = False):
-        # adjacency list: using a Set instead of a List
-        # because we assume all vertices are distinct.
+        # adjacency list: using a Set instead of List (assume all vertices are distinct).
         self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
         self._directed: bool = directed
 

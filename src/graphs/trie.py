@@ -2,8 +2,8 @@
 Trie (prefix tree) implementation: nested hash tables.
 If the charset is fixed, hash tables can be replaced with arrays.
 Pros: efficient prefix queries
-Cons: less space efficient than a set
-Trading space for time
+Cons: takes more space than a Set (trading space for time)
+
 N is the number of words and M is the length of the longest word.
 COSTS
 - Insert O(M)
@@ -70,6 +70,7 @@ class Trie:
         return res
 
     def find(self, substring: str) -> Set[int]:
+        """Returns all positions of substring in the word."""
         if substring is None:
             raise ValueError("substring must not be None")
         _len = len(substring)
