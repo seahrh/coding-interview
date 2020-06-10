@@ -1,7 +1,8 @@
 from collections import deque
 from typing import TypeVar, Generic, Optional, List, Deque
 
-T = TypeVar("T")  # Declare type variable
+
+T = TypeVar("T")
 
 
 class Node(Generic[T]):
@@ -49,14 +50,35 @@ def pre_order_traverse(root: Optional[Node]) -> List[Node]:
     return res
 
 
-def max_node(root: Optional[Node]) -> Optional[Node]:
+def max_node_bst(root: Optional[Node]) -> Optional[Node]:
     """Returns the last node of the in-order traversal path in the binary search tree."""
     if root is None:
         return None
     if root.right is not None:
-        return max_node(root.right)
+        return max_node_bst(root.right)
     # ignore the left subtree
     return root
+
+
+def max_node(root: Optional[Node]) -> Optional[Node]:
+    """Returns the max node of a binary tree."""
+    if root is None:
+        return None
+    res: Node = root
+    q: Deque[Node] = deque()
+    if root.left is not None:
+        q.append(root.left)
+    if root.right is not None:
+        q.append(root.right)
+    while len(q) != 0:
+        curr = q.popleft()
+        if curr.data > res.data:
+            res = curr
+        if curr.left is not None:
+            q.append(curr.left)
+        if curr.right is not None:
+            q.append(curr.right)
+    return res
 
 
 def is_binary_search_tree(root: Node) -> bool:

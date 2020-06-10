@@ -33,6 +33,24 @@ class TestPreOrderTraversal:
         assert [node.data for node in path] == [3, 1, 7, 5]
 
 
+class TestMaxNodeOfBinarySearchTree:
+    def test_single_node_tree(self):
+        root = Node(3)
+        assert max_node_bst(root).data == 3
+
+    def test_tree_has_left_subtree_but_empty_right_subtree(self):
+        root = Node(3)
+        insert_bst(root, Node(1))
+        assert max_node_bst(root).data == 3
+
+    def test_tree_has_both_left_and_right_subtrees(self):
+        root = Node(3)
+        insert_bst(root, Node(7))
+        insert_bst(root, Node(1))
+        insert_bst(root, Node(5))
+        assert max_node_bst(root).data == 7
+
+
 class TestMaxNode:
     def test_single_node_tree(self):
         root = Node(3)
@@ -49,6 +67,14 @@ class TestMaxNode:
         insert_bst(root, Node(1))
         insert_bst(root, Node(5))
         assert max_node(root).data == 7
+
+    def test_binary_tree(self):
+        root = Node(
+            1,
+            left=Node(3, left=Node(4), right=Node(5)),
+            right=Node(1, left=Node(6), right=Node(9)),
+        )
+        assert max_node(root).data == 9
 
 
 class TestIsBinarySearchTree:
