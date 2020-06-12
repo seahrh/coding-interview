@@ -1,4 +1,4 @@
-from heaps.running_median import *
+from datastructures.running_median import *
 
 
 class TestRunningMedian:

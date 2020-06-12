@@ -1,4 +1,4 @@
-from heaps.shortest_supersequence import *
+from datastructures.shortest_supersequence import *
 
 
 class TestShortestSupersequence:
