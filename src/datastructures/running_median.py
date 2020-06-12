@@ -20,7 +20,7 @@ Max heap is implemented in Python by multiplying the value by -1
 before adding it to the heap ("taking the inverse").
 """
 from heapq import heappushpop, heappush
-from typing import Union, Generic, List
+from typing import Union, List
 
 T = Union[float, int]
 

@@ -1,6 +1,6 @@
 """
 Shortest Supersequence: You are given two arrays, one shorter (with all distinct elements) and one
-longer. Find the shortest subarray in the longer array that contains all the elements in the shorter
+longer. Find the shortest subarray in the longer array that contains **all** the elements in the shorter
 array. The items can appear in any order.
 EXAMPLE
 Input:
@@ -9,8 +9,8 @@ Input:
 Output: {5,7,9,1} so indexes in the range [7, 10]
 
 (17.18, p595)
-SOLUTION
-- Each include has a queue that stores its index locations in the array.
+SOLUTION: Heaps
+- Each include has a queue that stores its positions in the array.
 - The heads of the queues provide a candidate seq (min_index, max_index)
 - Use a min-heap to find the smallest head of the queues.
 - Remove the smallest head from its respective queue.
@@ -27,7 +27,9 @@ from typing import NamedTuple, Dict, Deque, List, Set, Optional
 
 
 class Node(NamedTuple):
-    index: int  # type: ignore
+    """Item to be inserted into the heap. Break ties on second field `key` which must be distinct."""
+
+    position: int
     key: int
 
 
@@ -54,14 +56,14 @@ def _shortest_closure(location_map: Dict[int, Deque[int]]) -> Optional[Range]:
         if len(indices) == 0:
             return None
         index = indices.popleft()
-        heapq.heappush(min_heap, Node(index=index, key=key))  # O(lg S) time
+        heapq.heappush(min_heap, Node(position=index, key=key))  # O(lg S) time
         hi = max(hi, index)
-    lo = min_heap[0].index
+    lo = min_heap[0].position
     best_lo = lo
     best_hi = hi
     while True:  # O(B lg S) time
         min_node = heapq.heappop(min_heap)  # O(lg S) time
-        lo = min_node.index
+        lo = min_node.position
         if hi - lo < best_hi - best_lo:  # found shorter seq
             best_lo = lo
             best_hi = hi
@@ -70,7 +72,7 @@ def _shortest_closure(location_map: Dict[int, Deque[int]]) -> Optional[Range]:
             break
         index = indices.popleft()
         hi = max(hi, index)
-        heapq.heappush(min_heap, Node(index=index, key=min_node.key))  # O(lg S) time
+        heapq.heappush(min_heap, Node(position=index, key=min_node.key))  # O(lg S) time
     return Range(best_lo, best_hi)
 
 
