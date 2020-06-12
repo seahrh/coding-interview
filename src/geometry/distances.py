@@ -1,5 +1,8 @@
 import math
-from typing import List, Iterable
+from typing import List, Iterable, TypeVar
+
+
+T = TypeVar("T")
 
 
 def euclidean_distance(p: List[float], q: List[float]) -> float:
@@ -57,3 +60,18 @@ def cosine_similarity(p: List[float], q: List[float]) -> float:
     if len(p) != len(q):
         raise ValueError("vectors p and q must have the same dimension")
     return dot_product(p, q) / (magnitude(p) * magnitude(q))
+
+
+def hamming_distance(p: List[T], q: List[T]) -> int:
+    """In information theory, the Hamming distance between two strings of equal length is the number of positions
+    at which the corresponding symbols are different. In other words, it measures the minimum number of
+    substitutions required to change one string into the other,
+    or the minimum number of errors that could have transformed one string into the other.
+    """
+    if len(p) != len(q):
+        raise ValueError("Both lists must have equal length")
+    res: int = 0
+    for i in range(len(p)):
+        if p[i] != q[i]:
+            res += 1
+    return res
