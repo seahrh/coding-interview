@@ -27,13 +27,11 @@ def _lcs_rec(s: str, t: str, i: int, j: int) -> Set[str]:
         if len(us) == 0:
             res.add(s[i])
             return res
-        for tmp in _lcs_rec(s, t, i + 1, j + 1):
-            res.add(s[i] + tmp)
+        for u in us:
+            res.add(s[i] + u)
         return res
     us = _lcs_rec(s, t, i + 1, j)
     vs = _lcs_rec(s, t, i, j + 1)
-    if len(us) == 0 and len(vs) == 0:
-        return us
     if len(us) == 0:
         return vs
     if len(vs) == 0:
