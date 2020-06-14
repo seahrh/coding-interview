@@ -31,27 +31,32 @@ def dutch_sort(arr: List[int]) -> None:
 
 
 def dutch_sort_four_colors(arr: List[int]) -> None:
+    # p2_head and p3_tail mark the ends of the middle two partitions (p2, p3).
+    # i and j mark the ends of the unprocessed region.
+    # Space O(1)
     p2_head = 0
-    p3_head = 0
+    p3_tail = len(arr) - 1
     i = 0
-    p3_tail = len(arr) - 1  # Space O(1)
-    while i <= p3_tail:  # Time O(N)
+    j = len(arr) - 1
+    while i <= j:  # Time O(N)
         if arr[i] == 0:
             arr[p2_head], arr[i] = arr[i], arr[p2_head]
             p2_head += 1
-            p3_head += 1
             i += 1
             continue
         if arr[i] == 1:
-            arr[p3_head], arr[i] = arr[i], arr[p3_head]
-            p3_head += 1
             i += 1
             continue
         if arr[i] == 2:
-            i += 1
+            arr[j], arr[i] = arr[i], arr[j]
+            j -= 1
             continue
         if arr[i] == 3:
-            arr[p3_tail], arr[i] = arr[i], arr[p3_head]
+            arr[p3_tail], arr[j] = arr[j], arr[p3_tail]
+            # do not swap again if this is the last element of the unprocessed region
+            if i != j:
+                arr[p3_tail], arr[i] = arr[i], arr[p3_tail]
+            j -= 1
             p3_tail -= 1
             continue
         raise ValueError("Colours must have the values 0, 1, 2 or 3.")
