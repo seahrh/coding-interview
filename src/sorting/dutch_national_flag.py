@@ -5,6 +5,23 @@ Solve this Dutch National Flag problem using single pass, instead of the naive i
 and only allowed to use O(1) extra space (same for next part with 4
 unique elements). You are not allowed to use any sort() or sorted() functions from libraries.
 
+SOLUTION
+Four colours problem
+Maintain four indices:
+- p2_head, the first '1'
+- p3_tail, the last '2'
+- i the first element of the unprocessed region
+- j the last element of the unprocessed region
+
+0 0 1 1 _ _ _ _ 2 2 3 3
+        ^
+If current value is
+- '0', swap the first '1' with i
+- '1', do nothing
+- '2', swap i and j
+- '3', swap the last '2' with j. Then swap i with the p3_tail position.
+
+See https://stackoverflow.com/a/3436595/519951
 """
 from typing import List
 
