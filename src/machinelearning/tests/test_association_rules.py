@@ -39,3 +39,55 @@ class TestBinaryPartition:
                 left=frozenset({"d", "c", "b"}), right=frozenset({"a"})
             ),  # LHS drop 'a'
         }
+
+
+class TestFrequentItemsets:
+    def test_when_input_is_empty_then_return_empty_output(self):
+        assert frequent_itemsets([], minsup=0.5, k=1) == [[]]
+
+    def test_3_itemsets(self):
+        assert frequent_itemsets(
+            [
+                Pair(basket_id=1, item_id=2),
+                Pair(basket_id=1, item_id=3),
+                Pair(basket_id=1, item_id=4),
+                Pair(basket_id=1, item_id=5),
+                Pair(basket_id=2, item_id=1),
+                Pair(basket_id=2, item_id=2),
+                Pair(basket_id=2, item_id=4),
+                Pair(basket_id=2, item_id=5),
+                Pair(basket_id=3, item_id=1),
+                Pair(basket_id=3, item_id=2),
+                Pair(basket_id=3, item_id=4),
+                Pair(basket_id=3, item_id=5),
+                Pair(basket_id=3, item_id=6),
+                Pair(basket_id=4, item_id=1),
+                Pair(basket_id=4, item_id=2),
+                Pair(basket_id=4, item_id=3),
+                Pair(basket_id=4, item_id=4),
+                Pair(basket_id=4, item_id=5),
+                Pair(basket_id=5, item_id=5),
+                Pair(basket_id=5, item_id=1),
+                Pair(basket_id=6, item_id=5),
+                Pair(basket_id=6, item_id=2),
+                Pair(basket_id=7, item_id=5),
+                Pair(basket_id=7, item_id=4),
+                Pair(basket_id=8, item_id=4),
+            ],
+            minsup=0.5,
+            k=3,
+        ) == [
+            [
+                Itemset(support_count=7, items={5}),
+                Itemset(support_count=6, items={4}),
+                Itemset(support_count=5, items={2}),
+                Itemset(support_count=4, items={1}),
+            ],
+            [
+                Itemset(support_count=5, items={2, 5}),
+                Itemset(support_count=5, items={4, 5}),
+                Itemset(support_count=4, items={1, 5}),
+                Itemset(support_count=4, items={2, 4}),
+            ],
+            [Itemset(support_count=4, items={2, 4, 5})],
+        ]
