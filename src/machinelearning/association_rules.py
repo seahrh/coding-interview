@@ -1,12 +1,10 @@
 from itertools import combinations
-from typing import NamedTuple, Union, Set, Iterable, Tuple, FrozenSet
-
-Identifier = Union[int, str]
+from typing import NamedTuple, Set, Iterable, Tuple, FrozenSet, Hashable
 
 
 class Itemset(NamedTuple):
     support_count: int
-    items: Set[Identifier]
+    items: Set[Hashable]
 
 
 class Rule(NamedTuple):
@@ -16,18 +14,18 @@ class Rule(NamedTuple):
     consequent: Itemset
 
 
-def _key(items: Iterable[Identifier]) -> Tuple[Identifier, ...]:
+def _key(items: Iterable[Hashable]) -> Tuple[Hashable, ...]:
     tmp = list(items)
     tmp.sort()
     return tuple(tmp)
 
 
 class Partitions(NamedTuple):
-    left: FrozenSet[Identifier]
-    right: FrozenSet[Identifier]
+    left: FrozenSet[Hashable]
+    right: FrozenSet[Hashable]
 
 
-def binary_partition(superset: Set[Identifier],) -> Set[Partitions]:
+def binary_partition(superset: Set[Hashable],) -> Set[Partitions]:
     if len(superset) < 2:
         raise ValueError("Superset must contain at least two elements")
     res: Set[Partitions] = set()
