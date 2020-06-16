@@ -57,8 +57,8 @@ class Graph(Generic[T]):
         """ Is node1 directly connected to node2 """
         return from_node in self._alist and to_node in self._alist[from_node]
 
-    def adjacent(self, node: T) -> Set[T]:
-        return self._alist[node]
+    def adjacent(self, node: T) -> FrozenSet[T]:
+        return frozenset(self._alist[node])
 
     def connected_component(self, node: T, visited: Set[T] = None) -> Set[T]:
         """Returns all nodes in the same connected component as the input node.
