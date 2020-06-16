@@ -41,17 +41,16 @@ class Graph(Generic[T]):
         """ Remove all references to node """
         for node in nodes:
             for neighbours in self._alist.values():
-                if node in neighbours:
-                    neighbours.remove(node)
+                neighbours.discard(node)
             if node in self._alist:
                 del self._alist[node]
 
     def remove(self, *edges: Tuple[T, T]) -> None:
         for left, right in edges:
             if left in self._alist:
-                self._alist[left].remove(right)
+                self._alist[left].discard(right)
                 if not self._directed and right in self._alist:
-                    self._alist[right].remove(left)
+                    self._alist[right].discard(left)
 
     def is_adjacent(self, from_node: T, to_node: T) -> bool:
         """ Is node1 directly connected to node2 """

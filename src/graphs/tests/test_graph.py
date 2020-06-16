@@ -4,9 +4,11 @@ from graphs.graph import *
 class TestGraph:
     def test_undirected_graph(self):
         g = Graph[int](directed=False)
+        g.remove_nodes(1)  # delete non-existent node
         g.add_nodes(1, 2, 3, 4)
         assert g.adjacent(1) == g.adjacent(2) == g.adjacent(3) == g.adjacent(4) == set()
         assert not g.is_adjacent(1, 2)
+        g.remove((1, 2))  # delete non-existent edge
         g.add((1, 2), (2, 3), (3, 4), (4, 1))
         assert g.adjacent(1) == {2, 4} and g.is_adjacent(1, 2) and g.is_adjacent(1, 4)
         assert g.adjacent(2) == {3, 1} and g.is_adjacent(2, 3) and g.is_adjacent(1, 2)
@@ -23,6 +25,7 @@ class TestGraph:
 
     def test_directed_graph(self):
         g = Graph[int](directed=True)
+        g.remove_nodes(1)  # delete non-existent node
         g.add_nodes(1, 2, 3, 4)
         assert g.adjacent(1) == g.adjacent(2) == g.adjacent(3) == g.adjacent(4) == set()
         assert not g.is_adjacent(1, 2)
@@ -35,7 +38,7 @@ class TestGraph:
         assert g.nodes() == {3, 4}
         assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
         assert g.adjacent(4) == set() and not g.is_adjacent(4, 3)
-        g.remove((4, 3))
+        g.remove((4, 3))  # delete non-existent edge
         assert g.nodes() == {3, 4}
         assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
         g.remove((3, 4))
