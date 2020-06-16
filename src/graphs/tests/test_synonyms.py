@@ -5,17 +5,19 @@ class TestSynonyms:
     def test_given_empty_names_and_synonyms_then_return_empty_list(self):
         names = []
         synonyms = []
-        assert merge(names, synonyms) == []
+        assert merge(names, synonyms) == set()
 
     def test_given_empty_synonyms(self):
         names = [("John", 15)]
         synonyms = []
-        assert merge(names, synonyms) == [("John", 15)]
+        assert merge(names, synonyms) == {Node("John", 15)}
 
     def test_given_all_names_belong_to_same_synonym_group(self):
         names = [("John", 15), ("Jon", 1)]
         synonyms = [("Jon", "John")]
-        assert merge(names, synonyms) == [("John", 16)]
+        res = merge(names, synonyms)
+        assert len(res) == 1
+        assert Node("John", 16) in res or Node("Jon", 16) in res
 
     def test_given_example(self):
         names = [
@@ -31,7 +33,14 @@ class TestSynonyms:
             ("Chris", "Kris"),
             ("Chris", "Christopher"),
         ]
-        assert merge(names, synonyms) == [("John", 27), ("Chris", 36)]
+        res = merge(names, synonyms)
+        assert len(res) == 2
+        assert Node("Jon", 27) in res or Node("John", 27) in res
+        assert (
+            Node("Christopher", 36) in res
+            or Node("Chris", 36) in res
+            or Node("Kris", 36) in res
+        )
 
     def test_given_synonym_group_of_size_4(self):
         names = [
@@ -52,9 +61,14 @@ class TestSynonyms:
             ("Kari", "Carrie"),
             ("Carleton", "Carlton"),
         ]
-        assert merge(names, synonyms) == [
-            ("John", 33),
-            ("Davis", 2),
-            ("Kari", 8),
-            ("Carlton", 10),
-        ]
+        res = merge(names, synonyms)
+        assert len(res) == 4
+        assert (
+            Node("Jonathan", 33) in res
+            or Node("John", 33) in res
+            or Node("Jon", 33) in res
+            or Node("Johnny", 33) in res
+        )
+        assert Node("Davis", 2) in res
+        assert Node("Kari", 8) in res or Node("Carrie", 8) in res
+        assert Node("Carlton", 10) in res or Node("Carleton", 10) in res

@@ -9,6 +9,7 @@ from typing import (
     Deque,
     KeysView,
     Tuple,
+    FrozenSet,
 )
 
 T = TypeVar("T")  # Declare type variable
@@ -22,28 +23,39 @@ class Graph(Generic[T]):
         self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
         self._directed: bool = directed
 
-    def nodes(self) -> KeysView[T]:
-        return self._alist.keys()
+    def nodes(self) -> Set[T]:
+        res: Set[T] = set()
+        for node in self._alist.keys():
+            res.add(node)
+        return res
 
     def add_nodes(self, *nodes: T) -> None:
         """Add an unconnected node."""
         for node in nodes:
             self._alist[node] = set()
 
-    def add(self, *edges: Tuple[T, T]):
+    def add(self, *edges: Tuple[T, T]) -> None:
         """ Add edges (list of tuple pairs) to graph """
         for left, right in edges:
             self._alist[left].add(right)
             if not self._directed:
                 self._alist[right].add(left)
 
-    def remove(self, node: T) -> None:
+    def remove_nodes(self, *nodes: T) -> None:
         """ Remove all references to node """
-        for neighbours in self._alist.values():
-            if node in neighbours:
-                neighbours.remove(node)
-        if node in self._alist:
-            del self._alist[node]
+        for node in nodes:
+            for neighbours in self._alist.values():
+                if node in neighbours:
+                    neighbours.remove(node)
+            if node in self._alist:
+                del self._alist[node]
+
+    def remove(self, *edges: Tuple[T, T]) -> None:
+        for left, right in edges:
+            if left in self._alist:
+                self._alist[left].remove(right)
+                if not self._directed and right in self._alist:
+                    self._alist[right].remove(left)
 
     def is_adjacent(self, from_node: T, to_node: T) -> bool:
         """ Is node1 directly connected to node2 """

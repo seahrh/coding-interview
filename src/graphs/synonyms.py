@@ -56,8 +56,8 @@ def _graph(
     return g
 
 
-def merge(names: List[Tuple[str, int]], synonyms: List[Tuple[str, str]]) -> List[Node]:
-    res: List[Node] = []
+def merge(names: List[Tuple[str, int]], synonyms: List[Tuple[str, str]]) -> Set[Node]:
+    res: Set[Node] = set()
     g = _graph(names, synonyms)
     visited = set()
     for n in g.nodes():
@@ -67,5 +67,5 @@ def merge(names: List[Tuple[str, int]], synonyms: List[Tuple[str, str]]) -> List
         for c in g.connected_component(n):
             _sum += c.freq
             visited.add(c)
-        res.append(Node(n.name, _sum))
+        res.add(Node(n.name, _sum))
     return res
