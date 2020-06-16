@@ -8,7 +8,6 @@ from typing import (
     Callable,
     Deque,
     KeysView,
-    Iterable,
     Tuple,
 )
 
@@ -26,24 +25,17 @@ class Graph(Generic[T]):
     def nodes(self) -> KeysView[T]:
         return self._alist.keys()
 
-    def add_node(self, node: T) -> None:
-        """ Add an unconnected node. This allows unconnected components. """
-        self._alist[node] = set()
+    def add_nodes(self, *nodes: T) -> None:
+        """Add an unconnected node."""
+        for node in nodes:
+            self._alist[node] = set()
 
-    def add_edge(self, node1: T, node2: T) -> None:
-        """ Add connection between node1 and node2 """
-        self._alist[node1].add(node2)
-        if not self._directed:
-            self._alist[node2].add(node1)
-
-    def add_nodes(self, nodes: Iterable[T]):
-        for n in nodes:
-            self.add_node(n)
-
-    def add_edges(self, edges: Iterable[Tuple[T, T]]):
+    def add(self, *edges: Tuple[T, T]):
         """ Add edges (list of tuple pairs) to graph """
-        for node1, node2 in edges:
-            self.add_edge(node1, node2)
+        for left, right in edges:
+            self._alist[left].add(right)
+            if not self._directed:
+                self._alist[right].add(left)
 
     def remove(self, node: T) -> None:
         """ Remove all references to node """

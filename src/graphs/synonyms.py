@@ -27,7 +27,8 @@ Therefore, the total time of the algorithm is 0 (B + P).
 We know we cannot do better than this since we must at least read in the B + P pieces of data.
 O(B) space to hold the `visited` set. Worst case: no names are synonyms.
 """
-from typing import NamedTuple, Tuple, Dict
+from typing import NamedTuple, Dict
+
 from graphs.graph import *
 
 
@@ -48,10 +49,10 @@ def _graph(
     nodes: Dict[str, Node] = {}
     for name, freq in names:
         nodes[name] = Node(name=name, freq=freq)
-    g.add_nodes(nodes.values())
+    g.add_nodes(*nodes.values())  # expand collection to varargs
     for name1, name2 in synonyms:
         if name1 in nodes and name2 in nodes:
-            g.add_edge(nodes[name1], nodes[name2])
+            g.add((nodes[name1], nodes[name2]))
     return g
 
 
