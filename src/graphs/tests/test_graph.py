@@ -12,7 +12,7 @@ class TestGraph:
         assert g.adjacent(3) == {2, 4}
         assert g.adjacent(4) == {1, 3}
         g.remove_nodes(1, 2)
-        assert g.nodes == {3, 4}
+        assert g.nodes() == {3, 4}
 
 
 class TestBreadthFirstSearch:

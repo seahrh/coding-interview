@@ -7,7 +7,6 @@ from typing import (
     List,
     Callable,
     Deque,
-    KeysView,
     Tuple,
     FrozenSet,
 )
@@ -23,11 +22,8 @@ class Graph(Generic[T]):
         self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
         self._directed: bool = directed
 
-    def nodes(self) -> Set[T]:
-        res: Set[T] = set()
-        for node in self._alist.keys():
-            res.add(node)
-        return res
+    def nodes(self) -> FrozenSet[T]:
+        return frozenset(self._alist.keys())
 
     def add_nodes(self, *nodes: T) -> None:
         """Add an unconnected node."""
