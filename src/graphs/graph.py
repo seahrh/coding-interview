@@ -61,17 +61,20 @@ class Graph(Generic[T]):
 
     def connected_component(self, node: T, visited: Set[T] = None) -> Set[T]:
         """Returns all nodes in the same connected component as the input node.
+        Known as Connected Component for undirected graphs, Strongly Connected Components for directed graphs.
+        A vertex with no incident edges is itself a component.
+        A graph that is itself connected has exactly one component, consisting of the whole graph.
         O(n) time and O(n) space, where n is the size of the component."""
         if node not in self._alist:
             return set()
         if visited is None:
             visited = set()
-        if node in visited:
+        if node in visited:  # base case: node already visited
             return set()
         res = {node}
         visited.add(node)
-        for n in self.adjacent(node):
-            res = res | self.connected_component(n, visited)  # set union
+        for a in self.adjacent(node):
+            res = res | self.connected_component(a, visited)  # set union
         return res
 
     def __repr__(self):

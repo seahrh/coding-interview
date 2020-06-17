@@ -1,3 +1,4 @@
+import pytest
 from graphs.graph import *
 
 
@@ -45,6 +46,44 @@ class TestGraph:
         assert g.nodes() == {3, 4}
         assert g.adjacent(3) == g.adjacent(4) == set()
         assert not g.is_adjacent(3, 4)
+
+
+class TestComponents:
+    def test_when_vertex_does_not_exist_then_return_empty_collection(self):
+        g = Graph[int](directed=False)
+        g.add((1, 2))
+        assert g.connected_component(99) == set()
+        g = Graph[int](directed=True)
+        g.add_nodes((1, 2))
+        assert g.connected_component(99) == set()
+
+    def test_a_vertex_with_no_incident_edges_is_itself_a_component(self):
+        g = Graph[int](directed=False)
+        g.add_nodes(1)
+        assert g.connected_component(1) == {1}
+        g = Graph[int](directed=True)
+        g.add_nodes(1)
+        assert g.connected_component(1) == {1}
+
+    def test_a_connected_graph_has_exactly_one_component(self):
+        g = Graph[int](directed=False)
+        g.add((1, 2), (2, 3))
+        assert g.connected_component(1) == g.nodes()
+        assert g.connected_component(2) == g.nodes()
+        assert g.connected_component(3) == g.nodes()
+        g = Graph[int](directed=True)
+        g.add((1, 2), (2, 3), (3, 1))
+        assert g.connected_component(1) == g.nodes()
+        assert g.connected_component(2) == g.nodes()
+        assert g.connected_component(3) == g.nodes()
+
+    @pytest.mark.skip
+    def test_directed_graph(self):
+        g = Graph[int](directed=True)
+        g.add((1, 2), (2, 3))
+        assert g.connected_component(1) == {1}
+        assert g.connected_component(2) == {2}
+        assert g.connected_component(3) == {3}
 
 
 class TestBreadthFirstSearch:
