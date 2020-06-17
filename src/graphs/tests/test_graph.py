@@ -11,16 +11,28 @@ class TestGraph:
         assert not g.is_adjacent(1, 2)
         g.remove((1, 2))  # delete non-existent edge
         g.add((1, 2), (2, 3), (3, 4), (4, 1))
+        assert g.edges() == {
+            (1, 2),
+            (2, 1),
+            (2, 3),
+            (3, 2),
+            (3, 4),
+            (4, 3),
+            (4, 1),
+            (1, 4),
+        }
         assert g.adjacent(1) == {2, 4} and g.is_adjacent(1, 2) and g.is_adjacent(1, 4)
         assert g.adjacent(2) == {3, 1} and g.is_adjacent(2, 3) and g.is_adjacent(1, 2)
         assert g.adjacent(3) == {2, 4} and g.is_adjacent(3, 2) and g.is_adjacent(3, 4)
         assert g.adjacent(4) == {1, 3} and g.is_adjacent(1, 4) and g.is_adjacent(3, 4)
         g.remove_nodes(1, 2)
         assert g.nodes() == {3, 4}
+        assert g.edges() == {(3, 4), (4, 3)}
         assert g.adjacent(3) == {4} and g.is_adjacent(4, 3)
         assert g.adjacent(4) == {3} and g.is_adjacent(4, 3)
         g.remove((3, 4))
         assert g.nodes() == {3, 4}
+        assert g.edges() == set()
         assert g.adjacent(3) == g.adjacent(4) == set()
         assert not g.is_adjacent(3, 4)
 
@@ -31,19 +43,23 @@ class TestGraph:
         assert g.adjacent(1) == g.adjacent(2) == g.adjacent(3) == g.adjacent(4) == set()
         assert not g.is_adjacent(1, 2)
         g.add((1, 2), (2, 3), (3, 4), (4, 1))
+        assert g.edges() == {(1, 2), (2, 3), (3, 4), (4, 1)}
         assert g.adjacent(1) == {2} and g.is_adjacent(1, 2) and not g.is_adjacent(2, 1)
         assert g.adjacent(2) == {3} and g.is_adjacent(2, 3) and not g.is_adjacent(3, 2)
         assert g.adjacent(3) == {4} and g.is_adjacent(3, 4) and not g.is_adjacent(4, 3)
         assert g.adjacent(4) == {1} and g.is_adjacent(4, 1) and not g.is_adjacent(1, 4)
         g.remove_nodes(1, 2)
         assert g.nodes() == {3, 4}
+        assert g.edges() == {(3, 4)}
         assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
         assert g.adjacent(4) == set() and not g.is_adjacent(4, 3)
         g.remove((4, 3))  # delete non-existent edge
         assert g.nodes() == {3, 4}
+        assert g.edges() == {(3, 4)}
         assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
         g.remove((3, 4))
         assert g.nodes() == {3, 4}
+        assert g.edges() == set()
         assert g.adjacent(3) == g.adjacent(4) == set()
         assert not g.is_adjacent(3, 4)
 
