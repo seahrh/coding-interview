@@ -116,6 +116,17 @@ class Graph(DiGraph, Generic[T]):
         self._component(node, res, visited=set())
         return res
 
+    def components(self) -> "Set[Graph[T]]":
+        res: Set[Graph[T]] = set()
+        seen: Set[T] = set()
+        for node in self.nodes():
+            if node in seen:
+                continue
+            c = self.component(node)
+            res.add(c)
+            seen = seen | c.nodes()
+        return res
+
 
 def bfs(
     graph: DiGraph[T], start_node: T, process: Callable[[T], None] = None

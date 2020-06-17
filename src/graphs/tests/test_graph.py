@@ -76,8 +76,14 @@ class TestConnectedComponent:
 
     def test_a_vertex_with_no_incident_edges_is_itself_a_component(self):
         g = Graph[int]()
-        g.add_nodes(1)
+        g.add_nodes(1, 2)
         assert g.component(1).nodes() == {1}
+        assert g.component(2).nodes() == {2}
+        c1 = Graph[int]()
+        c1.add_nodes(1)
+        c2 = Graph[int]()
+        c2.add_nodes(2)
+        assert g.components() == {c1, c2}
         """
         g = DiGraph[int]()
         g.add_nodes(1)
@@ -90,6 +96,7 @@ class TestConnectedComponent:
         c = g.component(1)
         assert c.edges() == {(1, 2), (2, 1), (2, 3), (3, 2)}
         assert c == g.component(2) == g.component(3)
+        assert g.components() == {c}
         """
         g = DiGraph[int]()
         g.add((1, 2), (2, 3), (3, 1))
@@ -97,6 +104,17 @@ class TestConnectedComponent:
         assert g.connected_component(2) == g.nodes()
         assert g.connected_component(3) == g.nodes()
         """
+
+    def test_disconnected_graph(self):
+        g = Graph[int]()
+        g.add((1, 2), (2, 3), (4, 5), (5, 6))
+        c1 = g.component(1)
+        assert c1.edges() == {(1, 2), (2, 1), (2, 3), (3, 2)}
+        assert c1 == g.component(2) == g.component(3)
+        c2 = g.component(4)
+        assert c2.edges() == {(4, 5), (5, 4), (5, 6), (6, 5)}
+        assert c2 == g.component(5) == g.component(6)
+        assert g.components() == {c1, c2}
 
 
 class TestBreadthFirstSearch:
