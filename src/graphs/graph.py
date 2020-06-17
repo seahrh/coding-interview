@@ -12,7 +12,7 @@ from typing import (
     Hashable,
 )
 
-T = TypeVar("T")  # Declare type variable
+T = TypeVar("T", bound=Hashable)  # Declare type variable
 
 
 class DiGraph(Generic[T]):
