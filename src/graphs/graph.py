@@ -23,7 +23,7 @@ class DiGraph(Generic[T]):
         self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
 
     def __tuple(self) -> Tuple[Hashable, ...]:
-        return tuple(frozenset(self._alist.items()))
+        return self.nodes(), self.edges()
 
     def __eq__(self, other):
         if type(other) is type(self):
@@ -55,11 +55,6 @@ class DiGraph(Generic[T]):
         for node in nodes:
             self._alist[node] = set()
 
-    def add(self, *edges: Tuple[T, T]) -> None:
-        """ Add edges (list of tuple pairs) to graph """
-        for left, right in edges:
-            self._alist[left].add(right)
-
     def remove_nodes(self, *nodes: T) -> None:
         """ Remove all references to node """
         for node in nodes:
@@ -68,28 +63,15 @@ class DiGraph(Generic[T]):
             if node in self._alist:
                 del self._alist[node]
 
+    def add(self, *edges: Tuple[T, T]) -> None:
+        """ Add edges (list of tuple pairs) to graph """
+        for left, right in edges:
+            self._alist[left].add(right)
+
     def remove(self, *edges: Tuple[T, T]) -> None:
         for left, right in edges:
             if left in self._alist:
                 self._alist[left].discard(right)
-
-    def connected_component(self, node: T, visited: Set[T] = None) -> Set[T]:
-        """Returns all nodes in the same connected component as the input node.
-        Known as Connected Component for undirected graphs, Strongly Connected Components for directed graphs.
-        A vertex with no incident edges is itself a component.
-        A graph that is itself connected has exactly one component, consisting of the whole graph.
-        O(n) time and O(n) space, where n is the size of the component."""
-        if node not in self._alist:
-            return set()
-        if visited is None:
-            visited = set()
-        if node in visited:  # base case: node already visited
-            return set()
-        res = {node}
-        visited.add(node)
-        for a in self.adjacent(node):
-            res = res | self.connected_component(a, visited)  # set union
-        return res
 
     def __repr__(self):
         return "{}({})".format(self.__class__.__name__, dict(self._alist))
@@ -108,6 +90,31 @@ class Graph(DiGraph, Generic[T]):
         for left, right in edges:
             if right in self._alist:
                 self._alist[right].discard(left)
+
+    def _component(self, node: T, result: "Graph[T]", visited: Set[T]) -> None:
+        """Depth first search method to find the connected component of a given node.
+        This method works only for undirected graphs.
+        Time O(V + E) and Space O(V + E)."""
+        if node not in self.nodes():
+            return
+        # base case: node already visited
+        # cannot use result.nodes() because edges are added in both directions.
+        if node in visited:
+            return
+        visited.add(node)
+        result.add_nodes(node)  # node may not have edges
+        for a in self.adjacent(node):
+            result.add((node, a))
+            self._component(a, result, visited)
+
+    def component(self, node: T) -> "Graph[T]":
+        """Returns the connected component that contains the given vertex, as a new Graph object.
+        A vertex with no incident edges is itself a component.
+        A graph that is itself connected has exactly one component, consisting of the whole graph.
+        """
+        res = Graph[T]()
+        self._component(node, res, visited=set())
+        return res
 
 
 def bfs(

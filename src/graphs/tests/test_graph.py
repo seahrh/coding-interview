@@ -1,4 +1,3 @@
-import pytest
 from graphs.graph import *
 
 
@@ -64,42 +63,40 @@ class TestGraphs:
         assert not g.is_adjacent(3, 4)
 
 
-class TestComponents:
-    def test_when_vertex_does_not_exist_then_return_empty_collection(self):
+class TestConnectedComponent:
+    def test_when_vertex_does_not_exist_then_return_empty_graph(self):
         g = Graph[int]()
         g.add((1, 2))
-        assert g.connected_component(99) == set()
+        assert g.component(99).nodes() == set()
+        """
         g = DiGraph[int]()
         g.add_nodes((1, 2))
         assert g.connected_component(99) == set()
+        """
 
     def test_a_vertex_with_no_incident_edges_is_itself_a_component(self):
         g = Graph[int]()
         g.add_nodes(1)
-        assert g.connected_component(1) == {1}
+        assert g.component(1).nodes() == {1}
+        """
         g = DiGraph[int]()
         g.add_nodes(1)
         assert g.connected_component(1) == {1}
+        """
 
     def test_a_connected_graph_has_exactly_one_component(self):
         g = Graph[int]()
         g.add((1, 2), (2, 3))
-        assert g.connected_component(1) == g.nodes()
-        assert g.connected_component(2) == g.nodes()
-        assert g.connected_component(3) == g.nodes()
+        c = g.component(1)
+        assert c.edges() == {(1, 2), (2, 1), (2, 3), (3, 2)}
+        assert c == g.component(2) == g.component(3)
+        """
         g = DiGraph[int]()
         g.add((1, 2), (2, 3), (3, 1))
         assert g.connected_component(1) == g.nodes()
         assert g.connected_component(2) == g.nodes()
         assert g.connected_component(3) == g.nodes()
-
-    @pytest.mark.skip
-    def test_directed_graph(self):
-        g = DiGraph[int]()
-        g.add((1, 2), (2, 3))
-        assert g.connected_component(1) == {1}
-        assert g.connected_component(2) == {2}
-        assert g.connected_component(3) == {3}
+        """
 
 
 class TestBreadthFirstSearch:

@@ -64,7 +64,8 @@ def merge(names: List[Tuple[str, int]], synonyms: List[Tuple[str, str]]) -> Set[
         if n in visited:
             continue
         _sum = 0
-        for c in g.connected_component(n):
+        component = g.component(n)
+        for c in component.nodes():
             _sum += c.freq
             visited.add(c)
         res.add(Node(n.name, _sum))
