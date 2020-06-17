@@ -2,9 +2,9 @@ import pytest
 from graphs.graph import *
 
 
-class TestGraph:
+class TestGraphs:
     def test_undirected_graph(self):
-        g = Graph[int](directed=False)
+        g = Graph[int]()
         g.remove_nodes(1)  # delete non-existent node
         g.add_nodes(1, 2, 3, 4)
         assert g.adjacent(1) == g.adjacent(2) == g.adjacent(3) == g.adjacent(4) == set()
@@ -37,7 +37,7 @@ class TestGraph:
         assert not g.is_adjacent(3, 4)
 
     def test_directed_graph(self):
-        g = Graph[int](directed=True)
+        g = DiGraph[int]()
         g.remove_nodes(1)  # delete non-existent node
         g.add_nodes(1, 2, 3, 4)
         assert g.adjacent(1) == g.adjacent(2) == g.adjacent(3) == g.adjacent(4) == set()
@@ -66,28 +66,28 @@ class TestGraph:
 
 class TestComponents:
     def test_when_vertex_does_not_exist_then_return_empty_collection(self):
-        g = Graph[int](directed=False)
+        g = Graph[int]()
         g.add((1, 2))
         assert g.connected_component(99) == set()
-        g = Graph[int](directed=True)
+        g = DiGraph[int]()
         g.add_nodes((1, 2))
         assert g.connected_component(99) == set()
 
     def test_a_vertex_with_no_incident_edges_is_itself_a_component(self):
-        g = Graph[int](directed=False)
+        g = Graph[int]()
         g.add_nodes(1)
         assert g.connected_component(1) == {1}
-        g = Graph[int](directed=True)
+        g = DiGraph[int]()
         g.add_nodes(1)
         assert g.connected_component(1) == {1}
 
     def test_a_connected_graph_has_exactly_one_component(self):
-        g = Graph[int](directed=False)
+        g = Graph[int]()
         g.add((1, 2), (2, 3))
         assert g.connected_component(1) == g.nodes()
         assert g.connected_component(2) == g.nodes()
         assert g.connected_component(3) == g.nodes()
-        g = Graph[int](directed=True)
+        g = DiGraph[int]()
         g.add((1, 2), (2, 3), (3, 1))
         assert g.connected_component(1) == g.nodes()
         assert g.connected_component(2) == g.nodes()
@@ -95,7 +95,7 @@ class TestComponents:
 
     @pytest.mark.skip
     def test_directed_graph(self):
-        g = Graph[int](directed=True)
+        g = DiGraph[int]()
         g.add((1, 2), (2, 3))
         assert g.connected_component(1) == {1}
         assert g.connected_component(2) == {2}

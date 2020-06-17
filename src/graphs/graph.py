@@ -10,22 +10,20 @@ from typing import (
     Tuple,
     FrozenSet,
     Hashable,
-    Optional,
 )
 
 T = TypeVar("T")  # Declare type variable
 
 
-class Graph(Generic[T]):
-    """ Graph data structure, undirected by default. """
+class DiGraph(Generic[T]):
+    """ Directed Graph data structure"""
 
-    def __init__(self, directed: bool = False):
+    def __init__(self):
         # adjacency list: using a Set instead of List (assume all vertices are distinct).
         self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
-        self.directed: bool = directed
 
     def __tuple(self) -> Tuple[Hashable, ...]:
-        return frozenset(self._alist.items()), self.directed
+        return tuple(frozenset(self._alist.items()))
 
     def __eq__(self, other):
         if type(other) is type(self):
@@ -61,8 +59,6 @@ class Graph(Generic[T]):
         """ Add edges (list of tuple pairs) to graph """
         for left, right in edges:
             self._alist[left].add(right)
-            if not self.directed:
-                self._alist[right].add(left)
 
     def remove_nodes(self, *nodes: T) -> None:
         """ Remove all references to node """
@@ -76,8 +72,6 @@ class Graph(Generic[T]):
         for left, right in edges:
             if left in self._alist:
                 self._alist[left].discard(right)
-                if not self.directed and right in self._alist:
-                    self._alist[right].discard(left)
 
     def connected_component(self, node: T, visited: Set[T] = None) -> Set[T]:
         """Returns all nodes in the same connected component as the input node.
@@ -101,7 +95,24 @@ class Graph(Generic[T]):
         return "{}({})".format(self.__class__.__name__, dict(self._alist))
 
 
-def bfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> List[T]:
+class Graph(DiGraph, Generic[T]):
+    """Undirected graph, as a special case of a directed graph."""
+
+    def add(self, *edges: Tuple[T, T]) -> None:
+        super().add(*edges)
+        for left, right in edges:
+            self._alist[right].add(left)
+
+    def remove(self, *edges: Tuple[T, T]) -> None:
+        super().remove(*edges)
+        for left, right in edges:
+            if right in self._alist:
+                self._alist[right].discard(left)
+
+
+def bfs(
+    graph: DiGraph[T], start_node: T, process: Callable[[T], None] = None
+) -> List[T]:
     """Returns the path of nodes visited in Breadth First Search.
     Uses a queue to pick the next node to process.
     Time O(V + E)
@@ -124,7 +135,9 @@ def bfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> 
     return res
 
 
-def dfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> List[T]:
+def dfs(
+    graph: DiGraph[T], start_node: T, process: Callable[[T], None] = None
+) -> List[T]:
     """Returns the path of nodes visited in Depth First Search.
     Uses a stack to pick the next node to process.
     Time O(V + E)
@@ -147,8 +160,9 @@ def dfs(graph: Graph[T], start_node: T, process: Callable[[T], None] = None) -> 
     return res
 
 
+"""
 def components(graph: Graph[T]) -> Set[Graph[T]]:
-    """A connected component, of an undirected graph is a subgraph
+    A connected component, of an undirected graph is a subgraph
     in which any two vertices are connected to each other by paths.
     A vertex with no incident edges is itself a component.
     A graph that is itself connected has exactly one component, consisting of the whole graph.
@@ -156,9 +170,8 @@ def components(graph: Graph[T]) -> Set[Graph[T]]:
 
     :param graph: Input graph
     :return: Connected components as a set of subgraphs
-    """
-    if graph.directed:
-        raise ValueError("This method works only for Undirected graphs.")
+    
     res: Set[Graph[T]] = set()
 
     return res
+"""
