@@ -131,10 +131,14 @@ class DiGraph(Generic[T]):
         return len(self.find_cycle()) != 0
 
     def topsort(self) -> List[T]:
+        """Topological sort orders the vertices on a line such that all directed edges go from left to right.
+
+        Time O(V + E): DFS traversal
+        Space O(V)
+        """
         ordering: Deque[T] = deque()  # result is a queue; insert from left
         st: List[T] = []  # DFS iteration
         white: Set[T] = set(self.nodes())
-        # gray is a stack instead of a set because nodes are added to result wrt. insertion order
         gray: Set[T] = set()
         black: Set[T] = set()
         while len(white) != 0 or len(st) != 0:
