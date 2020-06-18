@@ -80,8 +80,10 @@ class DiGraph(Generic[T]):
 
     def find_cycle(self) -> "DiGraph[T]":
         """Returns one cycle in the graph if it exists.
-
         Explored means that a node and all its descendants have been explored.
+        White set: nodes that have not been explored
+        Gray set: nodes that are undergoing exploration but not completed
+        Black set: nodes that are completely explored
 
         Time O(V + E): same as DFS
         Space O(V): stack covers all nodes
@@ -92,7 +94,7 @@ class DiGraph(Generic[T]):
         gray: Set[T] = set()
         black: Set[T] = set()
         st: List[T] = []  # dfs
-        parent: Dict[T, Optional[T]] = {}
+        parent: Dict[T, Optional[T]] = {}  # map of child node to parent node
         while len(white) != 0 or len(st) != 0:
             if len(st) == 0:
                 # completed exploring gray nodes, so flush to black set.
