@@ -97,16 +97,13 @@ class DiGraph(Generic[T]):
         parent: Dict[T, Optional[T]] = {}  # map of child node to parent node
         while len(white) != 0 or len(st) != 0:
             if len(st) == 0:
-                # completed exploring gray nodes, so flush to black set.
-                black = black | gray
-                gray = set()
                 # add next node from white set
                 # both white set and stack cannot be empty at the same time.
                 tmp = white.pop()
                 gray.add(tmp)
                 st.append(tmp)
                 parent[tmp] = None
-            curr = st.pop()
+            curr = st[-1]  # do not pop the top!
             explored = True
             for a in self.adjacent(curr):
                 if a in black:
@@ -125,6 +122,7 @@ class DiGraph(Generic[T]):
                 gray.add(a)
                 st.append(a)
             if explored:
+                st.pop()  # pop only if the node and its successors have been explored
                 gray.remove(curr)
                 black.add(curr)
         return res
@@ -137,21 +135,16 @@ class DiGraph(Generic[T]):
         st: List[T] = []  # DFS iteration
         white: Set[T] = set(self.nodes())
         # gray is a stack instead of a set because nodes are added to result wrt. insertion order
-        gray: List[T] = []
+        gray: Set[T] = set()
         black: Set[T] = set()
         while len(white) != 0 or len(st) != 0:
             if len(st) == 0:
-                # completed exploring gray nodes, so flush to black set.
-                while len(gray) != 0:
-                    tmp = gray.pop()
-                    black.add(tmp)
-                    ordering.appendleft(tmp)
                 # add next node from white set
                 # both white set and stack cannot be empty at the same time.
                 tmp = white.pop()
-                gray.append(tmp)
+                gray.add(tmp)
                 st.append(tmp)
-            curr = st.pop()
+            curr = st[-1]  # do not pop the top!
             explored = True
             for a in self.adjacent(curr):
                 if a in black:
@@ -160,15 +153,13 @@ class DiGraph(Generic[T]):
                     return []
                 explored = False
                 white.discard(a)
-                gray.append(a)
+                gray.add(a)
                 st.append(a)
             if explored:
+                st.pop()  # pop only if the node and its successors have been explored
                 gray.remove(curr)
                 black.add(curr)
                 ordering.appendleft(curr)
-        # remember to add remaining gray nodes to result!
-        while len(gray) != 0:
-            ordering.appendleft(gray.pop())
         return list(ordering)
 
     def __repr__(self):

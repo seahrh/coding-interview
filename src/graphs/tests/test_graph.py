@@ -1,4 +1,3 @@
-import pytest
 from graphs.graph import *
 
 
@@ -90,13 +89,12 @@ class TestFindCycle:
         g.add((2, 4))
         assert g.find_cycle().edges() == {(1, 2), (4, 1), (2, 4)}
 
-    @pytest.mark.skip
     def test_case_2(self):
         g = DiGraph[int]()
         g.add((1, 3), (2, 3), (3, 5), (3, 4), (5, 6), (5, 7), (4, 7), (7, 8))
-        assert g.find_cycle().edges() == {}
+        assert not g.has_cycle()
         g.add((8, 1))
-        assert g.find_cycle().edges() == {}
+        assert g.find_cycle().edges() == {(1, 3), (8, 1), (5, 7), (7, 8), (3, 5)}
 
 
 class TestTopologicalSort:
@@ -125,11 +123,23 @@ class TestTopologicalSort:
         g.add((2, 4))
         assert g.topsort() == []  # has cycle
 
-    @pytest.mark.skip
     def test_case_2(self):
         g = DiGraph[int]()
         g.add((1, 3), (2, 3), (3, 5), (3, 4), (5, 6), (5, 7), (4, 7), (7, 8))
-        assert g.topsort() == []
+        a = g.topsort()
+        i1 = a.index(1)
+        i2 = a.index(2)
+        i3 = a.index(3)
+        i4 = a.index(4)
+        i5 = a.index(5)
+        i6 = a.index(6)
+        i7 = a.index(7)
+        i8 = a.index(8)
+        assert i1 < i3 and i2 < i3
+        assert i3 < i4 and i3 < i5
+        assert i5 < i6 and i5 < i7
+        assert i4 < i7
+        assert i7 < i8
         g.add((8, 1))
         assert g.topsort() == []  # has cycle
 
