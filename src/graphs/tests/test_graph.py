@@ -2,6 +2,33 @@ from graphs.graph import *
 
 
 class TestGraphs:
+    def test_directed_graph(self):
+        g = DiGraph[int]()
+        g.remove_nodes(1)  # delete non-existent node
+        g.add_nodes(1, 2, 3, 4)
+        assert g.adjacent(1) == g.adjacent(2) == g.adjacent(3) == g.adjacent(4) == set()
+        assert not g.is_adjacent(1, 2)
+        g.add((1, 2), (2, 3), (3, 4), (4, 1))
+        assert g.edges() == {(1, 2), (2, 3), (3, 4), (4, 1)}
+        assert g.adjacent(1) == {2} and g.is_adjacent(1, 2) and not g.is_adjacent(2, 1)
+        assert g.adjacent(2) == {3} and g.is_adjacent(2, 3) and not g.is_adjacent(3, 2)
+        assert g.adjacent(3) == {4} and g.is_adjacent(3, 4) and not g.is_adjacent(4, 3)
+        assert g.adjacent(4) == {1} and g.is_adjacent(4, 1) and not g.is_adjacent(1, 4)
+        g.remove_nodes(1, 2)
+        assert g.nodes() == {3, 4}
+        assert g.edges() == {(3, 4)}
+        assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
+        assert g.adjacent(4) == set() and not g.is_adjacent(4, 3)
+        g.remove((4, 3))  # delete non-existent edge
+        assert g.nodes() == {3, 4}
+        assert g.edges() == {(3, 4)}
+        assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
+        g.remove((3, 4))
+        assert g.nodes() == {3, 4}
+        assert g.edges() == set()
+        assert g.adjacent(3) == g.adjacent(4) == set()
+        assert not g.is_adjacent(3, 4)
+
     def test_undirected_graph(self):
         g = Graph[int]()
         g.remove_nodes(1)  # delete non-existent node
@@ -35,32 +62,30 @@ class TestGraphs:
         assert g.adjacent(3) == g.adjacent(4) == set()
         assert not g.is_adjacent(3, 4)
 
-    def test_directed_graph(self):
+
+class TestFindCycle:
+    def test_two_edges_or_less(self):
         g = DiGraph[int]()
-        g.remove_nodes(1)  # delete non-existent node
-        g.add_nodes(1, 2, 3, 4)
-        assert g.adjacent(1) == g.adjacent(2) == g.adjacent(3) == g.adjacent(4) == set()
-        assert not g.is_adjacent(1, 2)
-        g.add((1, 2), (2, 3), (3, 4), (4, 1))
-        assert g.edges() == {(1, 2), (2, 3), (3, 4), (4, 1)}
-        assert g.adjacent(1) == {2} and g.is_adjacent(1, 2) and not g.is_adjacent(2, 1)
-        assert g.adjacent(2) == {3} and g.is_adjacent(2, 3) and not g.is_adjacent(3, 2)
-        assert g.adjacent(3) == {4} and g.is_adjacent(3, 4) and not g.is_adjacent(4, 3)
-        assert g.adjacent(4) == {1} and g.is_adjacent(4, 1) and not g.is_adjacent(1, 4)
-        g.remove_nodes(1, 2)
-        assert g.nodes() == {3, 4}
-        assert g.edges() == {(3, 4)}
-        assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
-        assert g.adjacent(4) == set() and not g.is_adjacent(4, 3)
-        g.remove((4, 3))  # delete non-existent edge
-        assert g.nodes() == {3, 4}
-        assert g.edges() == {(3, 4)}
-        assert g.adjacent(3) == {4} and g.is_adjacent(3, 4)
-        g.remove((3, 4))
-        assert g.nodes() == {3, 4}
-        assert g.edges() == set()
-        assert g.adjacent(3) == g.adjacent(4) == set()
-        assert not g.is_adjacent(3, 4)
+        g.add_nodes(1)
+        assert not g.has_cycle()
+        g.add((1, 2))
+        assert not g.has_cycle()
+        g.add((2, 1))
+        assert g.find_cycle().edges() == {(1, 2), (2, 1)}
+
+    def test_edge_between_parent_and_grandchild(self):
+        g = DiGraph[int]()
+        g.add((1, 2), (2, 3), (1, 3), (4, 1), (4, 5), (5, 6))
+        assert not g.has_cycle()
+        g.add((6, 4))
+        assert g.find_cycle().edges() == {(4, 5), (5, 6), (6, 4)}
+
+    def test_case_1(self):
+        g = DiGraph[int]()
+        g.add((4, 1), (4, 2), (1, 2), (2, 3))
+        assert not g.has_cycle()
+        g.add((2, 4))
+        assert g.find_cycle().edges() == {(1, 2), (4, 1), (2, 4)}
 
 
 class TestConnectedComponent:

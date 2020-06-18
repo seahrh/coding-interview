@@ -10,6 +10,8 @@ from typing import (
     Tuple,
     FrozenSet,
     Hashable,
+    Dict,
+    Optional,
 )
 
 T = TypeVar("T", bound=Hashable)  # Declare type variable
@@ -21,17 +23,6 @@ class DiGraph(Generic[T]):
     def __init__(self):
         # adjacency list: using a Set instead of List (assume all vertices are distinct).
         self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
-
-    def __tuple(self) -> Tuple[Hashable, ...]:
-        return self.nodes(), self.edges()
-
-    def __eq__(self, other):
-        if type(other) is type(self):
-            return self.__tuple() == other.__tuple()
-        return False
-
-    def __hash__(self):
-        return hash(self.__tuple())
 
     def is_adjacent(self, from_node: T, to_node: T) -> bool:
         """ Is node1 directly connected to node2 """
@@ -49,6 +40,20 @@ class DiGraph(Generic[T]):
             for right in self.adjacent(left):
                 res.add((left, right))
         return frozenset(res)
+
+    def __tuple(self) -> Tuple[Hashable, ...]:
+        return self.nodes(), self.edges()
+
+    def __eq__(self, other):
+        if type(other) is type(self):
+            return self.__tuple() == other.__tuple()
+        return False
+
+    def __hash__(self):
+        return hash(self.__tuple())
+
+    def __len__(self):
+        return len(self.nodes())
 
     def add_nodes(self, *nodes: T) -> None:
         """Add an unconnected node."""
@@ -72,6 +77,58 @@ class DiGraph(Generic[T]):
         for left, right in edges:
             if left in self._alist:
                 self._alist[left].discard(right)
+
+    def find_cycle(self) -> "DiGraph[T]":
+        """Returns one cycle in the graph if it exists.
+
+        Explored means that a node and all its descendants have been explored.
+
+        Time O(V + E): same as DFS
+        Space O(V): stack covers all nodes
+        Based on https://www.youtube.com/watch?v=rKQaZuoUR4M
+        """
+        res: "DiGraph[T]" = DiGraph[T]()
+        white: Set[T] = set(self.nodes())
+        gray: Set[T] = set()
+        black: Set[T] = set()
+        st: List[T] = []  # dfs
+        parent: Dict[T, Optional[T]] = {}
+        while len(white) != 0 or len(st) != 0:
+            if len(st) == 0:
+                # completed exploring gray nodes, so flush to black set.
+                black = black | gray
+                gray = set()
+                # add next node from white set
+                # both white set and stack cannot be empty at the same time.
+                tmp = white.pop()
+                gray.add(tmp)
+                st.append(tmp)
+                parent[tmp] = None
+            curr = st.pop()
+            explored = True
+            for a in self.adjacent(curr):
+                if a in black:
+                    continue
+                if a in gray:  # cycle found
+                    left: Optional[T] = curr
+                    right: T = a
+                    while left is not None:
+                        res.add((left, right))
+                        right = left
+                        left = parent[left]
+                    return res
+                explored = False
+                parent[a] = curr
+                white.discard(a)
+                gray.add(a)
+                st.append(a)
+            if explored:
+                gray.remove(curr)
+                black.add(curr)
+        return res
+
+    def has_cycle(self) -> bool:
+        return len(self.find_cycle()) != 0
 
     def __repr__(self):
         return "{}({})".format(self.__class__.__name__, dict(self._alist))
@@ -176,20 +233,3 @@ def dfs(
                 discovered.add(neighbour)
                 st.append(neighbour)
     return res
-
-
-"""
-def components(graph: Graph[T]) -> Set[Graph[T]]:
-    A connected component, of an undirected graph is a subgraph
-    in which any two vertices are connected to each other by paths.
-    A vertex with no incident edges is itself a component.
-    A graph that is itself connected has exactly one component, consisting of the whole graph.
-    Time O(V + E)
-
-    :param graph: Input graph
-    :return: Connected components as a set of subgraphs
-    
-    res: Set[Graph[T]] = set()
-
-    return res
-"""
