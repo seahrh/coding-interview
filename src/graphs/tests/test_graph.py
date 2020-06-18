@@ -1,3 +1,4 @@
+import pytest
 from graphs.graph import *
 
 
@@ -68,6 +69,8 @@ class TestFindCycle:
         g = DiGraph[int]()
         g.add_nodes(1)
         assert not g.has_cycle()
+        g.add_nodes(1, 2)
+        assert not g.has_cycle()
         g.add((1, 2))
         assert not g.has_cycle()
         g.add((2, 1))
@@ -87,17 +90,55 @@ class TestFindCycle:
         g.add((2, 4))
         assert g.find_cycle().edges() == {(1, 2), (4, 1), (2, 4)}
 
+    @pytest.mark.skip
+    def test_case_2(self):
+        g = DiGraph[int]()
+        g.add((1, 3), (2, 3), (3, 5), (3, 4), (5, 6), (5, 7), (4, 7), (7, 8))
+        assert g.find_cycle().edges() == {}
+        g.add((8, 1))
+        assert g.find_cycle().edges() == {}
+
+
+class TestTopologicalSort:
+    def test_two_edges_or_less(self):
+        g = DiGraph[int]()
+        g.add_nodes(1)
+        assert g.topsort() == [1]
+        g.add_nodes(1, 2)
+        assert set(g.topsort()) == {1, 2}
+        g.add((1, 2))
+        assert g.topsort() == [1, 2]
+        g.add((2, 1))
+        assert g.topsort() == []  # has cycle
+
+    def test_edge_between_parent_and_grandchild(self):
+        g = DiGraph[int]()
+        g.add((1, 2), (2, 3), (1, 3), (4, 1), (4, 5), (5, 6))
+        assert g.topsort() == [4, 5, 6, 1, 2, 3]
+        g.add((6, 4))
+        assert g.topsort() == []  # has cycle
+
+    def test_case_1(self):
+        g = DiGraph[int]()
+        g.add((4, 1), (4, 2), (1, 2), (2, 3))
+        assert g.topsort() == [4, 1, 2, 3]
+        g.add((2, 4))
+        assert g.topsort() == []  # has cycle
+
+    @pytest.mark.skip
+    def test_case_2(self):
+        g = DiGraph[int]()
+        g.add((1, 3), (2, 3), (3, 5), (3, 4), (5, 6), (5, 7), (4, 7), (7, 8))
+        assert g.topsort() == []
+        g.add((8, 1))
+        assert g.topsort() == []  # has cycle
+
 
 class TestConnectedComponent:
     def test_when_vertex_does_not_exist_then_return_empty_graph(self):
         g = Graph[int]()
         g.add((1, 2))
         assert g.component(99).nodes() == set()
-        """
-        g = DiGraph[int]()
-        g.add_nodes((1, 2))
-        assert g.connected_component(99) == set()
-        """
 
     def test_a_vertex_with_no_incident_edges_is_itself_a_component(self):
         g = Graph[int]()
@@ -109,11 +150,6 @@ class TestConnectedComponent:
         c2 = Graph[int]()
         c2.add_nodes(2)
         assert g.components() == {c1, c2}
-        """
-        g = DiGraph[int]()
-        g.add_nodes(1)
-        assert g.connected_component(1) == {1}
-        """
 
     def test_a_connected_graph_has_exactly_one_component(self):
         g = Graph[int]()
@@ -122,13 +158,6 @@ class TestConnectedComponent:
         assert c.edges() == {(1, 2), (2, 1), (2, 3), (3, 2)}
         assert c == g.component(2) == g.component(3)
         assert g.components() == {c}
-        """
-        g = DiGraph[int]()
-        g.add((1, 2), (2, 3), (3, 1))
-        assert g.connected_component(1) == g.nodes()
-        assert g.connected_component(2) == g.nodes()
-        assert g.connected_component(3) == g.nodes()
-        """
 
     def test_disconnected_graph(self):
         g = Graph[int]()

@@ -132,6 +132,45 @@ class DiGraph(Generic[T]):
     def has_cycle(self) -> bool:
         return len(self.find_cycle()) != 0
 
+    def topsort(self) -> List[T]:
+        ordering: Deque[T] = deque()  # result is a queue; insert from left
+        st: List[T] = []  # DFS iteration
+        white: Set[T] = set(self.nodes())
+        # gray is a stack instead of a set because nodes are added to result wrt. insertion order
+        gray: List[T] = []
+        black: Set[T] = set()
+        while len(white) != 0 or len(st) != 0:
+            if len(st) == 0:
+                # completed exploring gray nodes, so flush to black set.
+                while len(gray) != 0:
+                    tmp = gray.pop()
+                    black.add(tmp)
+                    ordering.appendleft(tmp)
+                # add next node from white set
+                # both white set and stack cannot be empty at the same time.
+                tmp = white.pop()
+                gray.append(tmp)
+                st.append(tmp)
+            curr = st.pop()
+            explored = True
+            for a in self.adjacent(curr):
+                if a in black:
+                    continue
+                if a in gray:  # cycle found; topological sort is not possible
+                    return []
+                explored = False
+                white.discard(a)
+                gray.append(a)
+                st.append(a)
+            if explored:
+                gray.remove(curr)
+                black.add(curr)
+                ordering.appendleft(curr)
+        # remember to add remaining gray nodes to result!
+        while len(gray) != 0:
+            ordering.appendleft(gray.pop())
+        return list(ordering)
+
     def __repr__(self):
         return "{}({})".format(self.__class__.__name__, dict(self._alist))
 
