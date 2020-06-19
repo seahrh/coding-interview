@@ -20,3 +20,16 @@ class TestSubsetSum:
             frozenset({10, 5, 15}),
             frozenset({13, 12, 5}),
         }
+        assert subset_sum(capacity=28, weights={5, 10, 12, 13, 15, 18}) == {
+            frozenset({10, 13, 5}),
+            frozenset({10, 18}),
+            frozenset({13, 15}),
+        }
+        assert subset_sum(capacity=29, weights={5, 10, 12, 13, 15, 18}) == set()
+
+    def test_case_2(self):
+        assert subset_sum(capacity=9, weights={3, 34, 4, 12, 5, 2}) == {
+            frozenset({4, 5}),
+            frozenset({2, 3, 4}),
+        }
+        assert subset_sum(capacity=30, weights={3, 34, 4, 12, 5, 2}) == set()

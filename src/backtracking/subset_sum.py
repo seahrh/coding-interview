@@ -6,6 +6,9 @@ Variant of 0/1 Knapsack problem where all items have the same value per unit wei
 
 SOLUTION: Backtracking
 Time O(2^N)
+Space O(N): recursive call stack
+
+Based on https://www.youtube.com/watch?v=kyLxTdsT8ws
 """
 from typing import Set, FrozenSet, List
 
@@ -23,13 +26,13 @@ def _subset_sum(
         return
     if _sum > capacity:
         return
+    # check last because last item could be in the solution
     if index >= len(weights):
         return
-    p = set(partial)
-    p.add(weights[index])
-    _subset_sum(capacity, weights, index=index + 1, partial=p, result=result)
-    p = set(partial)
-    _subset_sum(capacity, weights, index=index + 1, partial=p, result=result)
+    partial.add(weights[index])
+    _subset_sum(capacity, weights, index + 1, partial, result)
+    partial.remove(weights[index])
+    _subset_sum(capacity, weights, index + 1, partial, result)
 
 
 def subset_sum(capacity: int, weights: Set[int]) -> Set[FrozenSet[int]]:
