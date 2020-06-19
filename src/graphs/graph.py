@@ -78,6 +78,50 @@ class DiGraph(Generic[T]):
             if left in self._alist:
                 self._alist[left].discard(right)
 
+    def bfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]:
+        """Returns the path of nodes visited in Breadth First Search.
+        Uses a queue to pick the next node to process.
+        Time O(V + E)
+        Space O(V)
+        """
+        q: Deque[T] = deque()
+        discovered: Set[T] = set()
+        res: List[T] = []
+        q.append(start_node)
+        discovered.add(start_node)
+        while len(q) != 0:
+            curr = q.popleft()
+            res.append(curr)
+            if process is not None:
+                process(curr)
+            for a in self.adjacent(curr):
+                if a not in discovered:
+                    discovered.add(a)
+                    q.append(a)
+        return res
+
+    def dfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]:
+        """Returns the path of nodes visited in Depth First Search.
+        Uses a stack to pick the next node to process.
+        Time O(V + E)
+        Space O(V)
+        """
+        st: Deque[T] = deque()
+        discovered: Set[T] = set()
+        res: List[T] = []
+        st.append(start_node)
+        discovered.add(start_node)
+        while len(st) != 0:
+            curr = st.pop()
+            res.append(curr)
+            if process is not None:
+                process(curr)
+            for a in self.adjacent(curr):
+                if a not in discovered:
+                    discovered.add(a)
+                    st.append(a)
+        return res
+
     def find_cycle(self) -> "DiGraph[T]":
         """Returns one cycle in the graph if it exists.
         Explored means that a node and all its descendants have been explored.
@@ -219,53 +263,3 @@ class Graph(DiGraph, Generic[T]):
             res.add(c)
             seen = seen | c.nodes()
         return res
-
-
-def bfs(
-    graph: DiGraph[T], start_node: T, process: Callable[[T], None] = None
-) -> List[T]:
-    """Returns the path of nodes visited in Breadth First Search.
-    Uses a queue to pick the next node to process.
-    Time O(V + E)
-    Space O(V)
-    """
-    q: Deque[T] = deque()
-    discovered: Set[T] = set()
-    res: List[T] = []
-    q.append(start_node)
-    discovered.add(start_node)
-    while len(q) != 0:
-        curr = q.popleft()
-        res.append(curr)
-        if process is not None:
-            process(curr)
-        for neighbour in graph.adjacent(curr):
-            if neighbour not in discovered:
-                discovered.add(neighbour)
-                q.append(neighbour)
-    return res
-
-
-def dfs(
-    graph: DiGraph[T], start_node: T, process: Callable[[T], None] = None
-) -> List[T]:
-    """Returns the path of nodes visited in Depth First Search.
-    Uses a stack to pick the next node to process.
-    Time O(V + E)
-    Space O(V)
-    """
-    st: Deque[T] = deque()
-    discovered: Set[T] = set()
-    res: List[T] = []
-    st.append(start_node)
-    discovered.add(start_node)
-    while len(st) != 0:
-        curr = st.pop()
-        res.append(curr)
-        if process is not None:
-            process(curr)
-        for neighbour in graph.adjacent(curr):
-            if neighbour not in discovered:
-                discovered.add(neighbour)
-                st.append(neighbour)
-    return res
