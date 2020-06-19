@@ -44,9 +44,10 @@ def knapsack(capacity: int, weights: List[int], values: List[int]) -> List[bool]
         col = []
         for k in range(i + 1):  # take the column up to the ith item
             col.append(table[k][j])
-        if argmax(col) == i:  # pick this item because it increased the total value
+        i = argmax(col)
+        if table[i][j] != 0:  # pick this item because it increased the total value
             item = i - 1
             res[item] = True
             j -= weights[item]
-        i -= 1  # consider one item at a time
+            i -= 1
     return res
