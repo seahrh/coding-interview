@@ -9,7 +9,7 @@ Return a boolean array that indicates whether the item is present in the knapsac
 If multiple solutions exist, just return any one of them.
 
 SOLUTION
-Dynamic programming (tabulation)
+Dynamic programming (tabulation) only works if weights and capacity are positive integers.
 Time O(NC)
 Space O(NC)
 

@@ -94,3 +94,11 @@ class TestZeroOneKnapsack:
             True,
             False,
         ]
+
+    def test_case_3(self):
+        assert knapsack(capacity=15, weights=[6, 2, 4, 9], values=[12, 10, 10, 18]) == [
+            False,
+            True,
+            True,
+            True,
+        ]
