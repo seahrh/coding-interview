@@ -8,6 +8,7 @@ A single solution is expressed as an boolean array that indicates whether the it
 Find all solutions.
 
 SOLUTION: Least cost branch and bound
+LC BB seeks the lowest cost so turn the problem into minimization with negative values.
 Time O(2^N lg 2^N): expand almost all nodes in worst case. Heap insert time is O(lg N).
 Space O(2^N): state space tree as min-heap.
 
@@ -54,6 +55,7 @@ class LeastCostTree:
                     continue
                 must_include = True
             if weight + self.weights[i] > self.capacity:
+                # solution is not feasible as the item cannot fit in the bag
                 if must_include:
                     return
                 remainder = self.capacity - weight
@@ -63,6 +65,7 @@ class LeastCostTree:
             weight += self.weights[i]
             upper -= self.values[i]
             cost = upper
+        # at least one item is picked
         if upper > self.best_upper and any(partial):
             return
         if upper < self.best_upper:
