@@ -14,14 +14,24 @@ class TestBinarySearch:
         assert search(arr=[1, 2], key=3) == -1
         assert search(arr=[1, 3], key=2) == -1
 
-    def test_search_array_of_length_three(self):
+    def test_search_array_of_length_three_or_greater(self):
         arr = [1, 2, 3]
         assert search(arr=arr, key=1) == 0
         assert search(arr=arr, key=2) == 1
         assert search(arr=arr, key=3) == 2
         assert search(arr=arr, key=0) == -1
         assert search(arr=arr, key=4) == -1
-        assert search(arr=[1, 2, 4], key=3) == -1
+        arr = [1, 2, 3, 4, 5, 6, 7, 8]
+        assert search(arr=arr, key=1) == 0
+        assert search(arr=arr, key=2) == 1
+        assert search(arr=arr, key=3) == 2
+        assert search(arr=arr, key=4) == 3
+        assert search(arr=arr, key=5) == 4
+        assert search(arr=arr, key=6) == 5
+        assert search(arr=arr, key=7) == 6
+        assert search(arr=arr, key=8) == 7
+        assert search(arr=arr, key=0) == -1
+        assert search(arr=arr, key=99) == -1
 
 
 class TestBinarySearchArrayWithEmptyStrings:

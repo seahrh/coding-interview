@@ -12,8 +12,7 @@ def search(arr: List[int], key: int) -> int:
         if key > arr[mid]:
             lo = mid + 1
             continue
-        if key < arr[mid]:
-            hi = mid - 1
+        hi = mid - 1
     return -1
 
 
@@ -37,8 +36,7 @@ def search_array_with_empty_strings(arr: List[str], key: str) -> int:
         if key > arr[mid]:
             lo = mid + 1
             continue
-        if key < arr[mid]:
-            hi = mid - 1
+        hi = mid - 1
     return -1
 
 
@@ -55,6 +53,5 @@ def nearest(arr: List[int], key: int) -> int:
         if key > arr[mid]:
             lo = mid + 1
             continue
-        if key < arr[mid]:
-            hi = mid - 1
+        hi = mid - 1
     return res
