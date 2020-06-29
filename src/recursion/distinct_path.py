@@ -20,7 +20,8 @@ See https://www.geeksforgeeks.org/root-leaf-path-maximum-distinct-nodes/
 SOLUTION
 N is the number of nodes in the tree.
 Time O(N)
-Space O((lg N)^2): create lg N `seen` sets and size of each set is lg N.
+Space O(N^2): unbalanced tree in the worst case, depth of recursive call stack.
+Balanced tree takes O((lg N)^2) space; create lg N `seen` sets and size of each set is lg N.
 
 """
 from typing import NamedTuple, Set, Optional
