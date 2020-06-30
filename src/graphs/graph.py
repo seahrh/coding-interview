@@ -17,12 +17,36 @@ from typing import (
 T = TypeVar("T", bound=Hashable)  # Declare type variable
 
 
+class Edge(Generic[T]):
+    """Directed edge going from left node to right node."""
+
+    def __init__(self, left: T, right: T, weight: float = 0, label: str = ""):
+        self.left = left
+        self.right = right
+        self.weight = weight
+        self.label = label
+
+    def __tuple(self) -> Tuple[Hashable, ...]:
+        return self.left, self.right, self.weight, self.label
+
+    def __eq__(self, other):
+        if type(other) is type(self):
+            return self.__tuple() == other.__tuple()
+        return False
+
+    def __hash__(self):
+        return hash(self.__tuple())
+
+    def __repr__(self):
+        return "{}({})".format(self.__class__.__name__, self.__dict__)
+
+
 class DiGraph(Generic[T]):
     """ Directed Graph data structure"""
 
     def __init__(self):
-        # adjacency list: using a Set instead of List (assume all vertices are distinct).
-        self._alist: DefaultDict[T, Set[T]] = defaultdict(set)
+        # TODO update adjacency list: using a Set instead of List (assume all vertices are distinct).
+        self._alist: DefaultDict[T, Dict[T, Edge[T]]] = defaultdict(dict)
 
     def is_adjacent(self, from_node: T, to_node: T) -> bool:
         """ Is node1 directly connected to node2 """
@@ -34,11 +58,11 @@ class DiGraph(Generic[T]):
     def nodes(self) -> FrozenSet[T]:
         return frozenset(self._alist.keys())
 
-    def edges(self) -> FrozenSet[Tuple[T, T]]:
-        res: Set[Tuple[T, T]] = set()
-        for left in self.nodes():
-            for right in self.adjacent(left):
-                res.add((left, right))
+    def edges(self) -> FrozenSet[Edge[T]]:
+        res: Set[Edge[T]] = set()
+        for edges in self._alist.values():
+            for edge in edges.values():
+                res.add(edge)
         return frozenset(res)
 
     def __tuple(self) -> Tuple[Hashable, ...]:
@@ -58,25 +82,26 @@ class DiGraph(Generic[T]):
     def add_nodes(self, *nodes: T) -> None:
         """Add an unconnected node."""
         for node in nodes:
-            self._alist[node] = set()
+            self._alist[node] = {}
 
     def remove_nodes(self, *nodes: T) -> None:
         """ Remove all references to node """
         for node in nodes:
-            for neighbours in self._alist.values():
-                neighbours.discard(node)
+            for edges in self._alist.values():
+                if node in edges:
+                    del edges[node]
             if node in self._alist:
                 del self._alist[node]
 
-    def add(self, *edges: Tuple[T, T]) -> None:
+    def add(self, *edges: Edge[T]) -> None:
         """ Add edges (list of tuple pairs) to graph """
-        for left, right in edges:
-            self._alist[left].add(right)
+        for edge in edges:
+            self._alist[edge.left][edge.right] = edge
 
-    def remove(self, *edges: Tuple[T, T]) -> None:
-        for left, right in edges:
-            if left in self._alist:
-                self._alist[left].discard(right)
+    def remove(self, *edges: Edge[T]) -> None:
+        for edge in edges:
+            if edge.left in self._alist and edge.right in self._alist[edge.left]:
+                del self._alist[edge.left][edge.right]
 
     def bfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]:
         """Returns the path of nodes visited in Breadth First Search.
@@ -156,7 +181,7 @@ class DiGraph(Generic[T]):
                     left: Optional[T] = curr
                     right: T = a
                     while left is not None:
-                        res.add((left, right))
+                        res.add(Edge(left, right))
                         right = left
                         left = parent[left]
                     return res
@@ -217,16 +242,18 @@ class DiGraph(Generic[T]):
 class Graph(DiGraph, Generic[T]):
     """Undirected graph, as a special case of a directed graph."""
 
-    def add(self, *edges: Tuple[T, T]) -> None:
+    def add(self, *edges: Edge[T]) -> None:
         super().add(*edges)
-        for left, right in edges:
-            self._alist[right].add(left)
+        for edge in edges:
+            self._alist[edge.right][edge.left] = Edge(
+                edge.right, edge.left, weight=edge.weight, label=edge.label
+            )
 
-    def remove(self, *edges: Tuple[T, T]) -> None:
+    def remove(self, *edges: Edge[T]) -> None:
         super().remove(*edges)
-        for left, right in edges:
-            if right in self._alist:
-                self._alist[right].discard(left)
+        for edge in edges:
+            if edge.right in self._alist and edge.left in self._alist[edge.right]:
+                del self._alist[edge.right][edge.left]
 
     def _component(self, node: T, result: "Graph[T]", visited: Set[T]) -> None:
         """Depth first search method to find the connected component of a given node.
@@ -241,7 +268,7 @@ class Graph(DiGraph, Generic[T]):
         visited.add(node)
         result.add_nodes(node)  # node may not have edges
         for a in self.adjacent(node):
-            result.add((node, a))
+            result.add(Edge(node, a))
             self._component(a, result, visited)
 
     def component(self, node: T) -> "Graph[T]":
