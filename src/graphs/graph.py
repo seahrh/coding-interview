@@ -45,7 +45,8 @@ class DiGraph(Generic[T]):
     """ Directed Graph data structure"""
 
     def __init__(self):
-        # TODO update adjacency list: using a Set instead of List (assume all vertices are distinct).
+        # Adjacency list: using a Dict or Set instead of List (assume all vertices are distinct).
+        # Nested hash table: left node -> right node -> Edge
         self._alist: DefaultDict[T, Dict[T, Edge[T]]] = defaultdict(dict)
 
     def is_adjacent(self, from_node: T, to_node: T) -> bool:
