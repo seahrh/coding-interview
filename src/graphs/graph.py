@@ -80,6 +80,9 @@ class DiGraph(Generic[T]):
     def __len__(self):
         return len(self.nodes())
 
+    def __contains__(self, item: T) -> bool:
+        return item in self._alist
+
     def add_nodes(self, *nodes: T) -> None:
         """Add an unconnected node."""
         for node in nodes:
