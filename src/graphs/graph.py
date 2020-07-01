@@ -45,8 +45,9 @@ class DiGraph(Generic[T]):
     """ Directed Graph data structure"""
 
     def __init__(self):
-        # Adjacency list: using a Dict or Set instead of List (assume all vertices are distinct).
-        # Nested hash table: left node -> right node -> Edge
+        # Adjacency list: use a Dict or Set instead of List (assume all vertices are distinct).
+        # For weighted graphs, ALIST is represented as a nested hash table: left node -> right node -> Edge
+        # For unweighted graphs, ALIST is represented as a hash table: left node -> Set of right nodes
         self._alist: DefaultDict[T, Dict[T, Edge[T]]] = defaultdict(dict)
 
     def is_adjacent(self, from_node: T, to_node: T) -> bool:
