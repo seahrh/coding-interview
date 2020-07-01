@@ -27,8 +27,10 @@ Therefore, the total time of the algorithm is 0 (B + P).
 We know we cannot do better than this since we must at least read in the B + P pieces of data.
 O(B) space to hold the `visited` set. Worst case: no names are synonyms.
 """
-from typing import NamedTuple
-from graphs.graph import *
+from typing import NamedTuple, List, Tuple, Set, Dict
+
+from graphs.connected_component import component
+from graphs.graph import Graph, Edge
 
 
 class Node(NamedTuple):
@@ -59,13 +61,13 @@ def merge(names: List[Tuple[str, int]], synonyms: List[Tuple[str, str]]) -> Set[
     res: Set[Node] = set()
     g = _graph(names, synonyms)
     visited = set()
-    for n in g.nodes():
-        if n in visited:
+    for node in g.nodes():
+        if node in visited:
             continue
         _sum = 0
-        component = g.component(n)
-        for c in component.nodes():
+        comp: Graph[Node] = component(g, node)
+        for c in comp.nodes():
             _sum += c.freq
             visited.add(c)
-        res.add(Node(n.name, _sum))
+        res.add(Node(node.name, _sum))
     return res

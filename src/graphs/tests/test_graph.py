@@ -176,43 +176,6 @@ class TestTopologicalSort:
         assert g.topsort() == []  # has cycle
 
 
-class TestConnectedComponent:
-    def test_when_vertex_does_not_exist_then_return_empty_graph(self):
-        g = Graph[int]()
-        g.add(Edge(1, 2))
-        assert g.component(99).nodes() == set()
-
-    def test_a_vertex_with_no_incident_edges_is_itself_a_component(self):
-        g = Graph[int]()
-        g.add_nodes(1, 2)
-        assert g.component(1).nodes() == {1}
-        assert g.component(2).nodes() == {2}
-        c1 = Graph[int]()
-        c1.add_nodes(1)
-        c2 = Graph[int]()
-        c2.add_nodes(2)
-        assert g.components() == {c1, c2}
-
-    def test_a_connected_graph_has_exactly_one_component(self):
-        g = Graph[int]()
-        g.add(Edge(1, 2), Edge(2, 3))
-        c = g.component(1)
-        assert c.edges() == {Edge(1, 2), Edge(2, 1), Edge(2, 3), Edge(3, 2)}
-        assert c == g.component(2) == g.component(3)
-        assert g.components() == {c}
-
-    def test_disconnected_graph(self):
-        g = Graph[int]()
-        g.add(Edge(1, 2), Edge(2, 3), Edge(4, 5), Edge(5, 6))
-        c1 = g.component(1)
-        assert c1.edges() == {Edge(1, 2), Edge(2, 1), Edge(2, 3), Edge(3, 2)}
-        assert c1 == g.component(2) == g.component(3)
-        c2 = g.component(4)
-        assert c2.edges() == {Edge(4, 5), Edge(5, 4), Edge(5, 6), Edge(6, 5)}
-        assert c2 == g.component(5) == g.component(6)
-        assert g.components() == {c1, c2}
-
-
 class TestBreadthFirstSearch:
     def test_bfs(self):
         g = Graph[int]()
