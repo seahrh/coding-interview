@@ -11,6 +11,7 @@ class TestGraphs:
         assert not g.is_adjacent(1, 2)
         edges = [Edge(1, 2), Edge(2, 3), Edge(3, 4), Edge(4, 1)]
         g.add(*edges)
+        assert g.nodes() == {1, 2, 3, 4}
         assert g.edges() == set(edges)
         assert g.adjacent(1) == {2} and g.is_adjacent(1, 2) and not g.is_adjacent(2, 1)
         assert g.adjacent(2) == {3} and g.is_adjacent(2, 3) and not g.is_adjacent(3, 2)
@@ -43,6 +44,7 @@ class TestGraphs:
         assert not g.is_adjacent(1, 2)
         g.remove(Edge(1, 2))  # delete non-existent edge
         g.add(Edge(1, 2), Edge(2, 3), Edge(3, 4), Edge(4, 1))
+        assert g.nodes() == {1, 2, 3, 4}
         assert g.edges() == {
             Edge(1, 2),
             Edge(2, 1),

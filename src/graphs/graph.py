@@ -66,6 +66,10 @@ class DiGraph(Generic[T]):
                 res.add(edge)
         return frozenset(res)
 
+    def out_edges(self, node: T) -> FrozenSet[Edge[T]]:
+        """Outgoing edges from the given node."""
+        return frozenset(self._alist[node].values())
+
     def __tuple(self) -> Tuple[Hashable, ...]:
         return self.nodes(), self.edges()
 
@@ -101,6 +105,8 @@ class DiGraph(Generic[T]):
         """ Add edges (list of tuple pairs) to graph """
         for edge in edges:
             self._alist[edge.left][edge.right] = edge
+            if edge.right not in self._alist:  # add new node
+                self._alist[edge.right] = {}
 
     def remove(self, *edges: Edge[T]) -> None:
         for edge in edges:
