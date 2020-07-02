@@ -23,7 +23,7 @@ Time O(V^2): perform relaxation on worst case V nodes on each node.
 """
 import sys
 from heapq import heappush, heappop
-from typing import List, Optional, Dict, Set, Tuple, Hashable
+from typing import List, Optional, Dict, Set, Tuple
 
 from graphs.graph import T, DiGraph
 
@@ -44,6 +44,9 @@ class Distance:
 
     def __hash__(self):
         return hash(self.__tuple())
+
+    def __lt__(self, other):
+        return self.__tuple() < other.__tuple()
 
     def __repr__(self):
         return f"{__class__.__name__}({self.__dict__})"
