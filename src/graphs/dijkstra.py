@@ -6,7 +6,7 @@ Given a directed graph and a source vertex in the graph,
 the task is to find the shortest distance and path from source to target vertex in the given graph
 where edges are weighted (non-negative).
 
-SOLUTION: BFS using a min heap instead of queue
+SOLUTION: Greedy BFS using a min heap instead of queue
 
 - Mark all vertices unvisited. Create a set of all unvisited vertices.
 - Assign zero distance value to source vertex and infinity distance value to all other vertices.
@@ -19,7 +19,15 @@ and assign the smaller one.
 and remove it from the unvisited set.
 - Similarly, continue for all the vertex until all the nodes are visited.
 
-Time O(V^2): perform relaxation on worst case V nodes on each node.
+Time O((V + E) lg V): BFS takes O(V + E) steps and at each step, heap insert in O(lg V).
+Space O(V): maintain Unvisited set and to store the result
+
+Cons
+- Cannot be used on edges with negative weights
+- Evaluate all nodes, unlike A*
+
+See
+- https://www.youtube.com/watch?v=XB4MIexjvY0
 """
 import sys
 from heapq import heappush, heappop
