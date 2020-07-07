@@ -119,6 +119,8 @@ def euclidean_distance(p: List[float], q: List[float]) -> float:
 
 def jaccard_distance(p: List[bool], q: List[bool]) -> float:
     """Jaccard distance is intended for boolean variables (e.g. norminal variables after one-hot encoding).
+
+    Based on https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
     """
     if len(p) == 0:
         raise ValueError("p must not be empty")
@@ -140,4 +142,34 @@ def jaccard_distance(p: List[bool], q: List[bool]) -> float:
 
 
 def jaccard_similarity(p: List[bool], q: List[bool]) -> float:
+    """Jaccard similarity or Jaccard coefficient."""
     return 1 - jaccard_distance(p, q)
+
+
+def dice_distance(p: List[bool], q: List[bool]) -> float:
+    """Dice distance is intended for boolean variables (e.g. norminal variables after one-hot encoding).
+
+    Based on https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.DistanceMetric.html
+    """
+    if len(p) == 0:
+        raise ValueError("p must not be empty")
+    if len(q) == 0:
+        raise ValueError("q must not be empty")
+    if len(p) != len(q):
+        raise ValueError("vectors p and q must have the same number of components")
+    tt = 0
+    ne = 0
+    for i in range(len(p)):
+        if p[i] and q[i]:  # both True
+            tt += 1
+        elif p[i] != q[i]:
+            ne += 1
+    total_size = 2 * tt + ne  # combined size of p and q sets
+    if total_size == 0:
+        raise ValueError("p and q must not be empty")
+    return float(ne / total_size)
+
+
+def dice_similarity(p: List[bool], q: List[bool]) -> float:
+    """Dice similarity or Dice coefficient."""
+    return 1 - dice_distance(p, q)

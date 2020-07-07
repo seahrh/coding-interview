@@ -89,3 +89,25 @@ class TestJaccardDistance:
         assert jaccard_distance([True, True], [False, True]) == 0.5
         assert jaccard_distance([True, True], [True, False]) == 0.5
         assert jaccard_distance([True, True], [True, True]) == 0
+
+
+class TestDiceDistance:
+    def test_2_or_less_components(self):
+        assert dice_distance([False], [True]) == 1
+        assert dice_distance([True], [False]) == 1
+        assert dice_distance([True], [True]) == 0
+        assert dice_distance([False, False], [False, True]) == 1
+        assert dice_distance([False, False], [True, False]) == 1
+        assert dice_distance([False, False], [True, True]) == 1
+        assert dice_distance([False, True], [False, False]) == 1
+        assert dice_distance([False, True], [False, True]) == 0
+        assert dice_distance([False, True], [True, False]) == 1
+        assert dice_distance([False, True], [True, True]) == 1 / 3
+        assert dice_distance([True, False], [False, False]) == 1
+        assert dice_distance([True, False], [False, True]) == 1
+        assert dice_distance([True, False], [True, False]) == 0
+        assert dice_distance([True, False], [True, True]) == 1 / 3
+        assert dice_distance([True, True], [False, False]) == 1
+        assert dice_distance([True, True], [False, True]) == 1 / 3
+        assert dice_distance([True, True], [True, False]) == 1 / 3
+        assert dice_distance([True, True], [True, True]) == 0
