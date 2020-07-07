@@ -1,6 +1,37 @@
 from geometry.distances import *
 
 
+class TestManhattanDistance:
+    def test_manhattan_distance(self):
+        assert manhattan_distance([1], [1]) == 0
+        assert manhattan_distance([1], [0]) == 1
+        assert manhattan_distance([0], [1]) == 1
+        p = [2, -1]
+        q = [-2, 2]
+        assert manhattan_distance(p, q) == 7
+        assert manhattan_distance(q, p) == 7
+
+
+class TestManhattanSimilarity:
+    def test_manhattan_similarity(self):
+        max_diff = 10
+        assert manhattan_similarity([1], [1], max_diff) == 1
+        assert manhattan_similarity([1], [0], max_diff) == 0.9
+        assert manhattan_similarity([0], [1], max_diff) == 0.9
+        p = [2, -1]
+        q = [-2, 2]
+        assert manhattan_similarity(p, q, max_diff) == 0.65
+        assert manhattan_similarity(q, p, max_diff) == 0.65
+        p = [1, 2, 3, 4]
+        q = [4, 3, 2, 1]
+        assert manhattan_similarity(p, q, max_diff) == 0.8
+        assert manhattan_similarity(q, p, max_diff) == 0.8
+        p = [1, 0, 1, 0, 1]
+        q = [1, 1, 0, 0, 1]
+        assert manhattan_similarity(p, q, max_diff=1) == 0.6
+        assert manhattan_similarity(q, p, max_diff=1) == 0.6
+
+
 class TestEuclideanDistance:
     def test_euclidean_distance(self):
         assert euclidean_distance([1], [1]) == 0
