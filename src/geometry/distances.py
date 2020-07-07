@@ -115,3 +115,29 @@ def euclidean_distance(p: List[float], q: List[float]) -> float:
     for i in range(len(p)):
         _sum += (q[i] - p[i]) ** 2
     return math.sqrt(_sum)
+
+
+def jaccard_distance(p: List[bool], q: List[bool]) -> float:
+    """Jaccard distance is intended for boolean variables (e.g. norminal variables after one-hot encoding).
+    """
+    if len(p) == 0:
+        raise ValueError("p must not be empty")
+    if len(q) == 0:
+        raise ValueError("q must not be empty")
+    if len(p) != len(q):
+        raise ValueError("vectors p and q must have the same number of components")
+    tt = 0
+    ne = 0
+    for i in range(len(p)):
+        if p[i] and q[i]:  # both True
+            tt += 1
+        elif p[i] != q[i]:
+            ne += 1
+    union = ne + tt
+    if union == 0:
+        raise ValueError("p and q must not be empty")
+    return float(ne / union)
+
+
+def jaccard_similarity(p: List[bool], q: List[bool]) -> float:
+    return 1 - jaccard_distance(p, q)

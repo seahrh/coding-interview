@@ -67,3 +67,25 @@ class TestHammingDistance:
         assert hamming_distance(list("karolin"), list("kathrin")) == 3
         assert hamming_distance(list("karolin"), list("kerstin")) == 3
         assert hamming_distance(list("1011101"), list("1001001")) == 2
+
+
+class TestJaccardDistance:
+    def test_2_or_less_components(self):
+        assert jaccard_distance([False], [True]) == 1
+        assert jaccard_distance([True], [False]) == 1
+        assert jaccard_distance([True], [True]) == 0
+        assert jaccard_distance([False, False], [False, True]) == 1
+        assert jaccard_distance([False, False], [True, False]) == 1
+        assert jaccard_distance([False, False], [True, True]) == 1
+        assert jaccard_distance([False, True], [False, False]) == 1
+        assert jaccard_distance([False, True], [False, True]) == 0
+        assert jaccard_distance([False, True], [True, False]) == 1
+        assert jaccard_distance([False, True], [True, True]) == 0.5
+        assert jaccard_distance([True, False], [False, False]) == 1
+        assert jaccard_distance([True, False], [False, True]) == 1
+        assert jaccard_distance([True, False], [True, False]) == 0
+        assert jaccard_distance([True, False], [True, True]) == 0.5
+        assert jaccard_distance([True, True], [False, False]) == 1
+        assert jaccard_distance([True, True], [False, True]) == 0.5
+        assert jaccard_distance([True, True], [True, False]) == 0.5
+        assert jaccard_distance([True, True], [True, True]) == 0
