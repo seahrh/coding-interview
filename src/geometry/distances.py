@@ -14,9 +14,9 @@ def magnitude(p: Iterable[float]) -> float:
 
 
 def dot_product(p: List[float], q: List[float]) -> float:
-    if p is None or len(p) == 0:
+    if len(p) == 0:
         raise ValueError("p must not be None or empty")
-    if q is None or len(q) == 0:
+    if len(q) == 0:
         raise ValueError("q must not be None or empty")
     if len(p) != len(q):
         raise ValueError("vectors p and q must have the same dimension")
@@ -34,9 +34,9 @@ def cosine_similarity(p: List[float], q: List[float]) -> float:
     with 0 indicating orthogonality or decorrelation,
     while in-between values indicate intermediate similarity or dissimilarity.
     """
-    if p is None or len(p) == 0:
+    if len(p) == 0:
         raise ValueError("p must not be None or empty")
-    if q is None or len(q) == 0:
+    if len(q) == 0:
         raise ValueError("q must not be None or empty")
     if len(p) != len(q):
         raise ValueError("vectors p and q must have the same dimension")
