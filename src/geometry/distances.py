@@ -1,29 +1,9 @@
 import math
-from typing import List, Iterable, TypeVar
+from typing import List, TypeVar
 
+from geometry.linear_algebra import magnitude, vdot
 
 T = TypeVar("T")
-
-
-def magnitude(p: Iterable[float]) -> float:
-    res: float = 0
-    for component in p:
-        res += component ** 2
-    res = math.sqrt(res)
-    return res
-
-
-def dot_product(p: List[float], q: List[float]) -> float:
-    if len(p) == 0:
-        raise ValueError("p must not be None or empty")
-    if len(q) == 0:
-        raise ValueError("q must not be None or empty")
-    if len(p) != len(q):
-        raise ValueError("vectors p and q must have the same dimension")
-    res: float = 0
-    for i in range(len(p)):
-        res += p[i] * q[i]
-    return res
 
 
 def cosine_similarity(p: List[float], q: List[float]) -> float:
@@ -40,7 +20,7 @@ def cosine_similarity(p: List[float], q: List[float]) -> float:
         raise ValueError("q must not be None or empty")
     if len(p) != len(q):
         raise ValueError("vectors p and q must have the same dimension")
-    return dot_product(p, q) / (magnitude(p) * magnitude(q))
+    return vdot(p, q) / (magnitude(p) * magnitude(q))
 
 
 def hamming_distance(p: List[T], q: List[T]) -> int:
