@@ -1,7 +1,7 @@
 import math
 import random
 from typing import List, Union, Callable
-from geometry.linear_algebra import dot
+from geometry.linear_algebra import dot, transpose
 
 Numeric = Union[int, float]
 
@@ -47,16 +47,56 @@ class Neuron:
 
 
 class DenseNet:
+    """
+    In a dense net, all layers are fully connected.
+    """
+
     def __init__(
         self,
-        input_layer_size: int,
-        hidden_layer_size: List[int],
+        hidden_layer_sizes: List[int],
         output_layer_size: int,
         activation: Callable[[Numeric], float] = relu,
         initialization: Callable[[int], float] = he_normal,
     ):
-        self._input_layer_size = input_layer_size
-        self._hidden_layer_size = hidden_layer_size
+        self._n_hidden_layers = len(hidden_layer_sizes)
+        self._hidden_layer_sizes = hidden_layer_sizes
         self._output_layer_size = output_layer_size
+        self._layers: List[List[Neuron]] = []
         self._activation = activation
         self._initialization = initialization
+
+    def _init_params(self, n_weights: int) -> None:
+        for i in range(self._n_hidden_layers):
+            neurons = [
+                Neuron(
+                    n_weights,
+                    activation=self._activation,
+                    initialization=self._initialization,
+                )
+                for _ in range(self._hidden_layer_sizes[i])
+            ]
+            self._layers.append(neurons)
+        output_layer = [
+            Neuron(
+                n_weights,
+                activation=self._activation,
+                initialization=self._initialization,
+            )
+            for _ in range(self._output_layer_size)
+        ]
+        self._layers.append(output_layer)
+
+    def _forward_propagate(self, data: List[List[Numeric]]):
+        xs: List[List[Numeric]] = data
+        for layer in self._layers:
+            zs: List[List[float]] = []
+            for neuron in layer:
+                z = neuron.forward_propagate(xs)
+                zs.append(z)
+            xs = transpose(zs)
+
+    def fit(self, data: List[List[Numeric]], epochs: int = 1) -> None:
+        n_features = len(data[0])
+        self._init_params(n_features)
+        for epoch in range(epochs):
+            self._forward_propagate(data)
