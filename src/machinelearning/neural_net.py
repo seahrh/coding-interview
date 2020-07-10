@@ -12,12 +12,12 @@ class Activation(ABC):
     @staticmethod
     @abstractmethod
     def apply(x: Numeric) -> float:
-        pass
+        raise NotImplementedError
 
     @staticmethod
     @abstractmethod
     def derivative(x: Numeric) -> float:
-        pass
+        raise NotImplementedError
 
 
 class ReluActivation(Activation):
@@ -46,7 +46,7 @@ class Neuron:
     def __init__(
         self,
         n_weights: int,
-        activation: Type[Activation],  # accepts any sublass
+        activation: Type[Activation],  # accepts any subclass
         initialization: Callable[[int], float],
     ):
         # weights shape (#weights, 1)
@@ -79,7 +79,7 @@ class DenseNet:
         self,
         hidden_layer_sizes: List[int],
         output_layer_size: int,
-        activation: Type[Activation] = ReluActivation,  # accepts any sublass
+        activation: Type[Activation] = ReluActivation,  # accepts any subclass
         initialization: Callable[[int], float] = he_normal,
     ):
         self._n_hidden_layers = len(hidden_layer_sizes)
