@@ -1,6 +1,20 @@
 from geometry.linear_algebra import *
 
 
+class TestTranspose:
+    def test_matrix_with_1_row(self):
+        assert transpose([[1]]) == [[1]]
+        assert transpose([[1, 2]]) == [[1], [2]]
+
+    def test_matrix_with_2_rows(self):
+        assert transpose([[1], [2]]) == [[1, 2]]
+        assert transpose([[1, 2], [3, 4]]) == [[1, 3], [2, 4]]
+
+    def test_matrix_with_3_rows(self):
+        assert transpose([[1], [2], [3]]) == [[1, 2, 3]]
+        assert transpose([[1, 2], [3, 4], [5, 6]]) == [[1, 3, 5], [2, 4, 6]]
+
+
 class TestDotProduct:
     def test_matrix_with_1_row(self):
         assert dot([[1]], [[-1]]) == [[-1]]

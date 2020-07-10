@@ -31,6 +31,14 @@ def full(rows: int, columns: int, fill: Numeric = 0) -> List[List[float]]:
     return [[fill] * columns for _ in range(rows)]
 
 
+def transpose(mat: List[List[Numeric]]) -> List[List[float]]:
+    res: List[List[float]] = full(rows=len(mat[0]), columns=len(mat))
+    for i in range(len(mat[0])):
+        for j in range(len(mat)):
+            res[i][j] = mat[j][i]
+    return res
+
+
 def dot(p: List[List[Numeric]], q: List[List[Numeric]]) -> List[List[float]]:
     """Matrix dot product."""
     p_shape = len(p), len(p[0])
