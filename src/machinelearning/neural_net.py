@@ -14,7 +14,11 @@ def he_normal(fan_in: int) -> float:
     return random.gauss(0, 1) * math.sqrt(2 / fan_in)
 
 
-class HiddenUnit:
+class Neuron:
+    """
+    A neuron in a hidden layer is also known as a hidden unit.
+    """
+
     def __init__(
         self,
         n_weights: int,
@@ -26,7 +30,7 @@ class HiddenUnit:
         self.bias: float = initialization(n_weights)
         self._activation = activation
 
-    def eval(self, xs: List[List[float]]) -> List[float]:
+    def forward_propagate(self, xs: List[List[float]]) -> List[float]:
         """Returns a list of activation values (one per example).
 
         :param xs: Input data shape (#examples, #features)
