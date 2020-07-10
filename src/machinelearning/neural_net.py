@@ -1,13 +1,37 @@
 import math
 import random
-from typing import List, Union, Callable
+from abc import ABC, abstractmethod
+from typing import List, Union, Callable, Type
+
 from geometry.linear_algebra import dot, transpose
 
 Numeric = Union[int, float]
 
 
-def relu(value: Numeric) -> float:
-    return max(0, value)
+class Activation(ABC):
+    @staticmethod
+    @abstractmethod
+    def apply(x: Numeric) -> float:
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def derivative(x: Numeric) -> float:
+        pass
+
+
+class ReluActivation(Activation):
+    @staticmethod
+    def apply(x: Numeric) -> float:
+        return max(0, x)
+
+    @staticmethod
+    def derivative(x: Numeric) -> float:
+        if x > 0:
+            return 1
+        # When x == 0, derivative does not exist. So use arbitrary value of zero.
+        # When x < 0, flat gradient so derivative == 0
+        return 0
 
 
 def he_normal(fan_in: int) -> float:
@@ -22,7 +46,7 @@ class Neuron:
     def __init__(
         self,
         n_weights: int,
-        activation: Callable[[Numeric], float],
+        activation: Type[Activation],  # accepts any sublass
         initialization: Callable[[int], float],
     ):
         # weights shape (#weights, 1)
@@ -41,7 +65,7 @@ class Neuron:
         xw: List[List[float]] = dot(xs, self.weights)
         res: List[float] = []
         for i in range(len(xw)):
-            z = self._activation(xw[i][0] + self.bias)
+            z = self._activation.apply(xw[i][0] + self.bias)
             res.append(z)
         return res
 
@@ -55,7 +79,7 @@ class DenseNet:
         self,
         hidden_layer_sizes: List[int],
         output_layer_size: int,
-        activation: Callable[[Numeric], float] = relu,
+        activation: Type[Activation] = ReluActivation,  # accepts any sublass
         initialization: Callable[[int], float] = he_normal,
     ):
         self._n_hidden_layers = len(hidden_layer_sizes)
