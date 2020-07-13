@@ -22,12 +22,22 @@ class Activation(ABC):
 
 class ReluActivation(Activation):
     @staticmethod
-    def apply(x: Numeric) -> float:
-        return max(0, x)
+    def apply(z: Numeric) -> float:
+        """Applies the rectified linear unit activation function.
+
+        :param z: WX the weighted input
+        :return: activation value
+        """
+        return max(0, z)
 
     @staticmethod
-    def derivative(x: Numeric) -> float:
-        if x > 0:
+    def derivative(z: Numeric) -> float:
+        """Returns the derivative of the activation function with respect to Z.
+
+        :param z: WX the weighted input
+        :return: partial derivative of activation function with respect to Z.
+        """
+        if z > 0:
             return 1
         # When x == 0, derivative does not exist. So use arbitrary value of zero.
         # When x < 0, flat gradient so derivative == 0
@@ -65,8 +75,8 @@ class Neuron:
         xw: List[List[float]] = dot(xs, self.weights)
         res: List[float] = []
         for i in range(len(xw)):
-            z = self._activation.apply(xw[i][0] + self.bias)
-            res.append(z)
+            a = self._activation.apply(xw[i][0] + self.bias)
+            res.append(a)
         return res
 
 
