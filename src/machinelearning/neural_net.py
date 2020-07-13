@@ -20,7 +20,7 @@ class Activation(ABC):
         raise NotImplementedError
 
 
-class ReluActivation(Activation):
+class Relu(Activation):
     @staticmethod
     def apply(z: Numeric) -> float:
         """Applies the rectified linear unit activation function.
@@ -44,7 +44,30 @@ class ReluActivation(Activation):
         return 0
 
 
+class Cost(ABC):
+    @staticmethod
+    @abstractmethod
+    def apply(y: Numeric, yhat: Numeric) -> float:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def derivative(y: Numeric, yhat: Numeric) -> float:
+        raise NotImplementedError
+
+
+class SimpleCost(Cost):
+    @staticmethod
+    def apply(y: Numeric, yhat: Numeric) -> float:
+        return 0.5 * (yhat - y) ** 2
+
+    @staticmethod
+    def derivative(y: Numeric, yhat: Numeric) -> float:
+        return yhat - y
+
+
 def he_normal(fan_in: int) -> float:
+    """He Normal initialization"""
     return random.gauss(0, 1) * math.sqrt(2 / fan_in)
 
 
@@ -89,13 +112,17 @@ class DenseNet:
         self,
         hidden_layer_sizes: List[int],
         output_layer_size: int,
-        activation: Type[Activation] = ReluActivation,  # accepts any subclass
+        cost: Type[Cost] = SimpleCost,
+        activation: Type[Activation] = Relu,  # accepts any subclass
         initialization: Callable[[int], float] = he_normal,
     ):
         self._n_hidden_layers = len(hidden_layer_sizes)
         self._hidden_layer_sizes = hidden_layer_sizes
         self._output_layer_size = output_layer_size
         self._layers: List[List[Neuron]] = []
+        self._cost = cost
+        # Cost history has the shape (#epochs, #targets, #examples)
+        self.costs: List[List[List[float]]] = []
         self._activation = activation
         self._initialization = initialization
 
@@ -120,17 +147,30 @@ class DenseNet:
         ]
         self._layers.append(output_layer)
 
-    def _forward_propagate(self, data: List[List[Numeric]]):
-        xs: List[List[Numeric]] = data
+    def _forward_propagate(self, X: List[List[Numeric]]) -> List[List[float]]:
+        # training data shape (#examples, #features or #neurons)
+        inp: List[List[float]] = X
+        # activations shape (#neurons, #examples)
+        activations: List[List[float]] = []
         for layer in self._layers:
-            zs: List[List[float]] = []
+            activations = []
             for neuron in layer:
-                z = neuron.forward_propagate(xs)
-                zs.append(z)
-            xs = transpose(zs)
+                a = neuron.forward_propagate(inp)
+                activations.append(a)
+            inp = transpose(activations)
+        return activations
 
-    def fit(self, data: List[List[Numeric]], epochs: int = 1) -> None:
-        n_features = len(data[0])
+    def fit(self, X: List[List[Numeric]], y: List[Numeric], epochs: int = 1) -> None:
+        n_features = len(X[0])
         self._init_params(n_features)
+        self.costs = []
         for epoch in range(epochs):
-            self._forward_propagate(data)
+            targets = self._forward_propagate(X)
+            target_costs: List[List[float]] = []
+            for target in targets:
+                costs: List[float] = []
+                for i in range(len(y)):
+                    c = self._cost.apply(y[i], yhat=target[i])
+                    costs.append(c)
+                target_costs.append(costs)
+            self.costs.append(target_costs)
