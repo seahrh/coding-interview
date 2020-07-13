@@ -39,8 +39,8 @@ class Relu(Activation):
         """
         if z > 0:
             return 1
-        # When x == 0, derivative does not exist. So use arbitrary value of zero.
-        # When x < 0, flat gradient so derivative == 0
+        # When z == 0, derivative does not exist. So use arbitrary value of zero.
+        # When z < 0, flat gradient so derivative == 0
         return 0
 
 
@@ -58,12 +58,12 @@ class Cost(ABC):
 
 class SimpleCost(Cost):
     @staticmethod
-    def apply(y: Numeric, yhat: Numeric) -> float:
-        return 0.5 * (yhat - y) ** 2
+    def apply(y: Numeric, y_hat: Numeric) -> float:
+        return 0.5 * (y_hat - y) ** 2
 
     @staticmethod
-    def derivative(y: Numeric, yhat: Numeric) -> float:
-        return yhat - y
+    def derivative(y: Numeric, y_hat: Numeric) -> float:
+        return y_hat - y
 
 
 def he_normal(fan_in: int) -> float:
@@ -83,24 +83,56 @@ class Neuron:
         initialization: Callable[[int], float],
     ):
         # weights shape (#weights, 1)
-        self.weights: List[List[float]] = [[initialization(n_weights)]] * n_weights
+        self.weights: List[List[float]] = [
+            [initialization(n_weights)] for _ in range(n_weights)
+        ]
         self.bias: float = initialization(n_weights)
         self._activation = activation
+        # output of linear function before activation
+        self.zs: List[float] = []
 
-    def forward_propagate(self, xs: List[List[float]]) -> List[float]:
+    def forward_propagate(self, batch: List[List[float]]) -> List[float]:
         """Returns a list of activation values (one per example).
 
-        :param xs: Input data shape (#examples, #features)
+        :param batch: Input data shape (#examples, #features)
         :return:
         """
-        if len(self.weights) != len(xs[0]):
+        if len(self.weights) != len(batch[0]):
             raise ValueError("Number of weights must equal the number of features")
-        xw: List[List[float]] = dot(xs, self.weights)
+        xw: List[List[float]] = dot(batch, self.weights)
+        self.zs = []
         res: List[float] = []
         for i in range(len(xw)):
-            a = self._activation.apply(xw[i][0] + self.bias)
+            z = xw[i][0] + self.bias
+            self.zs.append(z)
+            a = self._activation.apply(z)
             res.append(a)
         return res
+
+    def backward_propagate(
+        self,
+        batch: List[List[float]],
+        cost_derivative: List[float],
+        learning_rate: float,
+    ) -> None:
+        if len(self.zs) != len(batch):
+            raise ValueError(
+                "Length of output must equal the number of training examples"
+            )
+        if len(self.zs) != len(cost_derivative):
+            raise ValueError(
+                "Length of output must equal the number of cost derivatives"
+            )
+        gradients: List[float] = [0] * len(self.weights)
+        for i in range(len(self.zs)):
+            dc_da = cost_derivative[i]
+            da_dz = self._activation.derivative(self.zs[i])
+            for j in range(len(self.weights)):
+                dz_dw = batch[i][j]
+                # average gradients for the batch
+                gradients[j] += dc_da * da_dz * dz_dw / len(batch)
+        for i in range(len(gradients)):
+            self.weights[i][0] -= learning_rate * gradients[i]
 
 
 class DenseNet:
@@ -147,30 +179,44 @@ class DenseNet:
         ]
         self._layers.append(output_layer)
 
-    def _forward_propagate(self, X: List[List[Numeric]]) -> List[List[float]]:
-        # training data shape (#examples, #features or #neurons)
-        inp: List[List[float]] = X
-        # activations shape (#neurons, #examples)
-        activations: List[List[float]] = []
-        for layer in self._layers:
-            activations = []
-            for neuron in layer:
-                a = neuron.forward_propagate(inp)
-                activations.append(a)
-            inp = transpose(activations)
-        return activations
+    def _forward_propagate(self, batch: List[List[Numeric]]) -> List[List[float]]:
+        """One forward pass per batch.
 
-    def fit(self, X: List[List[Numeric]], y: List[Numeric], epochs: int = 1) -> None:
+        :param batch: shape (#examples, #features)
+        :return: output shape (#targets, #examples)
+        """
+        # training data
+        inp: List[List[float]] = batch
+        out: List[List[float]] = []
+        for layer in self._layers:
+            out = []
+            for neuron in layer:
+                a: List[float] = neuron.forward_propagate(inp)
+                out.append(a)
+            inp = transpose(out)
+        return out
+
+    def _batch_update(self, batch: List[List[Numeric]], y: List[List[Numeric]]) -> None:
+        # output shape (#targets, #examples)
+        out = self._forward_propagate(batch)
+        costs: List[List[float]] = [[]]
+        for i in range(len(out)):
+            for j in range(len(out[0])):
+                pass
+
+    def fit(
+        self,
+        X: List[List[Numeric]],
+        y: List[List[Numeric]],
+        batch_size: int = 1,
+        epochs: int = 1,
+    ) -> None:
         n_features = len(X[0])
         self._init_params(n_features)
         self.costs = []
         for epoch in range(epochs):
-            targets = self._forward_propagate(X)
-            target_costs: List[List[float]] = []
-            for target in targets:
-                costs: List[float] = []
-                for i in range(len(y)):
-                    c = self._cost.apply(y[i], yhat=target[i])
-                    costs.append(c)
-                target_costs.append(costs)
-            self.costs.append(target_costs)
+            i = 0
+            while i + batch_size < len(X):
+                batch = X[i : i + batch_size]
+                i += batch_size
+                pass
