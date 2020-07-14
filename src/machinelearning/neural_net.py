@@ -3,7 +3,7 @@ import random
 from abc import ABC, abstractmethod
 from typing import List, Union, Callable, Type
 
-from geometry.linear_algebra import dot, transpose
+from geometry.linear_algebra import dot, transpose, full
 
 Numeric = Union[int, float]
 
@@ -47,12 +47,12 @@ class Relu(Activation):
 class Cost(ABC):
     @staticmethod
     @abstractmethod
-    def apply(y: Numeric, yhat: Numeric) -> float:
+    def apply(y: Numeric, y_hat: Numeric) -> float:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def derivative(y: Numeric, yhat: Numeric) -> float:
+    def derivative(y: Numeric, y_hat: Numeric) -> float:
         raise NotImplementedError
 
 
@@ -112,27 +112,36 @@ class Neuron:
     def backward_propagate(
         self,
         batch: List[List[float]],
-        cost_derivative: List[float],
+        upstream_gradients: List[float],
         learning_rate: float,
     ) -> None:
         if len(self.zs) != len(batch):
             raise ValueError(
                 "Length of output must equal the number of training examples"
             )
-        if len(self.zs) != len(cost_derivative):
+        if len(self.zs) != len(upstream_gradients):
             raise ValueError(
                 "Length of output must equal the number of cost derivatives"
             )
         gradients: List[float] = [0] * len(self.weights)
         for i in range(len(self.zs)):
-            dc_da = cost_derivative[i]
+            dc_da = upstream_gradients[i]
             da_dz = self._activation.derivative(self.zs[i])
             for j in range(len(self.weights)):
                 dz_dw = batch[i][j]
-                # average gradients for the batch
+                # Chain rule, average gradients for the batch
                 gradients[j] += dc_da * da_dz * dz_dw / len(batch)
         for i in range(len(gradients)):
             self.weights[i][0] -= learning_rate * gradients[i]
+
+    def gradient_wrt_input(self) -> List[List[float]]:
+        """Returns the output derivative wrt. input.
+
+        :return: gradients shape (#weights, #examples)
+        """
+        # activation values in matrix form (1, #examples)
+        z_matrix: List[List[float]] = [self.zs]
+        return dot(self.weights, z_matrix)
 
 
 class DenseNet:
@@ -182,21 +191,60 @@ class DenseNet:
     def _forward_propagate(self, batch: List[List[Numeric]]) -> List[List[float]]:
         """One forward pass per batch.
 
-        :param batch: shape (#examples, #features)
-        :return: output shape (#targets, #examples)
+        :param batch: batch (#examples, #features)
+        :return: output from output layer (#examples, #targets)
         """
-        # training data
         inp: List[List[float]] = batch
-        out: List[List[float]] = []
         for layer in self._layers:
-            out = []
+            # layer output (#neurons or #targets, #examples)
+            out: List[List[float]] = []
             for neuron in layer:
                 a: List[float] = neuron.forward_propagate(inp)
                 out.append(a)
             inp = transpose(out)
-        return out
+        return inp
 
-    def _batch_update(self, batch: List[List[Numeric]], y: List[List[Numeric]]) -> None:
+    def _backward_propagate(
+        self,
+        batch: List[List[Numeric]],
+        y: List[List[Numeric]],
+        output: List[List[Numeric]],
+        learning_rate: float,
+    ) -> None:
+        batch_size = len(batch)
+        # upstream gradients (#neurons, #examples)
+        upstream_gradients: List[List[float]] = []
+        for i in range(len(y[0])):  # for each target variable
+            cost_gradients = []
+            for j in range(batch_size):  # for each example
+                c = self._cost.derivative(y[j][i], y_hat=output[j][i])
+                cost_gradients.append(c)
+            upstream_gradients.append(cost_gradients)
+        for i in range(len(self._layers) - 1, -1, -1):
+            layer = self._layers[i]
+            downstream_layer_size = len(layer[0].weights)
+            tmp: List[List[float]] = full(
+                rows=downstream_layer_size, columns=batch_size, fill=0
+            )
+            for j in range(len(layer)):
+                neuron = layer[j]
+                neuron.backward_propagate(
+                    batch,
+                    upstream_gradients=upstream_gradients[j],
+                    learning_rate=learning_rate,
+                )
+                gradients = neuron.gradient_wrt_input()
+                for w in range(len(tmp)):  # for each weight
+                    for ex in range(len(tmp[0])):  # for each example
+                        # take simple average
+                        tmp[w][ex] += (
+                            upstream_gradients[j][ex]
+                            * gradients[w][ex]
+                            / downstream_layer_size
+                        )
+            upstream_gradients = tmp
+
+    def _update(self, batch: List[List[Numeric]], y: List[List[Numeric]]) -> None:
         # output shape (#targets, #examples)
         out = self._forward_propagate(batch)
         costs: List[List[float]] = [[]]
