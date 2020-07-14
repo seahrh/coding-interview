@@ -244,18 +244,18 @@ class DenseNet:
                         )
             upstream_gradients = tmp
 
-    def _update(self, batch: List[List[Numeric]], y: List[List[Numeric]]) -> None:
-        # output shape (#targets, #examples)
-        out = self._forward_propagate(batch)
-        costs: List[List[float]] = [[]]
-        for i in range(len(out)):
-            for j in range(len(out[0])):
-                pass
+    def _iteration(
+        self, batch: List[List[Numeric]], y: List[List[Numeric]], learning_rate: float,
+    ) -> None:
+        """Run one iteration on one batch."""
+        output = self._forward_propagate(batch)
+        self._backward_propagate(batch, y, output, learning_rate)
 
     def fit(
         self,
         X: List[List[Numeric]],
         y: List[List[Numeric]],
+        learning_rate: float = 0.1,
         batch_size: int = 1,
         epochs: int = 1,
     ) -> None:
@@ -266,5 +266,8 @@ class DenseNet:
             i = 0
             while i + batch_size < len(X):
                 batch = X[i : i + batch_size]
+                self._iteration(batch, y, learning_rate)
                 i += batch_size
-                pass
+            if i < len(X):
+                batch = X[i:]
+                self._iteration(batch, y, learning_rate)
