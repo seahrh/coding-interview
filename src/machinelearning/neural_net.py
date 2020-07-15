@@ -244,7 +244,8 @@ class DenseNet:
                 n_weights = len(gradients)
                 for w in range(n_weights):
                     for k in range(batch_size):
-                        tmp[w][k] = gradients[w][k] * error_terms[j][k]
+                        # sum up error terms going to the same neuron in downstream layer
+                        tmp[w][k] += gradients[w][k] * error_terms[j][k]
             error_terms = tmp
 
     def _iteration(
