@@ -236,12 +236,15 @@ class DenseNet:
                 neuron.backward_propagate(
                     batch, error_terms=error_terms[j], learning_rate=learning_rate,
                 )
+                # no need to update error terms in the first hidden layer
+                if i == 0:
+                    continue
                 # gradients wrt input (#weights, batch size)
                 gradients = transpose(neuron.gradient_wrt_input())
                 n_weights = len(gradients)
                 for w in range(n_weights):
                     for k in range(batch_size):
-                        tmp[w][k] = gradients[w][k] * error_terms[w][k]
+                        tmp[w][k] = gradients[w][k] * error_terms[j][k]
             error_terms = tmp
 
     def _iteration(
