@@ -3,7 +3,6 @@ Smallest Difference: Given two arrays of integers, compute the pair of values (o
 array) with the smallest (absolute) difference. Return the difference.
 (16.6, p485)
 """
-from math import fabs
 import sys
 
 
@@ -25,7 +24,7 @@ def smallest_difference(a, b):
     j = 0
     _min = sys.maxsize
     while i < len(a) and j < len(b):  # O(A + B) time
-        diff = fabs(a[i] - b[j])
+        diff = abs(a[i] - b[j])
         if diff < _min:
             _min = diff
         if a[i] < b[j]:

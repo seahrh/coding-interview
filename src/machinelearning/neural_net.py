@@ -70,7 +70,7 @@ class SquaredError(Cost):
     def derivative(y: List[Numeric], y_hat: List[Numeric]) -> float:
         _sum: float = 0
         for i in range(len(y)):
-            _sum += math.fabs(y_hat[i] - y[i])
+            _sum += abs(y_hat[i] - y[i])
         return _sum
 
 

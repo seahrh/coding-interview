@@ -54,7 +54,7 @@ def manhattan_distance(p: List[float], q: List[float]) -> float:
         raise ValueError("vectors p and q must have the same number of components")
     _sum: float = 0
     for i in range(len(p)):
-        _sum += math.fabs(q[i] - p[i])
+        _sum += abs(q[i] - p[i])
     return _sum
 
 
@@ -75,7 +75,7 @@ def manhattan_similarity(p: List[float], q: List[float], max_diff: float) -> flo
         raise ValueError("vectors p and q must have the same number of components")
     _sum: float = 0
     for i in range(len(p)):
-        _sum += math.fabs(q[i] - p[i]) / max_diff
+        _sum += abs(q[i] - p[i]) / max_diff
     return 1 - _sum / len(p)
 
 

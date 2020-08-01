@@ -31,7 +31,7 @@ def _is_safe(q1: Position, q2: Position) -> bool:
         return False
     if q1.col == q2.col:
         return False
-    if math.fabs(q1.row - q2.row) == math.fabs(q1.col - q2.col):  # in diagonal
+    if abs(q1.row - q2.row) == abs(q1.col - q2.col):  # in diagonal
         return False
     return True
 

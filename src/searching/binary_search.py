@@ -48,7 +48,7 @@ def nearest(arr: List[int], key: int) -> int:
         mid = int(lo / 2 + hi / 2)  # avoid integer overflow
         if arr[mid] == key:
             return mid
-        if math.fabs(arr[mid] - key) < math.fabs(arr[res] - key):
+        if abs(arr[mid] - key) < abs(arr[res] - key):
             res = mid
         if key > arr[mid]:
             lo = mid + 1
