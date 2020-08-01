@@ -41,6 +41,7 @@ class TestFindTwoDuplicates:
     def test_duplicate_in_the_middle(self):
         assert find_two([3, 1, 3, 4, 1, 2]) == (3, 1)
         assert find_two([3, 1, 1, 3, 4, 2]) == (1, 3)
+        assert find_two([4, 2, 4, 5, 2, 3, 1]) == (4, 2)
 
     def test_duplicate_at_the_end(self):
         assert find_two([1, 3, 4, 4, 2, 2]) == (4, 2)

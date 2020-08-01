@@ -22,33 +22,50 @@ def remove(s):
 
 
 """
-N+1
-Unsorted Array will only have 1..N range inclusive
-Array length is N+1
+You are given an array of n+2 elements. All elements of the array are in range 1 to n.
+All elements occur once except two numbers which occur twice. Find the two repeating numbers.
+For example, array = {4, 2, 4, 5, 2, 3, 1} and n = 5
+The above array has n + 2 = 7 elements with all elements occurring once except 2 and 4 which occur twice.
+So the output should be 4 2.
 
-[3, 1, 3, 4, 2]
-3
+EXAMPLES
+Input: [3, 1, 3, 4, 2]
+Output: 3
 
 
-[1, 3, 4, 2, 2]
-2
+Input: [1, 3, 4, 2, 2]
+Output: 2
 
+We want a solution that takes O(N) time and O(1) space.
 
+SOLUTIONS
+
+(1) Sum method
 Sum(1..N) = sum_n
 Sum(array) - sum_n = duplicate_number
 Time O(N)
 Space O(1)
 
-Time O(N)
+(2) Sort then linear scan to find duplicate
+Time O(N lg N)
 Space O(1)
 
+(3) Linear scan and use a Set to store seen values.
+Time O(N)
+Space O(N)
 
-[2, 1, 2, 3, 4]
-i=0
+(4) Since values are positive numbers 1..N, use array indices to mark values we have seen.
+Either swap value to its corresponding index, or change the value at the index to negative sign. 
+Time O(N)
+Space O(1)
 
 A more realistic problem would be to find a variable number of duplicates
 but the space cost must be relaxed to O(N) to hold the result.
 Hence the question asks for a fixed number of duplicates.
+
+References
+- https://www.geeksforgeeks.org/find-the-two-repeating-elements-in-a-given-array/
+- https://www.geeksforgeeks.org/find-duplicates-in-on-time-and-constant-extra-space/
 """
 
 
