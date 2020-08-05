@@ -13,31 +13,32 @@ If the majority item appears less at the beginning, it must appear more often at
 To find the candidate in one pass, if we miss it at the beginning, we will pick it up towards the end.
 Run in two passes: first to find the majority candidate and validate that it is indeed majority.
 """
+from typing import List, Optional
 
 
-def _candidate(arr):
-    res = -1
+def _candidate(arr: List[int]) -> int:
+    res: int = -1
     count = 0
-    for v in arr:
+    for a in arr:
         if count == 0:
-            res = v
-        if res == v:
+            res = a
+        if res == a:
             count += 1
         else:
             count -= 1
     return res
 
 
-def _validate(arr, candidate):
+def _is_majority(arr: List[int], candidate: int) -> bool:
     count = 0
-    for v in arr:
-        if v == candidate:
+    for a in arr:
+        if a == candidate:
             count += 1
     return count > int(len(arr) / 2)
 
 
-def majority_element(arr):
+def majority_element(arr: List[int]) -> Optional[int]:
     c = _candidate(arr)
-    if _validate(arr, c):
+    if _is_majority(arr, c):
         return c
     return None

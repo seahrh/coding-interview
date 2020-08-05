@@ -47,10 +47,8 @@ def tower_length(persons: List[Person]) -> int:
             tmp.append(p)
             continue
         # end of curr sequence, so reset sequence
-        if len(tmp) > _max:
-            _max = len(tmp)
+        _max = max(_max, len(tmp))
         tmp = [p]
-    # remember to check whether last sequence is the longest!
-    if len(tmp) > _max:
-        _max = len(tmp)
+    # check whether last sequence is the longest!
+    _max = max(_max, len(tmp))
     return _max
