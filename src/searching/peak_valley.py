@@ -23,12 +23,9 @@ If the input array is sorted in strictly decreasing order, the first element is 
 100 is the peak element in {100, 80, 60, 50, 20}.
 If all elements of input array are same, every element is a peak element.
 
-Divide and Conquer can be used to find a peak in O(lg N) time.
-The idea is based on the technique of Binary Search to check if the middle element is the peak element or not.
-
-If the middle element is not the peak element,
-then check if the element on the right side is greater than the middle element
-then there is always a peak element on the right side.
+Use Binary Search to find the peak in O(lg N) time. Check if the middle element is the peak element or not.
+If the middle element is not the peak, then check if the element on the right is greater than the middle element,
+there is always a peak element on the right side.
 
 If the element on the left side is greater than the middle element
 then there is always a peak element on the left side.

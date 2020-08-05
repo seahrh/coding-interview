@@ -26,7 +26,7 @@ def _subset_sum(
         return
     if _sum > capacity:
         return
-    # check last because last item could be in the solution
+    # Base case: we have searched all weights so stop here
     if index >= len(weights):
         return
     partial.add(weights[index])

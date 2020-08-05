@@ -1,10 +1,25 @@
-# Write a method that takes O(n) time to decide if two strings are anagrams or not.
-# [CTCI Q1.4]
-# Assume charset is UTF-8 ASCII values only.
+"""
+Write a function to check whether two given strings are anagram of each other or not.
+An anagram of a string is another string that contains same characters,
+only the order of characters can be different.
+For example, “abcd” and “dabc” are anagram of each other.
+
+[CTCI Q1.4]
+See https://www.geeksforgeeks.org/check-whether-two-strings-are-anagram-of-each-other/
+
+SOLUTION
+Sort the strings then compare.
+Time O(N lg N)
+Space O(1)
+
+Assume charset is UTF-8 ASCII values only. Then faster solution is possible.
+In first string, count each character and number of distinct chars. Check this tally in the second string.
+Time O(N)
+Space O(1): assume charset is of constant size
+"""
 
 
-def is_anagram(s, t):
-    # This takes O(s + t) time and O(1) space.
+def is_anagram(s: str, t: str) -> bool:
     if s == "":
         raise ValueError("s must not be empty")
     if t == "":
