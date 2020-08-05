@@ -16,7 +16,7 @@ Space O(N)
 from typing import List
 
 
-def length(arr: List[int]) -> int:
+def shortest_winter(arr: List[int]) -> int:
     """Returns the length of the left partition (winter)."""
     if len(arr) < 2:
         raise ValueError("Array must have at least 2 elements")
@@ -28,6 +28,6 @@ def length(arr: List[int]) -> int:
     # loop until 2nd last element because size of right partition is at least 1
     for i in range(len(arr) - 1):
         _max = max(arr[i], _max)
-        if i + 1 < len(arr) and _max < min_right[i + 1]:
+        if _max < min_right[i + 1]:
             return i + 1
     return len(arr) - 1  # longest winter
