@@ -4,9 +4,10 @@ array) with the smallest (absolute) difference. Return the difference.
 (16.6, p485)
 """
 import sys
+from typing import List
 
 
-def smallest_difference(a, b):
+def smallest_difference(a: List[int], b: List[int]) -> int:
     """Return the smallest absolute difference between any pairs in two arrays of numbers.
     First, sort the arrays then search for the pair.
     Idea: Advancing the pointer to the larger value only makes the difference larger,
@@ -22,11 +23,10 @@ def smallest_difference(a, b):
     b.sort()
     i = 0
     j = 0
-    _min = sys.maxsize
+    _min: int = sys.maxsize
     while i < len(a) and j < len(b):  # O(A + B) time
         diff = abs(a[i] - b[j])
-        if diff < _min:
-            _min = diff
+        _min = min(_min, diff)
         if a[i] < b[j]:
             i += 1
         else:

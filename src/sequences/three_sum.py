@@ -12,8 +12,8 @@ The solution set must not contain duplicate triplets.
 You are allowed to modify the array in-place.
 
 SOLUTION
-The idea is to sort an input array and then run through all indices of a possible first element of a triplet.
-For each possible first element we make a standard bi-directional 2Sum sweep of the remaining part of the array.
+Sort the array and run through all indices of a possible first element of a triplet.
+For each possible first element, make a bi-directional sweep of the remaining part of the array.
 
 Time O(N^2)
 Space O(1)

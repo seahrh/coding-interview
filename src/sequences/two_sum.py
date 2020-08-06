@@ -1,10 +1,12 @@
+from collections import defaultdict
+from typing import List, Set, Tuple, DefaultDict
+
 # Find pairs of elements from an array whose sum equals a given number. The
 # array can contain any integer, including zero, negative numbers and duplicates.
 # Return all pairs.
-from collections import defaultdict
 
 
-def pair_sum(arr, summ):
+def two_sum(arr: List[int], target: int) -> Set[Tuple[int, int]]:
     """Returns a set of pairs (therefore no duplicate pairs).
     Builds a hash table where key is a complement and value is the number of times
     that this complement can be added to a valid pair.
@@ -13,16 +15,16 @@ def pair_sum(arr, summ):
 
     This takes O(n) time and O(n) space.
     """
-    res = set()
-    unpaired_count = defaultdict(int)
-    for v in arr:
-        complement = summ - v
-        if unpaired_count[v] > 0:  # current value is a matching complement
-            if v < complement:
-                res.add((v, complement))
+    res: Set[Tuple[int, int]] = set()
+    unpaired_count: DefaultDict[int, int] = defaultdict(int)
+    for a in arr:
+        complement = target - a
+        if unpaired_count[a] > 0:  # current value matches the complement
+            if a < complement:
+                res.add((a, complement))
             else:
-                res.add((complement, v))
-            unpaired_count[v] -= 1
+                res.add((complement, a))
+            unpaired_count[a] -= 1
             continue
         unpaired_count[complement] += 1
     return res
@@ -31,7 +33,7 @@ def pair_sum(arr, summ):
 # Same problem as above, but suppose array is already sorted.
 
 
-def pair_sum_sorted(arr, summ):
+def two_sum_sorted(arr: List[int], target: int) -> Set[Tuple[int, int]]:
     """Let first point to the head of the array and last point to the end of the array.
     To find the complement of first,we just move last backwards until we find it.
 
@@ -42,14 +44,16 @@ def pair_sum_sorted(arr, summ):
     Why must this find all complements for last? Because all pairs must be made up of a first and a last.
     We've found all complements for first, therefore we've found all complements of last.
 
-    O(n) time and O(n) space (to hold the result).
+    Time O(N lg N)
+    Space O(N): only to store the result, else O(1).
     """
-    res = set()
+    arr.sort()
+    res: Set[Tuple[int, int]] = set()
     i = 0
     j = len(arr) - 1
     while i < j:
         s = arr[i] + arr[j]
-        if s == summ:
+        if s == target:
             if arr[i] < arr[j]:
                 res.add((arr[i], arr[j]))
             else:
@@ -58,7 +62,7 @@ def pair_sum_sorted(arr, summ):
             j -= 1
             continue
         # we need a bigger sum so move left pointer to a greater number
-        if s < summ:
+        if s < target:
             i += 1
         else:  # we need a smaller sum so move right pointer to a smaller number
             j -= 1
@@ -71,7 +75,7 @@ def pair_sum_sorted(arr, summ):
 # Based on https://youtu.be/XKu_SEDAykw
 
 
-def has_pair_sum(arr, summ):
+def has_two_sum(arr: List[int], target: int) -> bool:
     """Build a set to store the complements. If complement exists, then the pair is found.
 
     This takes O(n) time and O(n) space."""
@@ -81,5 +85,5 @@ def has_pair_sum(arr, summ):
     for v in arr:
         if v in complements:
             return True
-        complements.add(summ - v)
+        complements.add(target - v)
     return False
