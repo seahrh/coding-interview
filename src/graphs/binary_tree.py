@@ -114,7 +114,7 @@ def get_in_order(root: Node, index: int) -> Optional[Node]:
         raise ValueError("Tree must have a root")
     if index < 1:
         raise ValueError("Index starts from 1")
-    st: Deque[Node] = deque()
+    st: List[Node] = []
     curr: Optional[Node] = root
     length = 0
     while len(st) != 0 or curr is not None:
