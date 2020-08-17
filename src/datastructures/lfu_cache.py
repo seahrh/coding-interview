@@ -62,7 +62,8 @@ class LfuCache:
         if len(self.map) == self.capacity and key not in self.map:
             use_ordering = self.freq_map[self.freq_min]
             node = use_ordering.pop()
-            del self.map[node.data.key]
+            if node is not None:
+                del self.map[node.data.key]
         node = DLinkedList.Node(data=Item(key=key, value=value))
         if key in self.map:
             node = self.map[key]

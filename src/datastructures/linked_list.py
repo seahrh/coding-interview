@@ -27,7 +27,7 @@ class DLinkedList:
     def __len__(self):
         return self.len
 
-    def remove(self, node):
+    def remove(self, node: "DLinkedList.Node") -> None:
         """Remove node in O(1) time."""
         if node.prev is not None:
             node.prev.next = node.next
@@ -39,7 +39,7 @@ class DLinkedList:
             self.tail = node.prev
         self.len -= 1
 
-    def append_left(self, node):
+    def append_left(self, node: "DLinkedList.Node") -> None:
         if self.head is None:
             self.tail = node
         else:
@@ -48,7 +48,8 @@ class DLinkedList:
         self.head = node
         self.len += 1
 
-    def pop(self):
+    def pop(self) -> Optional["DLinkedList.Node"]:
         res = self.tail
-        self.remove(res)
+        if res is not None:
+            self.remove(res)
         return res

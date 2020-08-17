@@ -57,7 +57,8 @@ class LruCache:
         # eviction if cache is full
         if len(self.map) == self.capacity and key not in self.map:
             node = self.use_ordering.pop()
-            del self.map[node.data.key]
+            if node is not None:
+                del self.map[node.data.key]
         node = DLinkedList.Node(data=Item(key, value))
         self.map[key] = node
         self.use_ordering.append_left(node)
