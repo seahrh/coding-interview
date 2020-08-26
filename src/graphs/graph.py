@@ -141,7 +141,7 @@ class DiGraph(Generic[T]):
         Time O(V + E)
         Space O(V)
         """
-        st: Deque[T] = deque()
+        st: List[T] = []
         discovered: Set[T] = set()
         res: List[T] = []
         st.append(start_node)
