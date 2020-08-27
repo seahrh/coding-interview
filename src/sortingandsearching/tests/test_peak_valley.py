@@ -1,4 +1,4 @@
-from searching.peak_valley import *
+from sortingandsearching.peak_valley import *
 
 
 class TestPeak:

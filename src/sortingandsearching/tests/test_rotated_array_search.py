@@ -1,5 +1,5 @@
 import pytest
-from searching.rotated_array_search import *
+from sortingandsearching.rotated_array_search import *
 
 
 class TestRotatedArraySearch:

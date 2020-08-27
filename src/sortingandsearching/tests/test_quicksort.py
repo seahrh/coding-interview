@@ -1,4 +1,4 @@
-from sorting.quicksort import *
+from sortingandsearching.quicksort import *
 
 
 class TestMedianOfThree:

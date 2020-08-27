@@ -1,4 +1,4 @@
-from sorting.dutch_national_flag import *
+from sortingandsearching.dutch_national_flag import *
 
 
 class TestDutchNationalFlag:

@@ -1,4 +1,4 @@
-from searching.count_values_in_range import *
+from sortingandsearching.count_values_in_range import *
 
 
 class TestCountValuesInRange:

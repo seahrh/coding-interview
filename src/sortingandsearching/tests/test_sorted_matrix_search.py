@@ -1,5 +1,5 @@
 import pytest
-from searching.sorted_matrix_search import *
+from sortingandsearching.sorted_matrix_search import *
 
 
 class TestSortedMatrixSearch:

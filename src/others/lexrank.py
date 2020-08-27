@@ -35,7 +35,7 @@ Time O(n^2)
 Space O(n)
 """
 from math import factorial
-from searching.binary_search import search
+from sortingandsearching.binary_search import search
 
 
 def rank(string):

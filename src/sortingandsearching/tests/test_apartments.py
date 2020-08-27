@@ -1,4 +1,4 @@
-from sorting.apartments import *
+from sortingandsearching.apartments import *
 
 
 class TestApartments:
