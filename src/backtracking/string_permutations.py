@@ -2,6 +2,8 @@
 Permutations without Dups: Write a method to compute all permutations of a string of unique
 characters.
 (8.7, p367)
+Constraints: 1 <= N <= 8
+See https://cses.fi/problemset/task/1622
 
 SOLUTION
 Backtracking without pruning: enumerate all possibilities.
@@ -13,14 +15,20 @@ Space O(N): recursive call stack
 from typing import Set
 
 
-def permutate_without_duplicates(remainder: str) -> Set[str]:
-    res = set()
-    if len(remainder) == 0:  # base case
-        res.add("")
-        return res
+def _solve(remainder: str, result: Set[str]) -> None:
+    if len(remainder) == 1:  # base case
+        result.add(remainder)
+        return
     head = remainder[0]
-    partials = permutate_without_duplicates(remainder[1:])
+    # pass a new empty set to store the partial solutions
+    partials: Set[str] = set()
+    _solve(remainder[1:], partials)
     for p in partials:
-        for i in range(len(p) + 1):  # also insert character at the end of the string!
-            res.add(p[:i] + head + p[i:])
+        for i in range(len(p) + 1):
+            result.add(p[:i] + head + p[i:])
+
+
+def solve(s: str) -> Set[str]:
+    res: Set[str] = set()
+    _solve(s, res)
     return res

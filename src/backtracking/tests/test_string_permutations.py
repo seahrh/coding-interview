@@ -1,18 +1,15 @@
 from backtracking.string_permutations import *
 
 
-class TestStringPermutationsWithoutDuplicates:
-    def test_when_string_is_empty_then_return_array_with_an_empty_string(self):
-        assert permutate_without_duplicates("") == {""}
-
+class TestStringPermutations:
     def test_when_string_is_length_one(self):
-        assert permutate_without_duplicates("a") == {"a"}
+        assert solve("a") == {"a"}
 
     def test_when_string_is_length_two(self):
-        assert permutate_without_duplicates("ab") == {"ab", "ba"}
+        assert solve("ab") == {"ab", "ba"}
 
     def test_when_string_is_length_three(self):
-        assert permutate_without_duplicates("abc") == {
+        assert solve("abc") == {
             "abc",
             "bac",
             "bca",
@@ -22,7 +19,7 @@ class TestStringPermutationsWithoutDuplicates:
         }
 
     def test_when_string_is_length_four(self):
-        assert permutate_without_duplicates("abcd") == {
+        assert solve("abcd") == {
             "abcd",
             "bacd",
             "bcad",
