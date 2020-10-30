@@ -1,3 +1,6 @@
-[![Build Status](https://travis-ci.org/seahrh/coding-interview.svg?branch=master)](https://travis-ci.org/seahrh/coding-interview)
+![default_workflow](https://github.com/seahrh/coding-interview/workflows/default_workflow/badge.svg?branch=master)
 
-# coding-interview
+Coding interview questions and solutions in Python 3
+=====================================================
+
+Tested solutions in Python 3.7
