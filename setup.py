@@ -7,7 +7,12 @@ setup(
     python_requires="~=3.7",
     install_requires=[],
     extras_require={
-        "tests": ["black~=19.10b0", "mypy==0.780", "pytest>=5.4.2", "pytest-cov>=2.9.0"]
+        "tests": [
+            "black~=20.8b1",
+            "mypy~=0.812",
+            "pytest~=6.2.2",
+            "pytest-cov~=2.11.1",
+        ]
     },
     packages=find_packages("src", exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     package_dir={"": "src"},
