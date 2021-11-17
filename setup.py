@@ -9,9 +9,9 @@ setup(
     extras_require={
         "tests": [
             "black~=20.8b1",
-            "mypy~=0.812",
-            "pytest~=6.2.2",
-            "pytest-cov~=2.11.1",
+            "mypy~=0.910",
+            "pytest~=6.2.5",
+            "pytest-cov-3.0.0",
         ]
     },
     packages=find_packages("src", exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
