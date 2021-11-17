@@ -11,7 +11,7 @@ setup(
             "black~=20.8b1",
             "mypy~=0.910",
             "pytest~=6.2.5",
-            "pytest-cov-3.0.0",
+            "pytest-cov~=3.0.0",
         ]
     },
     packages=find_packages("src", exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
