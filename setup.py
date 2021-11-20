@@ -5,7 +5,9 @@ setup(
     name="coding-interview",
     version=__version__,
     python_requires="~=3.7",
-    install_requires=[],
+    install_requires=[
+        "numpy==1.21.4",
+    ],
     extras_require={
         "tests": [
             "black~=20.8b1",
