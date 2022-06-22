@@ -6,7 +6,7 @@ setup(
     version=__version__,
     python_requires="~=3.7",
     install_requires=[
-        "numpy==1.21.4",
+        "numpy==1.22.0",
     ],
     extras_require={
         "tests": [
