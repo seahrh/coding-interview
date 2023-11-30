@@ -30,10 +30,10 @@ See
 - https://www.youtube.com/watch?v=XB4MIexjvY0
 """
 import sys
-from heapq import heappush, heappop
-from typing import List, Optional, Dict, Set, Tuple
+from heapq import heappop, heappush
+from typing import Dict, List, Optional, Set, Tuple
 
-from graphs.graph import T, DiGraph
+from graphs.graph import DiGraph, T
 
 
 class Distance:

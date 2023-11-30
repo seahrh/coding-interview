@@ -4,7 +4,7 @@ What happens if N > M ?
 You are not allowed to use Dict and Set.
 Increase capacity (decrease load factor) to reduce risk of collision.
 """
-from typing import TypeVar, Generic, List, NamedTuple, Optional, Hashable
+from typing import Generic, Hashable, List, NamedTuple, Optional, TypeVar
 
 # Declare type variables
 K = TypeVar("K", bound=Hashable)

@@ -6,7 +6,7 @@ Space O(V + E)
 """
 from typing import Set
 
-from graphs.graph import T, Graph, Edge
+from graphs.graph import Edge, Graph, T
 
 
 def _component(graph: Graph[T], node: T, result: Graph[T], visited: Set[T]) -> None:

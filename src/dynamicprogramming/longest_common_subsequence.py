@@ -15,7 +15,7 @@ Memoization approach.
 - Time O(N^2)
 - Space O(N^2)
 """
-from typing import Set, Tuple, Dict
+from typing import Dict, Set, Tuple
 
 
 def _lcs_rec(s: str, t: str, i: int, j: int) -> Set[str]:

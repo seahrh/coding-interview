@@ -1,4 +1,4 @@
-from mathematics import two_missing_numbers, ndiegame
+from mathematics import ndiegame, two_missing_numbers
 
 
 class TestTwoMissingNumbers:

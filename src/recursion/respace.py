@@ -23,9 +23,8 @@ We don't need a hash table in this case because the start index is the key.
 
 O(n^2) time and O(n) space, where n is the number of characters.
 """
-from collections import namedtuple
 import sys
-
+from collections import namedtuple
 
 ParseResult = namedtuple("ParseResult", "n_invalid parsed")
 

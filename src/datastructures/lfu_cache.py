@@ -14,7 +14,7 @@ This number is set to zero when the item is removed.
 
 See https://leetcode.com/problems/lfu-cache/
 """
-from typing import NamedTuple, Dict
+from typing import Dict, NamedTuple
 
 from datastructures.linked_list import *
 

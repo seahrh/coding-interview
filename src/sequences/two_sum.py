@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import List, Set, Tuple, DefaultDict
+from typing import DefaultDict, List, Set, Tuple
 
 # Find pairs of elements from an array whose sum equals a given number. The
 # array can contain any integer, including zero, negative numbers and duplicates.

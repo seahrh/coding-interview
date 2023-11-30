@@ -2,7 +2,7 @@
 # In-place
 # Worst case takes O(n lg n) time and O(1) space
 from abc import ABCMeta, abstractmethod
-from typing import List, TypeVar, Any
+from typing import Any, List, TypeVar
 
 
 class Comparable(metaclass=ABCMeta):

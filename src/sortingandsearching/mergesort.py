@@ -5,7 +5,7 @@ Mergesort takes more space than quicksort, O(N) vs O(lg N).
 Stable sort (not in-place)
 """
 from abc import ABCMeta, abstractmethod
-from typing import TypeVar, List, Any
+from typing import Any, List, TypeVar
 
 
 class Comparable(metaclass=ABCMeta):

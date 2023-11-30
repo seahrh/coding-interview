@@ -31,8 +31,16 @@ class TestMergeTrees:
         assert r.right.left.data == 7
         assert r.right.right.data == 13
         r = merge_rec(
-            left=Node(1, left=Node(2, right=Node(5)), right=Node(3, right=Node(7)),),
-            right=Node(5, left=Node(7, right=Node(4)), right=Node(3, left=Node(1)),),
+            left=Node(
+                1,
+                left=Node(2, right=Node(5)),
+                right=Node(3, right=Node(7)),
+            ),
+            right=Node(
+                5,
+                left=Node(7, right=Node(4)),
+                right=Node(3, left=Node(1)),
+            ),
         )
         assert r.data == 6
         assert r.left.data == 9
@@ -71,8 +79,16 @@ class TestMergeTrees:
         assert r.right.left.data == 7
         assert r.right.right.data == 13
         r = merge(
-            left=Node(1, left=Node(2, right=Node(5)), right=Node(3, right=Node(7)),),
-            right=Node(5, left=Node(7, right=Node(4)), right=Node(3, left=Node(1)),),
+            left=Node(
+                1,
+                left=Node(2, right=Node(5)),
+                right=Node(3, right=Node(7)),
+            ),
+            right=Node(
+                5,
+                left=Node(7, right=Node(4)),
+                right=Node(3, left=Node(1)),
+            ),
         )
         assert r.data == 6
         assert r.left.data == 9

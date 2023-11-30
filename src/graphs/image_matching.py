@@ -10,14 +10,14 @@ if a region in the first grid completely matches a region in the second grid, th
 Count total number of such matched regions in the second grid.
 For example given two 3x3 grids:
 G1:	111		G2: 111
-	100			100
-	100			101
+    100			100
+    100			101
 There are two regions in G2: {(0,0), (0,1), (0,2), (1,0), (2,0)} and {(2,2)}.
 Regions in G1 cover the first region in G2 but not the second region. Thus, there is only one matching region.
 Making a slight alteration to the above example:
 G1:	111		G2: 111
-	101			100
-	100			101
+    101			100
+    100			101
 Now there are no matching regions.
 From G1, "1" at position (1,2) is not matched in G2. G2[2][2] == "1" is not matched in G1.
 
@@ -41,7 +41,7 @@ Space O(N^2): assume original grids cannot be modified, so make own grid to main
 See https://leetcode.com/discuss/interview-question/231726/image-matching
 """
 from copy import deepcopy
-from typing import List, Tuple, Set
+from typing import List, Set, Tuple
 
 
 def _is_new_matching_region(g: List[List[int]], i: int, j: int) -> bool:

@@ -19,22 +19,52 @@ class TestZeroOneKnapsackBB:
 
     def test_case_1(self):
         assert knapsack(capacity=8, weights=[4, 3, 5, 2], values=[5, 2, 6, 1]) == {
-            (False, True, True, False,)
+            (
+                False,
+                True,
+                True,
+                False,
+            )
         }
         assert knapsack(capacity=9, weights=[4, 3, 5, 2], values=[5, 2, 6, 1]) == {
-            (True, False, True, False,)
+            (
+                True,
+                False,
+                True,
+                False,
+            )
         }
         assert knapsack(capacity=10, weights=[4, 3, 5, 2], values=[5, 2, 6, 1]) == {
-            (True, False, True, False,)
+            (
+                True,
+                False,
+                True,
+                False,
+            )
         }
         assert knapsack(capacity=11, weights=[4, 3, 5, 2], values=[5, 2, 6, 1]) == {
-            (True, False, True, True,)
+            (
+                True,
+                False,
+                True,
+                True,
+            )
         }
         assert knapsack(capacity=12, weights=[4, 3, 5, 2], values=[5, 2, 6, 1]) == {
-            (True, True, True, False,)
+            (
+                True,
+                True,
+                True,
+                False,
+            )
         }
         assert knapsack(capacity=15, weights=[4, 3, 5, 2], values=[5, 2, 6, 1]) == {
-            (True, True, True, True,)
+            (
+                True,
+                True,
+                True,
+                True,
+            )
         }
         assert knapsack(capacity=7, weights=[4, 3, 5, 2], values=[5, 2, 6, 1]) == {
             (True, True, False, False),
@@ -62,22 +92,46 @@ class TestZeroOneKnapsackBB:
 
     def test_case_2(self):
         assert knapsack(capacity=5, weights=[3, 1, 2], values=[12, 6, 10]) == {
-            (True, False, True,)
+            (
+                True,
+                False,
+                True,
+            )
         }
         assert knapsack(capacity=7, weights=[3, 1, 2], values=[12, 6, 10]) == {
-            (True, True, True,)
+            (
+                True,
+                True,
+                True,
+            )
         }
         assert knapsack(capacity=4, weights=[3, 1, 2], values=[12, 6, 10]) == {
-            (True, True, False,)
+            (
+                True,
+                True,
+                False,
+            )
         }
         assert knapsack(capacity=3, weights=[3, 1, 2], values=[12, 6, 10]) == {
-            (False, True, True,)
+            (
+                False,
+                True,
+                True,
+            )
         }
         assert knapsack(capacity=2, weights=[3, 1, 2], values=[12, 6, 10]) == {
-            (False, False, True,)
+            (
+                False,
+                False,
+                True,
+            )
         }
         assert knapsack(capacity=1, weights=[3, 1, 2], values=[12, 6, 10]) == {
-            (False, True, False,)
+            (
+                False,
+                True,
+                False,
+            )
         }
 
     def test_case_3(self):

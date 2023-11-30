@@ -10,7 +10,7 @@ Space O(N): recursive call stack
 
 Based on https://www.youtube.com/watch?v=kyLxTdsT8ws
 """
-from typing import Set, FrozenSet, List
+from typing import FrozenSet, List, Set
 
 
 def _subset_sum(

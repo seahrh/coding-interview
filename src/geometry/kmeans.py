@@ -1,6 +1,7 @@
 import random
 import sys
-from typing import List, Callable
+from typing import Callable, List
+
 from geometry.distances import euclidean_distance
 
 

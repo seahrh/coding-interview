@@ -1,4 +1,5 @@
 import pytest
+
 from sequences.sequence_sum import *
 
 

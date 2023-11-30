@@ -1,4 +1,5 @@
 import pytest
+
 from graphs.word_transformer import *
 
 

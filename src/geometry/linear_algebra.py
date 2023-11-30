@@ -1,5 +1,5 @@
 import math
-from typing import List, Iterable, Union
+from typing import Iterable, List, Union
 
 Numeric = Union[int, float]
 
@@ -7,7 +7,7 @@ Numeric = Union[int, float]
 def magnitude(p: Iterable[Numeric]) -> float:
     res: float = 0
     for component in p:
-        res += component ** 2
+        res += component**2
     res = math.sqrt(res)
     return res
 

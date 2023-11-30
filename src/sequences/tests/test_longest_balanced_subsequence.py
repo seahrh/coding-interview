@@ -1,4 +1,5 @@
 import pytest
+
 from sequences.longest_balanced_subsequence import *
 
 

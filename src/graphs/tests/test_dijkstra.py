@@ -1,5 +1,5 @@
-from graphs.graph import Edge
 from graphs.dijkstra import *
+from graphs.graph import Edge
 
 
 class TestDijkstraShortestPath:

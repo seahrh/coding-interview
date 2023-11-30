@@ -1,15 +1,15 @@
 from collections import defaultdict
 from itertools import combinations
 from typing import (
-    NamedTuple,
-    Set,
-    Iterable,
-    Tuple,
-    FrozenSet,
-    Hashable,
-    List,
     DefaultDict,
     Dict,
+    FrozenSet,
+    Hashable,
+    Iterable,
+    List,
+    NamedTuple,
+    Set,
+    Tuple,
 )
 
 
@@ -36,7 +36,9 @@ class Partitions(NamedTuple):
     right: FrozenSet[Hashable]
 
 
-def binary_partition(superset: Set[Hashable],) -> Set[Partitions]:
+def binary_partition(
+    superset: Set[Hashable],
+) -> Set[Partitions]:
     if len(superset) < 2:
         raise ValueError("Superset must contain at least two elements")
     res: Set[Partitions] = set()

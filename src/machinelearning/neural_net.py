@@ -1,9 +1,9 @@
 import math
 import random
 from abc import ABC, abstractmethod
-from typing import List, Union, Callable, Type
+from typing import Callable, List, Type, Union
 
-from geometry.linear_algebra import dot, transpose, full
+from geometry.linear_algebra import dot, full, transpose
 
 Numeric = Union[int, float]
 
@@ -118,7 +118,10 @@ class Neuron:
         return res
 
     def backward_propagate(
-        self, batch: List[List[float]], error_terms: List[float], learning_rate: float,
+        self,
+        batch: List[List[float]],
+        error_terms: List[float],
+        learning_rate: float,
     ) -> None:
         if len(self.zs) != len(batch):
             raise ValueError(
@@ -234,7 +237,9 @@ class DenseNet:
             for j in range(len(layer)):
                 neuron = layer[j]
                 neuron.backward_propagate(
-                    batch, error_terms=error_terms[j], learning_rate=learning_rate,
+                    batch,
+                    error_terms=error_terms[j],
+                    learning_rate=learning_rate,
                 )
                 # no need to update error terms in the first hidden layer
                 if i == 0:
@@ -249,7 +254,10 @@ class DenseNet:
             error_terms = tmp
 
     def _iteration(
-        self, batch: List[List[Numeric]], y: List[List[Numeric]], learning_rate: float,
+        self,
+        batch: List[List[Numeric]],
+        y: List[List[Numeric]],
+        learning_rate: float,
     ) -> None:
         """Run one iteration on one batch."""
         output = self._forward_propagate(batch)

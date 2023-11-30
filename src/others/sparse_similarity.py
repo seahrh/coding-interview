@@ -30,8 +30,7 @@ Given that the problem stated sparseness, P << D
 O(DW + PW) time
 O(PW + D) space
 """
-from collections import namedtuple, defaultdict
-
+from collections import defaultdict, namedtuple
 
 Document = namedtuple("Document", "id words")
 

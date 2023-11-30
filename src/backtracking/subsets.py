@@ -6,7 +6,7 @@ SOLUTION
 Time O(2^N)
 Space O(N): depth of recursive call stack
 """
-from typing import Set, List, FrozenSet
+from typing import FrozenSet, List, Set
 
 
 def _solve(

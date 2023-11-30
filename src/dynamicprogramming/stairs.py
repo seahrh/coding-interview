@@ -6,7 +6,7 @@ Optional:
 What if a person can climb any number from a set X, for example if X = {1,2,4}, then he/she
 can climb 1, 2 or 4 stairs at a time. How many ways he/she can climb from bottom to top?
 """
-from typing import Set, List
+from typing import List, Set
 
 
 def climb_rec(n: int, steps: Set[int]) -> int:

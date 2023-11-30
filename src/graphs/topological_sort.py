@@ -19,8 +19,9 @@ Time O(V + E): DFS traversal
 Space O(V)
 """
 from collections import deque
-from typing import Optional, Set, List, Dict, Deque
-from graphs.graph import T, Edge, DiGraph
+from typing import Deque, Dict, List, Optional, Set
+
+from graphs.graph import DiGraph, Edge, T
 
 
 def find_cycle(graph: DiGraph[T]) -> DiGraph[T]:

@@ -21,8 +21,8 @@ def my_sgd(X, y, learning_rate, n_iter):
         w_gradient = np.zeros(shape=(1, X.shape[1]))
         b_gradient = 0
         for i in range(len(X)):
-            y_pred = np.dot(w, X[i]) + b
-            loss = (y[i] - y_pred) ** 2
+            # y_pred = np.dot(w, X[i]) + b
+            # loss = (y[i] - y_pred) ** 2
             # derivative of L wrt W
             w_gradient += (-2 * X[i] ** 2) - (2 * X[i] * y[i]) + (2 * b * X[i])
             # derivative of L wrt b

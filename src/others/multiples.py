@@ -18,8 +18,8 @@ Solution: insert multiples into respective 'factor' queues.
 
 O(k) time and O(k) space.
 """
-from collections import deque
 import sys
+from collections import deque
 
 
 def kth_multiple(k):

@@ -7,7 +7,7 @@ Quicksort takes less space than mergesort, O(lg N) vs O(N).
 In-place sort, hence not a stable sort like mergesort.
 """
 from abc import ABCMeta, abstractmethod
-from typing import TypeVar, List, Any, Callable, Optional, Tuple
+from typing import Any, Callable, List, Optional, Tuple, TypeVar
 
 
 class Comparable(metaclass=ABCMeta):

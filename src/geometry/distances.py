@@ -44,7 +44,7 @@ def hamming_distance(p: List[T], q: List[T]) -> int:
 
 def manhattan_distance(p: List[float], q: List[float]) -> float:
     """Sum of absolute differences.
-     The taxicab metric is also known as rectilinear distance, L1 norm. L1 distance or Manhattan distance.
+    The taxicab metric is also known as rectilinear distance, L1 norm. L1 distance or Manhattan distance.
     """
     if len(p) == 0:
         raise ValueError("p must not be empty")

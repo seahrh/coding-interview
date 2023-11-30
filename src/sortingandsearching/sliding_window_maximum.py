@@ -40,7 +40,7 @@ See
 - https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
 """
 from collections import deque
-from typing import List, Deque
+from typing import Deque, List
 
 
 def solve(k: int, arr: List[int]) -> List[int]:

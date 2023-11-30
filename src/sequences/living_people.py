@@ -6,8 +6,7 @@ be included in that year's count. For example, Person (birth = 1908, death = 190
 counts for both 1908 and 1909.
 (16.10, p493)
 """
-from collections import namedtuple, defaultdict
-
+from collections import defaultdict, namedtuple
 
 Person = namedtuple("Person", "yob yod")
 

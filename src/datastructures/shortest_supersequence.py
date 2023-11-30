@@ -23,7 +23,7 @@ Space O(B + S)
 import heapq
 import sys
 from collections import deque
-from typing import NamedTuple, Dict, Deque, List, Set, Optional
+from typing import Deque, Dict, List, NamedTuple, Optional, Set
 
 
 class Node(NamedTuple):

@@ -23,7 +23,8 @@ Iteration approach
 Based on https://leetcode.com/articles/merge-two-binary-trees/
 """
 from copy import deepcopy
-from typing import Optional, List, Tuple
+from typing import List, Optional, Tuple
+
 from graphs.binary_tree import Node
 
 

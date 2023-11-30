@@ -21,7 +21,7 @@ words. W is the number of words in the dictionary and L is the length of the lon
 O(E^(D/2)) time
 O(DE + WL) space
 """
-from collections import defaultdict, namedtuple, deque
+from collections import defaultdict, deque, namedtuple
 
 
 def _wildcards(word, symbol="_"):

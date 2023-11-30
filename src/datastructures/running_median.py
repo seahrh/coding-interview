@@ -19,8 +19,8 @@ The heaps take O(n) space.
 Max heap is implemented in Python by multiplying the value by -1
 before adding it to the heap ("taking the inverse").
 """
-from heapq import heappushpop, heappush
-from typing import Union, List
+from heapq import heappush, heappushpop
+from typing import List, Union
 
 T = Union[float, int]
 

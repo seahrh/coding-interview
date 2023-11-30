@@ -27,7 +27,7 @@ until we reach the end of the original sequence.
 Time O(N lg N)
 Space O(N)
 """
-from typing import NamedTuple, List
+from typing import List, NamedTuple
 
 
 class Person(NamedTuple):

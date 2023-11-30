@@ -27,10 +27,10 @@ Therefore, the total time of the algorithm is 0 (B + P).
 We know we cannot do better than this since we must at least read in the B + P pieces of data.
 O(B) space to hold the `visited` set. Worst case: no names are synonyms.
 """
-from typing import NamedTuple, List, Tuple, Set, Dict
+from typing import Dict, List, NamedTuple, Set, Tuple
 
 from graphs.connected_component import component
-from graphs.graph import Graph, Edge
+from graphs.graph import Edge, Graph
 
 
 class Node(NamedTuple):

@@ -13,7 +13,7 @@ SOLUTION
 4. If range of values is known, hash table can be used where items are placed in their respective
 interval buckets. This takes O(N) time and O(N) space.
 """
-from typing import NamedTuple, List, Callable
+from typing import Callable, List, NamedTuple
 
 
 class PartitionResult(NamedTuple):

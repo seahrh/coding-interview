@@ -51,7 +51,7 @@ def fib(n: int) -> int:
     """
     Improved dynamic programming approach: reduce space to O(1) because recurrence requires
     only the last 2 args and do not need the entire memo array.
-    
+
     Time O(N)
     Space O(1)
     """

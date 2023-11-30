@@ -26,7 +26,7 @@ Updating Most Recently Used:
 Eviction:
     Remove tail of linked list. Get key from linked list node and remove key from hash table.
 """
-from typing import NamedTuple, Dict
+from typing import Dict, NamedTuple
 
 from datastructures.linked_list import *
 

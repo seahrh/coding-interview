@@ -18,7 +18,7 @@ For each possible first element, make a bi-directional sweep of the remaining pa
 Time O(N^2)
 Space O(1)
 """
-from typing import NamedTuple, Set, List
+from typing import List, NamedTuple, Set
 
 
 class Triple(NamedTuple):

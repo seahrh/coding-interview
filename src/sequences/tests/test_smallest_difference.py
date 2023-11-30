@@ -1,4 +1,5 @@
 import pytest
+
 from sequences.smallest_difference import *
 
 

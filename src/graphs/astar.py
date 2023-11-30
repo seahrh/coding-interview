@@ -22,8 +22,8 @@ G is the distance between the current node and the start node.
 H is the heuristic — estimated distance from the current node to the end node.
 
 """
-from heapq import heappush, heappop
-from typing import NamedTuple, Optional, List, Set, Iterable, Tuple, Callable
+from heapq import heappop, heappush
+from typing import Callable, Iterable, List, NamedTuple, Optional, Set, Tuple
 
 
 class Position(NamedTuple):
@@ -59,7 +59,8 @@ class Node:
         res = []
         for m in moves:
             pos = Position(
-                row=self.position.row + m.row, col=self.position.col + m.col,
+                row=self.position.row + m.row,
+                col=self.position.col + m.col,
             )
             if not pos.in_bounds(rows=len(maze), cols=len(maze[0])):
                 continue

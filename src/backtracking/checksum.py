@@ -29,7 +29,6 @@ Space O(N): recursive call stack
 """
 from typing import List
 
-
 _DEFAULT: int = -999
 
 

@@ -55,7 +55,7 @@ Time O(N)
 Space O(N)
 
 (4) Since values are positive numbers 1..N, use array indices to mark values we have seen.
-Either swap value to its corresponding index, or change the value at the index to negative sign. 
+Either swap value to its corresponding index, or change the value at the index to negative sign.
 Time O(N)
 Space O(1)
 

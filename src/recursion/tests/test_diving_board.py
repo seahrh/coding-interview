@@ -1,4 +1,5 @@
 import pytest
+
 from recursion.diving_board import *
 
 

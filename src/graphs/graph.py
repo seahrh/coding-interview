@@ -1,16 +1,16 @@
 from collections import defaultdict, deque
 from typing import (
-    TypeVar,
-    Generic,
-    DefaultDict,
-    Set,
-    List,
     Callable,
+    DefaultDict,
     Deque,
-    Tuple,
-    FrozenSet,
-    Hashable,
     Dict,
+    FrozenSet,
+    Generic,
+    Hashable,
+    List,
+    Set,
+    Tuple,
+    TypeVar,
 )
 
 T = TypeVar("T", bound=Hashable)  # Declare type variable
@@ -41,7 +41,7 @@ class Edge(Generic[T]):
 
 
 class DiGraph(Generic[T]):
-    """ Directed Graph data structure"""
+    """Directed Graph data structure"""
 
     def __init__(self):
         # Adjacency list: use a Dict or Set instead of List (assume all vertices are distinct).
@@ -50,7 +50,7 @@ class DiGraph(Generic[T]):
         self._alist: DefaultDict[T, Dict[T, Edge[T]]] = defaultdict(dict)
 
     def is_adjacent(self, from_node: T, to_node: T) -> bool:
-        """ Is node1 directly connected to node2 """
+        """Is node1 directly connected to node2"""
         return from_node in self._alist and to_node in self._alist[from_node]
 
     def adjacent(self, node: T) -> FrozenSet[T]:
@@ -93,7 +93,7 @@ class DiGraph(Generic[T]):
             self._alist[node] = {}
 
     def remove_nodes(self, *nodes: T) -> None:
-        """ Remove all references to node """
+        """Remove all references to node"""
         for node in nodes:
             for edges in self._alist.values():
                 if node in edges:
@@ -102,7 +102,7 @@ class DiGraph(Generic[T]):
                 del self._alist[node]
 
     def add(self, *edges: Edge[T]) -> None:
-        """ Add edges (list of tuple pairs) to graph """
+        """Add edges (list of tuple pairs) to graph"""
         for edge in edges:
             self._alist[edge.left][edge.right] = edge
             if edge.right not in self._alist:  # add new node
@@ -113,7 +113,7 @@ class DiGraph(Generic[T]):
             if edge.left in self._alist and edge.right in self._alist[edge.left]:
                 del self._alist[edge.left][edge.right]
 
-    def bfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]: # type: ignore [assignment]
+    def bfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]:  # type: ignore [assignment]
         """Returns the path of nodes visited in Breadth First Search.
         Uses a queue to pick the next node to process.
         Time O(V + E)
@@ -135,7 +135,7 @@ class DiGraph(Generic[T]):
                     q.append(a)
         return res
 
-    def dfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]: # type: ignore [assignment]
+    def dfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]:  # type: ignore [assignment]
         """Returns the path of nodes visited in Depth First Search.
         Uses a stack to pick the next node to process.
         Time O(V + E)

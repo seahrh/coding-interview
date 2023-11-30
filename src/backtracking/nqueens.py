@@ -17,7 +17,7 @@ If you refactor and prevent it from checking queens occupying the same row as ea
 it will still be brute force,
 but the possible board states drop from 16,777,216 to a little over 40,000 and has a time complexity of O(n!).
 """
-from typing import NamedTuple, List, Tuple, Set
+from typing import List, NamedTuple, Set, Tuple
 
 
 class Position(NamedTuple):
