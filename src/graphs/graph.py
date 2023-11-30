@@ -113,7 +113,7 @@ class DiGraph(Generic[T]):
             if edge.left in self._alist and edge.right in self._alist[edge.left]:
                 del self._alist[edge.left][edge.right]
 
-    def bfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]:
+    def bfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]: # type: ignore [assignment]
         """Returns the path of nodes visited in Breadth First Search.
         Uses a queue to pick the next node to process.
         Time O(V + E)
@@ -135,7 +135,7 @@ class DiGraph(Generic[T]):
                     q.append(a)
         return res
 
-    def dfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]:
+    def dfs(self, start_node: T, process: Callable[[T], None] = None) -> List[T]: # type: ignore [assignment]
         """Returns the path of nodes visited in Depth First Search.
         Uses a stack to pick the next node to process.
         Time O(V + E)
