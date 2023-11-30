@@ -61,4 +61,4 @@ class MyCalendar:
         if self.root is None:
             self.root = Node(start, end)
             return True
-        return self.root.insert(Node(start, end))
+        return self.root.insert(Node(start, end))  # type: ignore [no-any-return]
