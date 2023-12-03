@@ -63,4 +63,4 @@ class Solution:
                     j += 1
                     continue
                 k -= 1
-        return list(res)
+        return list(res)  # type: ignore[arg-type]
