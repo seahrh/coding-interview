@@ -1,8 +1,10 @@
 """
-Given an array of integers,
+239. Sliding Window Maximum https://leetcode.com/problems/sliding-window-maximum/
+
+You are given an array of integers nums,
 there is a sliding window of size k which is moving from the very left of the array to the very right.
 You can only see the k numbers in the window. Each time the sliding window moves right by one position.
-Return the max element of each sliding window.
+Return the max sliding window.
 Example:
 Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
 Output: [3,3,5,5,6,7]
@@ -34,33 +36,30 @@ Hence, the head of the list is always the maximum element.
 Array index to check elements that do not belong to the current window. Remove them from the head of the list.
 Time O(N): every element is pushed or popped from the list at most once.
 Space O(N)
-
-See
-- https://leetcode.com/problems/sliding-window-maximum/
-- https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
 """
 from collections import deque
 from typing import Deque, List
 
 
-def solve(k: int, arr: List[int]) -> List[int]:
-    res: List[int] = []
-    q: Deque[int] = deque()
-    # initialize first window
-    for i in range(k):
-        # discard smaller elements in the list
-        while len(q) != 0 and arr[i] >= arr[q[-1]]:
-            q.pop()
-        q.append(i)
-    res.append(arr[q[0]])
-    # i is the tail of the window
-    for i in range(k, len(arr)):
-        # discard elements no longer in the window
-        while len(q) != 0 and q[0] <= i - k:
-            q.popleft()
-        # discard smaller elements in the list
-        while len(q) != 0 and arr[i] >= arr[q[-1]]:
-            q.pop()
-        q.append(i)
-        res.append(arr[q[0]])
-    return res
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        res: List[int] = []
+        q: Deque[int] = deque()
+        # initialize first window
+        for i in range(k):
+            # discard smaller elements in the list
+            while len(q) != 0 and nums[i] >= nums[q[-1]]:
+                q.pop()
+            q.append(i)
+        res.append(nums[q[0]])
+        # i is the tail of the window
+        for i in range(k, len(nums)):
+            # discard elements no longer in the window
+            while len(q) != 0 and q[0] <= i - k:
+                q.popleft()
+            # discard smaller elements in the list
+            while len(q) != 0 and nums[i] >= nums[q[-1]]:
+                q.pop()
+            q.append(i)
+            res.append(nums[q[0]])
+        return res
