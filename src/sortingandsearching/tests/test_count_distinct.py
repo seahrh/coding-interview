@@ -1,4 +1,4 @@
-from sortingandsearching.count_distinct import *
+from sortingandsearching.lc0_contains_duplicate import *
 
 
 class TestCountDistinct:
