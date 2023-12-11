@@ -18,9 +18,11 @@ All the integers of nums are unique.
 
 SOLUTION
 Consider all numbers for each position in permutation.
-Base case: permutation has reached full length.
+Base case: permutation grown to full length.
 Time O(N!)
 Space O(N)
+References
+- https://leetcode.com/problems/permutations/solutions/18239/a-general-approach-to-backtracking-questions-in-java-subsets-permutations-combination-sum-palindrome-partioning/
 """
 from typing import List
 
@@ -31,7 +33,7 @@ class Solution:
             full.append(p)
             return
         for i in range(len(nums)):
-            if nums[i] in p:  # skip element already exists
+            if nums[i] in p:  # skip duplicate element in subsequent positions
                 continue
             p.append(nums[i])
             self.rec(nums=nums, p=list(p), full=full)
