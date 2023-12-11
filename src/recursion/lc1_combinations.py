@@ -17,6 +17,7 @@ Constraints:
 1 <= k <= n
 
 SOLUTION
+For each number, either pick or not pick. The path from root to leaf contains 1 or more combinations.
 Time O(2^N)
 Space O(N)
 """
