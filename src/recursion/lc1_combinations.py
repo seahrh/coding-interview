@@ -25,7 +25,9 @@ from typing import List, Set, Tuple
 
 
 class Solution:
-    def rec(self, n: int, k: int, i: int, p: List[int], full: Set[Tuple[int]]) -> None:
+    def rec(
+        self, n: int, k: int, i: int, p: List[int], full: Set[Tuple[int, ...]]
+    ) -> None:
         if i > n:  # base case
             return
         self.rec(n, k, i + 1, list(p), full)
@@ -37,6 +39,6 @@ class Solution:
         self.rec(n, k, i + 1, list(p), full)
 
     def combine(self, n: int, k: int) -> List[List[int]]:
-        full = set()
+        full: Set[Tuple[int, ...]] = set()
         self.rec(n=n, k=k, i=1, p=[], full=full)
         return [list(c) for c in full]

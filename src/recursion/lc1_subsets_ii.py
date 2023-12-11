@@ -22,7 +22,9 @@ from typing import List, Set, Tuple
 
 
 class Solution:
-    def rec(self, nums: List[int], i: int, p: List[int], full: Set[Tuple[int]]) -> None:
+    def rec(
+        self, nums: List[int], i: int, p: List[int], full: Set[Tuple[int, ...]]
+    ) -> None:
         if i == len(nums):  # base case
             p.sort()
             full.add(tuple(p))
@@ -32,6 +34,6 @@ class Solution:
         self.rec(nums=nums, i=i + 1, p=list(p), full=full)
 
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        full = set()
+        full: Set[Tuple[int, ...]] = set()
         self.rec(nums=nums, i=0, p=[], full=full)
         return [list(s) for s in full]
