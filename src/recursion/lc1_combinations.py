@@ -17,28 +17,29 @@ Constraints:
 1 <= k <= n
 
 SOLUTION
-For each number, either pick or not pick. The path from root to leaf contains 1 or more combinations.
+For each number, either pick or not pick. The path from root to leaf represents 1 combination.
+Base case: visited all numbers or partial solution has grown to full length.
 Time O(2^N)
 Space O(N)
+References
+- https://leetcode.com/problems/combinations/solutions/3845640/recursion-very-simple-pick-not-pick/
 """
-from typing import List, Set, Tuple
+from typing import List
 
 
 class Solution:
-    def rec(
-        self, n: int, k: int, i: int, p: List[int], full: Set[Tuple[int, ...]]
-    ) -> None:
-        if i > n:  # base case
+    def rec(self, n: int, k: int, i: int, p: List[int], full: List[List[int]]) -> None:
+        if i > n:
+            if len(p) == k:
+                full.append(p)
             return
-        self.rec(n, k, i + 1, list(p), full)
-        p.append(i)
         if len(p) == k:
-            p.sort()
-            full.add(tuple(p))
-            p = []
+            full.append(p)
+            return
+        self.rec(n, k, i + 1, list(p) + [i], full)
         self.rec(n, k, i + 1, list(p), full)
 
     def combine(self, n: int, k: int) -> List[List[int]]:
-        full: Set[Tuple[int, ...]] = set()
+        full: List[List[int]] = []
         self.rec(n=n, k=k, i=1, p=[], full=full)
-        return [list(c) for c in full]
+        return full
