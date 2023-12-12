@@ -63,4 +63,4 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         full: List[List[int]] = []
         self.rec(candidates, target, i=0, ps=0, p=[], full=full)
-        return [list(f) for f in full]
+        return full
