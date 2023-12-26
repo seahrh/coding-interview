@@ -10,11 +10,11 @@ setup(
     ],
     extras_require={
         "lint": [
-            "black==23.7.0",
-            "isort==5.12.0",
+            "black==23.12.1",
+            "isort==5.13.2",
             "pre-commit==3.3.3",
             "flake8==6.1.0",
-            "mypy==1.4.1",
+            "mypy==1.8.0",
         ],
         "tests": [
             "pytest==7.4.0",
