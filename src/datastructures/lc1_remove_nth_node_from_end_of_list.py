@@ -35,7 +35,7 @@ class Solution:
         for _ in range(n):
             p2 = p2.next
         if p2 is None:
-            return head.next
+            return head.next  # type: ignore[no-any-return]
         while p2 is not None:
             if p1.next is not None and p2.next is None:
                 p1.next = p1.next.next
