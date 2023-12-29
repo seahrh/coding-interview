@@ -29,11 +29,11 @@ class TreeNode:
 
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-        res = []
+        res: List[int] = []
 
         def rec(root: Optional[TreeNode]) -> None:
             if root is None:
-                return None
+                return
             rec(root.left)
             res.append(root.val)
             rec(root.right)
