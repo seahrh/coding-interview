@@ -34,7 +34,7 @@ from typing import Dict
 
 class TrieNode:
     def __init__(self):
-        self.mp: Dict[str, "TrieNode"] = {}
+        self.chi: Dict[str, "TrieNode"] = {}
         self.end: bool = False
 
 
@@ -45,9 +45,9 @@ class WordDictionary:
     def addWord(self, word: str) -> None:
         curr = self.root
         for c in word:
-            if c not in curr.mp:
-                curr.mp[c] = TrieNode()
-            curr = curr.mp[c]
+            if c not in curr.chi:
+                curr.chi[c] = TrieNode()
+            curr = curr.chi[c]
         curr.end = True
 
     def search(self, word: str) -> bool:
@@ -55,12 +55,12 @@ class WordDictionary:
             if i == len(word):
                 return node.end
             if word[i] == ".":
-                for nex in node.mp.values():
+                for nex in node.chi.values():
                     if rec(nex, word, i + 1):
                         return True
                 return False
-            if word[i] not in node.mp:
+            if word[i] not in node.chi:
                 return False
-            return rec(node.mp[word[i]], word, i + 1)
+            return rec(node.chi[word[i]], word, i + 1)
 
         return rec(self.root, word, i=0)

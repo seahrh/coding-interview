@@ -33,7 +33,7 @@ from typing import Dict
 
 class TrieNode:
     def __init__(self):
-        self.mp: Dict[str, "TrieNode"] = {}
+        self.chi: Dict[str, "TrieNode"] = {}
         self.end: bool = False
 
 
@@ -44,23 +44,23 @@ class Trie:
     def insert(self, word: str) -> None:
         curr = self.root
         for c in word:
-            if c not in curr.mp:
-                curr.mp[c] = TrieNode()
-            curr = curr.mp[c]
+            if c not in curr.chi:
+                curr.chi[c] = TrieNode()
+            curr = curr.chi[c]
         curr.end = True
 
     def search(self, word: str) -> bool:
         curr = self.root
         for c in word:
-            if c not in curr.mp:
+            if c not in curr.chi:
                 return False
-            curr = curr.mp[c]
+            curr = curr.chi[c]
         return curr.end
 
     def startsWith(self, prefix: str) -> bool:
         curr = self.root
         for c in prefix:
-            if c not in curr.mp:
+            if c not in curr.chi:
                 return False
-            curr = curr.mp[c]
+            curr = curr.chi[c]
         return True
