@@ -30,14 +30,14 @@ At most 1000 calls will be made to book.
 from typing import Optional
 
 
-class Node:
+class TreeNode:
     def __init__(self, start, end):
         self.start: int = start
         self.end: int = end
-        self.left: Optional["Node"] = None
-        self.right: Optional["Node"] = None
+        self.left: Optional["TreeNode"] = None
+        self.right: Optional["TreeNode"] = None
 
-    def insert(self, node: "Node") -> bool:
+    def insert(self, node: "TreeNode") -> bool:
         if node.start >= self.end:
             if not self.right:
                 self.right = node
@@ -57,6 +57,6 @@ class MyCalendar:
 
     def book(self, start: int, end: int) -> bool:
         if self.root is None:
-            self.root = Node(start, end)
+            self.root = TreeNode(start, end)
             return True
-        return self.root.insert(Node(start, end))  # type: ignore[no-any-return]
+        return self.root.insert(TreeNode(start, end))  # type: ignore[no-any-return]
