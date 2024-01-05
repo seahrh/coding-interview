@@ -1,4 +1,4 @@
-from recursion.binode import *
+from trees.binode import *
 
 
 class TestBinode:
