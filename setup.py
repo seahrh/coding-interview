@@ -4,7 +4,7 @@ __version__ = "1.0"
 setup(
     name="coding-interview",
     version=__version__,
-    python_requires=">=3.9,<3.12",
+    python_requires=">=3.9,<3.13",
     install_requires=[
         "numpy==1.26.2",
     ],
