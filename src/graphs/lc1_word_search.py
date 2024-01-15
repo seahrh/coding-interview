@@ -30,7 +30,7 @@ class Solution:
         directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
         vis: List[List[int]] = [[0] * n for _ in range(m)]
 
-        def dfs(board: List[List[str]], word: str, i: int, j: int, k: int) -> bool:
+        def dfs(i: int, j: int, k: int) -> bool:
             nonlocal vis
             if k == len(word) - 1 and board[i][j] == word[k]:
                 return True
@@ -42,13 +42,13 @@ class Solution:
                 if 0 <= a < m and 0 <= b < n:
                     if vis[a][b] == 1:
                         continue
-                    if dfs(board, word, a, b, k + 1):
+                    if dfs(a, b, k + 1):
                         return True
             vis[i][j] = 0  # release the node so that it can be reused!
             return False
 
         for i in range(m):
             for j in range(n):
-                if word[0] == board[i][j] and dfs(board, word, i, j, k=0):
+                if word[0] == board[i][j] and dfs(i, j, k=0):
                     return True
         return False
