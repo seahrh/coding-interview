@@ -37,12 +37,12 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        p1 = head
-        p2 = head
-        # Infinite loop if cycle exists
-        while p2 is not None and p2.next is not None:
-            p1 = p1.next
-            p2 = p2.next.next
-            if p1 is not None and p2 is not None and p1 == p2:
+        slo = head
+        fas = head
+        # While possible to advance the Fast pointer. Infinite loop if cycle exists
+        while fas is not None and fas.next is not None:
+            slo = slo.next
+            fas = fas.next.next
+            if slo is not None and fas is not None and slo == fas:
                 return True
         return False
