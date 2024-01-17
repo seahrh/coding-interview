@@ -15,13 +15,7 @@ The number of nodes in the tree is in the range [0, 10^4].
 """
 from typing import Optional
 
-
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from codi.trees import TreeNode
 
 
 class Solution:

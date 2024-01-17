@@ -36,13 +36,7 @@ Based on https://leetcode.com/articles/merge-two-binary-trees/
 from copy import deepcopy
 from typing import List, Optional, Tuple
 
-
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from codi.trees import TreeNode
 
 
 class Solution:
