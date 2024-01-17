@@ -1,4 +1,4 @@
-from codi.graphs.word_rectangle import *
+from codi.stringalgorithms.word_rectangle import *
 
 
 class TestWordRectangle:

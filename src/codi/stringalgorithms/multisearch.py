@@ -25,7 +25,7 @@ Space O(T + B + TM)
 """
 from collections import defaultdict
 
-from codi.graphs.trie import *
+from codi.stringalgorithms.trie import *
 
 # 2nd approach: Use small strings to construct a trie
 

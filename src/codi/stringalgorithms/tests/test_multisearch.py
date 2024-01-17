@@ -1,4 +1,4 @@
-from codi.graphs.multisearch import *
+from codi.stringalgorithms.multisearch import *
 
 
 class TestMultiSearch:

@@ -8,7 +8,7 @@ rows must be the same length and all columns must be the same height.
 """
 from collections import defaultdict
 
-from codi.graphs.trie import Trie
+from codi.stringalgorithms.trie import Trie
 
 
 def _max_length(words):

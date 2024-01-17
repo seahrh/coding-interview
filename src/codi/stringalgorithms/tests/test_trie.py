@@ -1,4 +1,4 @@
-from codi.graphs.trie import *
+from codi.stringalgorithms.trie import *
 
 
 class TestTrie:
