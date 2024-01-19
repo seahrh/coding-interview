@@ -31,13 +31,11 @@ from typing import List
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
         ans = 0
-        prev = -sys.maxsize
-        # sort by range end
-        intervals.sort(key=lambda x: x[1])
+        end = -sys.maxsize
+        intervals.sort(key=lambda x: x[1])  # sort by range end
         for rg in intervals:
-            if rg[0] >= prev:
-                prev = rg[1]
+            if rg[0] >= end:  # non-overlapping interval
+                end = rg[1]
                 continue
-            # curr interval overlaps with prev
             ans += 1
         return ans
