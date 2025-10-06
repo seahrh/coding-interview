@@ -22,29 +22,29 @@ Only one valid answer exists.
 Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
 """
 from collections import defaultdict
-from typing import DefaultDict, List, NamedTuple, Set, Tuple
-
-
-class Entry(NamedTuple):
-    v: int
-    i: int
+from typing import DefaultDict, List, Set, Tuple
 
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        ar = [Entry(v=v, i=i) for i, v in enumerate(nums)]
+        """
+        Time O(N lg N)
+        Space O(N)
+        """
+        ar = [(x, i) for i, x in enumerate(nums)]
         ar.sort()
         i = 0
         j = len(nums) - 1
         while i < j:
-            sm = ar[i].v + ar[j].v
+            sm = ar[i][0] + ar[j][0]
             if sm == target:
-                return [ar[i].i, ar[j].i]
+                break
+            if sm > target:
+                j -= 1
+                continue
             if sm < target:
                 i += 1
-                continue
-            j -= 1
-        return []
+        return [ar[i][1], ar[j][1]]
 
 
 def two_sum(arr: List[int], target: int) -> Set[Tuple[int, int]]:

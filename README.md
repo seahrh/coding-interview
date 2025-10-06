@@ -3,4 +3,4 @@
 Coding interview questions and solutions in Python 3
 =====================================================
 
-Tested solutions in Python 3.11
+Accepted / Tested solutions in Python 3.12
