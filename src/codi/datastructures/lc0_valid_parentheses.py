@@ -29,16 +29,15 @@ class Solution:
         for c in s:
             if c in "([{":
                 st.append(c)
-            elif c == ")":
+                continue
+            if c == ")":
                 if len(st) == 0 or st[-1] != "(":
                     return False
-                st.pop()
-            elif c == "}":
-                if len(st) == 0 or st[-1] != "{":
-                    return False
-                st.pop()
-            elif c == "]":
+            if c == "]":
                 if len(st) == 0 or st[-1] != "[":
                     return False
-                st.pop()
+            if c == "}":
+                if len(st) == 0 or st[-1] != "{":
+                    return False
+            st.pop()
         return len(st) == 0
