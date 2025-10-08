@@ -6,6 +6,7 @@ Find one such solution, not all solutions.
 SOLUTION
 Single pass O(N) time solution based on https://stackoverflow.com/a/33982388/519951
 """
+
 from typing import List, Optional, Tuple
 
 

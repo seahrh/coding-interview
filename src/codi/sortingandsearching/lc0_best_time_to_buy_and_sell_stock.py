@@ -23,6 +23,7 @@ Make 1 pass and consider two things:
 1. Is this price cheaper than any other price I've seen before?
 2. If I subtract current price by the cheapest price I've found, does this yield a greater profit than what I've seen so far?
 """
+
 from typing import List
 
 

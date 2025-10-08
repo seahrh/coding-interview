@@ -49,6 +49,7 @@ Recursively add the linked list of the left subtree
 Time O(N^2): worst case N nodes are found in the left subtree, N nodes have left child.
 Space O(N): depth of recursive call stack
 """
+
 from typing import Optional
 
 

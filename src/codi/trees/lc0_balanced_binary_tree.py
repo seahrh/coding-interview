@@ -20,6 +20,7 @@ SOLUTION
 References
 - https://leetcode.com/problems/balanced-binary-tree/solutions/2428871/very-easy-100-fully-explained-c-java-python-javascript-python3/
 """
+
 from typing import Optional
 
 from codi.trees import TreeNode

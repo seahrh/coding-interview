@@ -12,6 +12,7 @@ Time O(N * N!)
 - Inserting the character takes factorial time because there are N! permutations (partials).
 Space O(N): recursive call stack
 """
+
 from typing import Set
 
 

@@ -28,7 +28,6 @@ References
 - https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solutions/4425847/clean-solution/
 """
 
-
 from codi.trees import TreeNode
 
 

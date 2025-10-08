@@ -4,6 +4,7 @@ The game is played on a nxn board, where n >= 3
 You do not know the last move.
 (16.4, p477)
 """
+
 from enum import Enum, auto
 
 

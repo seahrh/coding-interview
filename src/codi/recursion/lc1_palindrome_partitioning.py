@@ -22,6 +22,7 @@ References
 - https://www.youtube.com/watch?v=3jvWodd7ht0
 - https://leetcode.com/problems/palindrome-partitioning/solutions/3084800/c-backtracking-easy-to-understand/
 """
+
 from copy import deepcopy
 from typing import List
 
@@ -40,7 +41,7 @@ class Solution:
             return True
 
         def dfs(i: int) -> None:
-            nonlocal res, partial
+            nonlocal res, partial  # noqa: F824
             if i >= len(s):
                 res.append(deepcopy(partial))  # partial solution is non-empty
                 return

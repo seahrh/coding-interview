@@ -28,6 +28,7 @@ k == lists.length
 lists[i] is sorted in ascending order.
 The sum of lists[i].length will not exceed 10^4.
 """
+
 from heapq import heappop, heappush
 from typing import List, Optional, Tuple
 

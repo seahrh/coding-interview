@@ -28,6 +28,7 @@ Constraints:
 word and prefix consist only of lowercase English letters.
 At most 3 * 10^4 calls in total will be made to insert, search, and startsWith.
 """
+
 from typing import Dict
 
 

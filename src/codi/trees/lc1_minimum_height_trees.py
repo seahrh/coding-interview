@@ -34,6 +34,7 @@ References
 - Code https://leetcode.com/problems/minimum-height-trees/solutions/827284/c-99-tc-with-explanation-using-bfs-top-sort/
 - Explanation https://leetcode.com/problems/minimum-height-trees/solutions/1631179/c-python-3-simple-solution-w-explanation-brute-force-2x-dfs-remove-leaves-w-bfs/
 """
+
 from collections import deque
 from typing import Deque, List
 

@@ -34,6 +34,7 @@ References
 - https://codeforces.com/blog/entry/70018
 - https://leetcode.com/problems/longest-increasing-subsequence/solutions/74824/JavaPython-Binary-search-O(nlogn)-time-with-explanation/
 """
+
 from bisect import bisect_left
 from typing import List
 

@@ -20,6 +20,7 @@ Monotonically Increasing Stack
 References
 - https://leetcode.com/problems/largest-rectangle-in-histogram/solutions/995249/python-increasing-stack-explained/
 """
+
 from typing import List
 
 

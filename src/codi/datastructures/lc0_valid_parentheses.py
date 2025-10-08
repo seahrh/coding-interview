@@ -19,6 +19,7 @@ Constraints:
 1 <= s.length <= 10^4
 s consists of parentheses only '()[]{}'.
 """
+
 from typing import List
 
 

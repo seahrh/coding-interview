@@ -6,22 +6,20 @@ Worst case: array is already sorted, or poor choice of pivot.
 Quicksort takes less space than mergesort, O(lg N) vs O(N).
 In-place sort, hence not a stable sort like mergesort.
 """
+
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, List, Optional, Tuple, TypeVar
 
 
 class Comparable(metaclass=ABCMeta):
     @abstractmethod
-    def __gt__(self, other: Any) -> bool:
-        ...
+    def __gt__(self, other: Any) -> bool: ...  # noqa: E704
 
     @abstractmethod
-    def __lt__(self, other: Any) -> bool:
-        ...
+    def __lt__(self, other: Any) -> bool: ...  # noqa: E704
 
     @abstractmethod
-    def __le__(self, other: Any) -> bool:
-        ...
+    def __le__(self, other: Any) -> bool: ...  # noqa: E704
 
 
 T = TypeVar("T", bound=Comparable)

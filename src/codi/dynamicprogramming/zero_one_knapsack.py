@@ -15,6 +15,7 @@ Space O(NC)
 
 Based on https://www.youtube.com/watch?v=nLmhmB6NzcM
 """
+
 from typing import List
 
 from codi.util import argmax

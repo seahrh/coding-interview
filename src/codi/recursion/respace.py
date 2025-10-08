@@ -23,6 +23,7 @@ We don't need a hash table in this case because the start index is the key.
 
 O(n^2) time and O(n) space, where n is the number of characters.
 """
+
 import sys
 from collections import namedtuple
 

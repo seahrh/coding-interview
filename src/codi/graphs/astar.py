@@ -22,6 +22,7 @@ G is the distance between the current node and the start node.
 H is the heuristic — estimated distance from the current node to the end node.
 
 """
+
 from heapq import heappop, heappush
 from typing import Callable, Iterable, List, NamedTuple, Optional, Set, Tuple
 

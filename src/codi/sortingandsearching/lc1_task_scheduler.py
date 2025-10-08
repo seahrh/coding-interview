@@ -37,6 +37,7 @@ SOLUTION
 References
 - https://leetcode.com/problems/task-scheduler/solutions/4413802/clean-commented-java-solution-beats-97/
 """
+
 from collections import Counter
 from typing import List
 

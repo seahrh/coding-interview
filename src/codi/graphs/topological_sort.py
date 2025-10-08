@@ -18,6 +18,7 @@ Topological sort orders the vertices on a line such that all directed edges go f
 Time O(V + E): DFS traversal
 Space O(V)
 """
+
 from collections import deque
 from typing import Deque, Dict, List, Optional, Set
 

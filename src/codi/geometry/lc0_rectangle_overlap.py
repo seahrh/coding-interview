@@ -23,6 +23,7 @@ rec2.length == 4
 -10^9 <= rec1[i], rec2[i] <= 10^9
 rec1 and rec2 represent a valid rectangle with a non-zero area.
 """
+
 from typing import List
 
 

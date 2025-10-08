@@ -29,6 +29,7 @@ word in search consist of '.' or lowercase English letters.
 There will be at most 2 dots in word for search queries.
 At most 10^4 calls will be made to addWord and search.
 """
+
 from typing import Dict
 
 

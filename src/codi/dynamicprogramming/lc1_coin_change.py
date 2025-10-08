@@ -31,6 +31,7 @@ Space O(X): memo array
 References
 - https://codeforces.com/blog/entry/70018
 """
+
 from typing import List
 
 

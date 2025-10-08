@@ -22,7 +22,7 @@ class TestStringHash:
 
 class TestMyHashTable:
     def test_overwrite_key(self):
-        table = MyHashTable[str, str](capacity=10)
+        table = MyHashTable(capacity=10)
         table.put("a", "a1")
         table.put("b", "b1")
         table.put("c", "c1")
@@ -35,7 +35,7 @@ class TestMyHashTable:
         assert table.get("c") == "c1"
 
     def test_collision(self):
-        table = MyHashTable[str, str](capacity=1)
+        table = MyHashTable(capacity=1)
         table.put("a", "a1")
         table.put("b", "b1")
         table.put("c", "c1")

@@ -32,6 +32,7 @@ At most 100 calls will be made to push, pop, top, and empty.
 All the calls to pop and top are valid.
 Follow-up: Can you implement the stack using only one queue?
 """
+
 from collections import deque
 
 

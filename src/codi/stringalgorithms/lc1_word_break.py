@@ -31,6 +31,7 @@ Space O(WK): build trie
 References
 - https://leetcode.com/problems/word-break/solutions/2722114/python-trie-solution-beats-80-simple-recursive/
 """
+
 from typing import Dict, List
 
 
@@ -56,7 +57,7 @@ class Trie:
         dp = {}
 
         def rec(node, word, i) -> bool:
-            nonlocal dp
+            nonlocal dp  # noqa: F824
             if i == len(word):
                 return node.end
             if node.end:

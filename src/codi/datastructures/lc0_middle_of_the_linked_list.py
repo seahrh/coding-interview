@@ -20,6 +20,7 @@ Walk the linked list with 2 pointers: one fast and one slow.
 Time O(N)
 Space O(1)
 """
+
 from typing import Optional
 
 from codi.datastructures import ListNode

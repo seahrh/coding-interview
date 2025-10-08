@@ -32,6 +32,7 @@ Space O(N): stack
 References
 - https://leetcode.com/problems/asteroid-collision/solutions/3681775/easy-c-solution-using-stacks-simulation/
 """
+
 from typing import List
 
 

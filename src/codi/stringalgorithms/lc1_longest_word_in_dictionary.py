@@ -23,6 +23,7 @@ SOLUTION
 References
 - https://leetcode.com/problems/longest-word-in-dictionary/solutions/113916/python-trie-bfs/
 """
+
 from collections import deque
 from typing import Deque, Dict, List
 

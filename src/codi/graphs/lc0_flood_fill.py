@@ -19,6 +19,7 @@ Input: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0
 Output: [[0,0,0],[0,0,0]]
 Explanation: The starting pixel is already colored 0, so no changes are made to the image.
 """
+
 from typing import List
 
 
@@ -32,7 +33,7 @@ class Solution:
         ori = image[sr][sc]
 
         def dfs(i: int, j: int) -> None:
-            nonlocal image
+            nonlocal image  # noqa: F824
             if visited[i][j] == 1:
                 return
             visited[i][j] = 1

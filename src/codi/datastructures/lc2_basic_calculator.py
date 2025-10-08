@@ -29,6 +29,7 @@ Output of recursion is the sum of intermediate stack.
 References
 - https://leetcode.com/problems/basic-calculator/solutions/1456850/python-basic-calculator-i-ii-iii-easy-solution-detailed-explanation/
 """
+
 from typing import List, Tuple
 
 

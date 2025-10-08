@@ -27,6 +27,7 @@ startTime1 <= endTime1
 startTime2 <= endTime2
 All the event times follow the HH:MM format.
 """
+
 from typing import List
 
 

@@ -21,6 +21,7 @@ Constraints:
 1 <= logs.length <= 100
 1950 <= birthi < deathi <= 2050
 """
+
 from typing import List
 
 

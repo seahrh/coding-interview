@@ -27,7 +27,7 @@ class Rule(NamedTuple):
 
 def _key(items: Iterable[Hashable]) -> Tuple[Hashable, ...]:
     tmp = list(items)
-    tmp.sort()
+    tmp.sort()  # type: ignore[call-overload]
     return tuple(tmp)
 
 

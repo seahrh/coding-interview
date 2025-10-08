@@ -32,6 +32,7 @@ Look for min in the unsorted partition.
 Time O(lg N)
 Space O(1)
 """
+
 from typing import List
 
 

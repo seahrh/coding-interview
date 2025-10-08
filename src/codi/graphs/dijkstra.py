@@ -29,6 +29,7 @@ Cons
 See
 - https://www.youtube.com/watch?v=XB4MIexjvY0
 """
+
 import sys
 from heapq import heappop, heappush
 from typing import Dict, List, Optional, Set, Tuple
@@ -78,7 +79,7 @@ def distances(
         if len(min_heap) == 0:
             node = unvisited.pop()
             heappush(min_heap, res[node])
-        curr: T = heappop(min_heap).child
+        curr: T = heappop(min_heap).child  # type: ignore[assignment]
         if curr not in unvisited:
             continue
         for edge in graph.out_edges(curr):
@@ -87,7 +88,7 @@ def distances(
             cost = res[curr].cost + edge.weight
             if cost < best.cost:
                 best.cost = cost
-                best.parent = curr
+                best.parent = curr  # type: ignore[assignment]
             heappush(min_heap, best)
         unvisited.remove(curr)
     return res

@@ -34,6 +34,7 @@ References
 - https://leetcode.com/problems/accounts-merge/solutions/1084738/python-the-clean-union-find-solution-you-are-looking-for/
 - https://youtu.be/wU6udHRIkcc?si=Ts-KinfVDaJwm1j9
 """
+
 from typing import Dict, List
 
 

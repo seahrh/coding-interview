@@ -30,6 +30,7 @@ Space O(N^2): bec we have to store positions, otherwise O(1).
 References
 - https://usaco.guide/problems/cses-1642-sum-of-four-values/solution
 """
+
 from collections import defaultdict
 from typing import List, Set, Tuple
 

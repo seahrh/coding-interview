@@ -23,6 +23,7 @@ Space O(1)
 
 See https://www.geeksforgeeks.org/queries-counts-array-elements-values-given-range/
 """
+
 from typing import List
 
 

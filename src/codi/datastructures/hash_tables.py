@@ -4,14 +4,11 @@ What happens if N > M ?
 You are not allowed to use Dict and Set.
 Increase capacity (decrease load factor) to reduce risk of collision.
 """
-from typing import Generic, Hashable, List, NamedTuple, Optional, TypeVar
 
-# Declare type variables
-K = TypeVar("K", bound=Hashable)
-V = TypeVar("V")
+from typing import List, NamedTuple, Optional, Union
 
 
-def string_hash(key: K, capacity: int) -> int:
+def string_hash(key: Union[str, int, float], capacity: int) -> int:
     """Return hash value of given key.
     Cast key to string representation.
     Treat string as a sequence of ordinal values; weighted sum with position as weight.
@@ -25,12 +22,12 @@ def string_hash(key: K, capacity: int) -> int:
     return res % capacity
 
 
-class Entry(NamedTuple, Generic[K, V]):
-    key: K
-    value: V
+class Entry(NamedTuple):
+    key: Union[str, int, float]
+    value: Union[str, int, float]
 
 
-class MyHashTable(Generic[K, V]):
+class MyHashTable:
     def __init__(self, capacity: int = 10, hash_fn=string_hash):
         if capacity < 1:
             raise ValueError("capacity must not be less than 1")
@@ -41,7 +38,7 @@ class MyHashTable(Generic[K, V]):
         # Initialize empty collection in each slot
         self._table: List[List[Entry]] = [[] for _ in range(self._capacity)]
 
-    def put(self, key: K, value: V) -> None:
+    def put(self, key: Union[str, int, float], value: Union[str, int, float]) -> None:
         """Insert takes O(N) time if risk of collision is high. Else O(1) time.
         Speed up reads at the expense of writes;
         Sort the entries array when the array grows. Insert now takes O(N lg N) time.
@@ -59,7 +56,7 @@ class MyHashTable(Generic[K, V]):
         if not exists:
             entries.append(e)
 
-    def get(self, key: K) -> Optional[V]:
+    def get(self, key: Union[str, int, float]) -> Optional[Union[str, int, float]]:
         """Search takes O(N) time if risk of collision is high. Else O(1) time.
         Search takes O(lg N) time if entries array is sorted.
         But this means we need to sort the array each time it is updated.
@@ -67,6 +64,6 @@ class MyHashTable(Generic[K, V]):
         i = self._hash(key, self._capacity)
         for entry in self._table[i]:
             if key == entry.key:
-                v: V = entry.value
+                v = entry.value
                 return v
         return None

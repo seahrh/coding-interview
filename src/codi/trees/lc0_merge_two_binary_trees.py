@@ -33,6 +33,7 @@ Iteration approach
 
 Based on https://leetcode.com/articles/merge-two-binary-trees/
 """
+
 from copy import deepcopy
 from typing import List, Optional, Tuple
 

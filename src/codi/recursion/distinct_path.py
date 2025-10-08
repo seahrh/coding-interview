@@ -24,6 +24,7 @@ Space O(N^2): unbalanced tree in the worst case, depth of recursive call stack.
 Balanced tree takes O((lg N)^2) space; create lg N `seen` sets and size of each set is lg N.
 
 """
+
 from typing import NamedTuple, Optional, Set
 
 

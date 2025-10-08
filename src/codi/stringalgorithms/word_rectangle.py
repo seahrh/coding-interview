@@ -6,6 +6,7 @@ rows must be the same length and all columns must be the same height.
 
 (17.25, p629)
 """
+
 from collections import defaultdict
 
 from codi.stringalgorithms.trie import Trie

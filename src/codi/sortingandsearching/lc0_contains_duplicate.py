@@ -19,6 +19,7 @@ Sort the array in-place, then increment count when a different value is seen.
 Time O(N lg N)
 Space O(1)
 """
+
 from typing import List
 
 

@@ -25,6 +25,7 @@ To find a larger area when shrinking the width, compensate by looking for greate
 Time O(N)
 Space O(1)
 """
+
 from typing import List
 
 

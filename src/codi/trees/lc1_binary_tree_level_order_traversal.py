@@ -20,6 +20,7 @@ SOLUTION
 References
 - https://leetcode.com/problems/binary-tree-level-order-traversal/solutions/3169565/solution/
 """
+
 from collections import deque
 from typing import Deque, List, Optional
 

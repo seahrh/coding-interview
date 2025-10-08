@@ -39,6 +39,7 @@ head=Most Recently Used, tail=Least Recently Used
 References
 - https://flykiller.github.io/leetcode/0146
 """
+
 from collections import OrderedDict
 from dataclasses import dataclass
 from typing import Dict, Optional

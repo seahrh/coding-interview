@@ -23,6 +23,7 @@ DFS find the max diameter at every node.
 References
 - https://leetcode.com/problems/diameter-of-binary-tree/solutions/1515564/python-easy-to-understand-solution-w-explanation/
 """
+
 from typing import Optional
 
 from codi.trees import TreeNode

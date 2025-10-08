@@ -18,6 +18,7 @@ Solution: insert multiples into respective 'factor' queues.
 
 O(k) time and O(k) space.
 """
+
 import sys
 from collections import deque
 

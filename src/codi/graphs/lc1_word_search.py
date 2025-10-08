@@ -21,6 +21,7 @@ n = board[i].length
 board and word consists of only lowercase and uppercase English letters.
 Follow up: Could you use search pruning to make your solution faster with a larger board?
 """
+
 from typing import List
 
 
@@ -31,7 +32,7 @@ class Solution:
         vis: List[List[int]] = [[0] * n for _ in range(m)]
 
         def dfs(i: int, j: int, k: int) -> bool:
-            nonlocal vis
+            nonlocal vis  # noqa: F824
             if k == len(word) - 1 and board[i][j] == word[k]:
                 return True
             if board[i][j] != word[k]:

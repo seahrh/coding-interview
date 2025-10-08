@@ -25,6 +25,7 @@ n == grid[i].length
 1 <= m, n <= 10
 grid[i][j] is 0, 1, or 2.
 """
+
 from collections import deque
 from typing import Deque, List
 

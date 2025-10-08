@@ -40,6 +40,7 @@ Time O(N^2): worst case max number of connected components is N^2/2
 Space O(N^2): assume original grids cannot be modified, so make own grid to maintain state.
 See https://leetcode.com/discuss/interview-question/231726/image-matching
 """
+
 from copy import deepcopy
 from typing import List, Set, Tuple
 

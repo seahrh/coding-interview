@@ -7,8 +7,7 @@ from typing import Any, List, TypeVar
 
 class Comparable(metaclass=ABCMeta):
     @abstractmethod
-    def __gt__(self, other: Any) -> bool:
-        ...
+    def __gt__(self, other: Any) -> bool: ...  # noqa: E704
 
 
 T = TypeVar("T", bound=Comparable)

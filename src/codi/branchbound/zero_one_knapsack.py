@@ -14,6 +14,7 @@ Space O(2^N): state space tree as min-heap.
 
 Based on https://www.youtube.com/watch?v=yV1d-b_NeK8
 """
+
 from heapq import heappop, heappush
 from typing import List, NamedTuple, Set, Tuple, Union
 

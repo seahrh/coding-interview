@@ -8,6 +8,7 @@ Output: (3, 9)
 
 (16.16, p507)
 """
+
 import sys
 
 

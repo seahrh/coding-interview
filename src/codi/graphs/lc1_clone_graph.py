@@ -39,6 +39,7 @@ SOLUTION
 References
 - https://leetcode.com/problems/clone-graph/solutions/3391952/python3-solution/
 """
+
 from typing import Dict, Optional
 
 
@@ -54,7 +55,7 @@ class Solution:
         nodes: Dict[int, Node] = {}
 
         def dfs(s: Optional["Node"]) -> Node:
-            nonlocal nodes
+            nonlocal nodes  # noqa: F824
             if s.val in nodes:
                 return nodes[s.val]
             a = Node(s.val)

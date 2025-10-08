@@ -2,6 +2,7 @@
 Linear regression with SGD
 Based on https://medium.com/@nikhilparmar9/simple-sgd-implementation-in-python-for-linear-regression-on-boston-housing-data-f63fcaaecfb1
 """
+
 import numpy as np
 
 

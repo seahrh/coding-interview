@@ -24,6 +24,7 @@ the majority element will eventually regain the lead.
 References
 - https://leetcode.com/problems/majority-element/solutions/3676530/3-method-s-beats-100-c-java-python-beginner-friendly/
 """
+
 from typing import List
 
 

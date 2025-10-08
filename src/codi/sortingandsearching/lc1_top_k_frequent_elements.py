@@ -20,6 +20,7 @@ SOLUTION
 Time O(N lg K)
 Space O(K): min heap
 """
+
 from collections import Counter
 from heapq import heappush, heapreplace
 from typing import List, Tuple

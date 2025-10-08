@@ -28,6 +28,7 @@ dp[i] = highest profit from a single job considering the first i jobs sorted by 
 Time O( (N+M)lg N + M lg M)
 Space O(N)
 """
+
 import sys
 from bisect import bisect_right
 from typing import List

@@ -4,6 +4,7 @@ This method works only for undirected graphs.
 Time O(V + E)
 Space O(V + E)
 """
+
 from typing import Set
 
 from codi.graphs.graph import Edge, Graph, T

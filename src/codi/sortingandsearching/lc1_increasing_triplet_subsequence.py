@@ -25,6 +25,7 @@ Track the lower bound of the 1st and 2nd elements of subseq.
 References
 - https://leetcode.com/problems/increasing-triplet-subsequence/discuss/79004/Concise-Java-solution-with-comments
 """
+
 import sys
 from typing import List
 

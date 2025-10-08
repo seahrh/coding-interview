@@ -36,6 +36,7 @@ Swap item to delete to the last index of the array. Array pop() takes O(1) time.
 References
 - https://leetcode.com/problems/insert-delete-getrandom-o1/solutions/2858286/python3-hashmap-list-got-this-in-google-phone-interview/
 """
+
 import random
 
 

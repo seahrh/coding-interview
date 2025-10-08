@@ -24,6 +24,7 @@ SOLUTION
 References
 - https://leetcode.com/problems/non-overlapping-intervals/solutions/3786664/easy-python-solution-99-pass/
 """
+
 import sys
 from typing import List
 

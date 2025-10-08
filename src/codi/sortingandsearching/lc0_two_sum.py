@@ -21,17 +21,19 @@ Constraints:
 Only one valid answer exists.
 Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
 """
+
 from collections import defaultdict
 from typing import DefaultDict, List, Set, Tuple
 
 
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    def twoSumSorting(self, nums: List[int], target: int) -> List[int]:
         """
         Time O(N lg N)
         Space O(N)
         """
-        ar = [(x, i) for i, x in enumerate(nums)]
+        # In the Pair, 1st element is the value, 2nd element is the original array index.
+        ar: List[Tuple[int, int]] = [(x, i) for i, x in enumerate(nums)]
         ar.sort()
         i = 0
         j = len(nums) - 1

@@ -20,6 +20,7 @@ SOLUTION
 References
 - https://www.techinterviewhandbook.org/algorithms/interval/
 """
+
 from typing import List
 
 

@@ -21,6 +21,7 @@ SOLUTION
 References
 - https://leetcode.com/problems/validate-binary-search-tree/solutions/3169560/solution/
 """
+
 import sys
 from typing import Optional
 

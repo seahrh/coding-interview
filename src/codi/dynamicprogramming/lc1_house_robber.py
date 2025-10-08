@@ -27,6 +27,7 @@ dp[i] = max money that can be robbed from first i houses.
 Base case: dp[0]=0, dp[1]=first house
 Recurrence: dp[i] = max(dp[i - 1], dp[i - 2] + curr_house)
 """
+
 from typing import List
 
 

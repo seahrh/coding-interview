@@ -13,6 +13,7 @@ Let R be number of rows and C be number of columns of the matrix.
 O(R^2C) time
 O(C) space: store the cumulative column sums
 """
+
 import sys
 from collections import namedtuple
 

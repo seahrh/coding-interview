@@ -23,6 +23,7 @@ Time O(TM + BM)
 Space O(T + B + TM)
 
 """
+
 from collections import defaultdict
 
 from codi.stringalgorithms.trie import *

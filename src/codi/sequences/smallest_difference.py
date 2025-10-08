@@ -3,6 +3,7 @@ Smallest Difference: Given two arrays of integers, compute the pair of values (o
 array) with the smallest (absolute) difference. Return the difference.
 (16.6, p485)
 """
+
 import sys
 from typing import List
 

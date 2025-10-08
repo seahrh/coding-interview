@@ -23,6 +23,7 @@ Space O(1)
 References
 - comments https://leetcode.com/problems/trapping-rain-water/solutions/3401992/100-detailed-explaination-with-pictures-in-c-java-python-two-pointers/
 """
+
 from typing import List
 
 

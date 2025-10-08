@@ -14,6 +14,7 @@ Pass root as the next node to the left subtree, previous node to the right subtr
 Time O(N)
 Space O(N): depth of recursive call stack
 """
+
 from typing import Optional
 
 

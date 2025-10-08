@@ -18,6 +18,7 @@ The number of nodes in the list is sz.
 1 <= n <= sz
 Follow up: Could you do this in one pass?
 """
+
 from typing import Optional
 
 from codi.datastructures import ListNode

@@ -30,6 +30,7 @@ key and value consist of lowercase English letters and digits.
 All the timestamps timestamp of set are strictly increasing.
 At most 2 * 10^5 calls will be made to set and get.
 """
+
 from bisect import bisect_left
 from typing import Dict, List, Tuple
 

@@ -5,6 +5,7 @@ number generator which is perfect.
 
 (17.2, p544)
 """
+
 from random import randint
 
 

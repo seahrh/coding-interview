@@ -33,6 +33,7 @@ Space O(N+L): BFS queue, visited set, string slice
 References
 - https://leetcode.com/problems/word-ladder/solutions/1764371/a-very-highly-detailed-explanation/
 """
+
 from collections import deque
 from typing import Deque, List, Set
 

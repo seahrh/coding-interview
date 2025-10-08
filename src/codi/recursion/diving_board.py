@@ -4,6 +4,7 @@ There are two types of planks, one of length shorter and one of length longer. Y
 exactly K planks of wood. Write a method to generate all possible lengths for the diving board.
 (16.11, p497)
 """
+
 from typing import Set
 
 

@@ -4,14 +4,14 @@ MERGESORT
 Mergesort takes more space than quicksort, O(N) vs O(lg N).
 Stable sort (not in-place)
 """
+
 from abc import ABCMeta, abstractmethod
 from typing import Any, List, TypeVar
 
 
 class Comparable(metaclass=ABCMeta):
     @abstractmethod
-    def __le__(self, other: Any) -> bool:
-        ...
+    def __le__(self, other: Any) -> bool: ...  # noqa: E704
 
 
 T = TypeVar("T", bound=Comparable)

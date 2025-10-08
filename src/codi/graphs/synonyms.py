@@ -27,6 +27,7 @@ Therefore, the total time of the algorithm is 0 (B + P).
 We know we cannot do better than this since we must at least read in the B + P pieces of data.
 O(B) space to hold the `visited` set. Worst case: no names are synonyms.
 """
+
 from typing import Dict, List, NamedTuple, Set, Tuple
 
 from codi.graphs.connected_component import component

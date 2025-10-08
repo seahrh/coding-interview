@@ -18,6 +18,7 @@ Space O(N): depth of recursive stack
 References
 - https://leetcode.com/problems/generate-parentheses/solutions/3290261/i-bet-you-will-understand-intutive-solution-beginner-friendly-c/
 """
+
 from typing import List
 
 

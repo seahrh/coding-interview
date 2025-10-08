@@ -23,7 +23,6 @@ Constraints:
 1 <= bad <= n <= 2^31 - 1
 """
 
-
 # The isBadVersion API is already defined for you.
 # def isBadVersion(version: int) -> bool:
 

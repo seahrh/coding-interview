@@ -38,6 +38,7 @@ References
 - explanation https://leetcode.com/problems/linked-list-cycle-ii/solutions/1701128/c-java-python-slow-and-fast-image-explanation-beginner-friendly/
 - code https://leetcode.com/problems/linked-list-cycle-ii/solutions/3274329/clean-codes-full-explanation-floyd-s-cycle-finding-algorithm-c-java-python3/
 """
+
 from typing import Optional
 
 from codi.datastructures import ListNode

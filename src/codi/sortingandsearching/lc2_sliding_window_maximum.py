@@ -37,6 +37,7 @@ Array index to check elements that do not belong to the current window. Remove t
 Time O(N): every element is pushed or popped from the list at most once.
 Space O(N)
 """
+
 from collections import deque
 from typing import Deque, List
 

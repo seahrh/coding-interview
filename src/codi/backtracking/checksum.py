@@ -27,6 +27,7 @@ Evaluate row sums after all columns have been filled.
 Time O(4^N) ~= O(2^N): four-way split at each level of the recursion tree.
 Space O(N): recursive call stack
 """
+
 from typing import List
 
 _DEFAULT: int = -999

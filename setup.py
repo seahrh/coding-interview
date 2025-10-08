@@ -4,21 +4,21 @@ __version__ = "1.0"
 setup(
     name="coding-interview",
     version=__version__,
-    python_requires=">=3.9,<3.13",
+    python_requires=">=3.11,<3.13",
     install_requires=[
-        "numpy==1.26.2",
+        "numpy==1.26.4",
     ],
     extras_require={
         "lint": [
-            "black==23.12.1",
-            "isort==5.13.2",
-            "pre-commit==3.3.3",
-            "flake8==6.1.0",
-            "mypy==1.8.0",
+            "black==25.1.0",
+            "isort==6.0.1",
+            "pre-commit==4.2.0",
+            "flake8==7.3.0",
+            "mypy==1.16.1",
         ],
         "tests": [
-            "pytest==7.4.0",
-            "pytest-cov==4.1.0",
+            "pytest==8.3.3",
+            "pytest-cov==6.0.0",
         ],
     },
     packages=find_packages("src", exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),

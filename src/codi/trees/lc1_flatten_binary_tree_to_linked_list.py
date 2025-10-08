@@ -30,6 +30,7 @@ Space O(N)
 References
 - comments https://leetcode.com/problems/flatten-binary-tree-to-linked-list/solutions/36977/my-short-post-order-traversal-java-solution-for-share/
 """
+
 from codi.trees import TreeNode
 
 

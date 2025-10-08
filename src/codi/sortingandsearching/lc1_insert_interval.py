@@ -23,6 +23,7 @@ intervals is sorted by starti in ascending order.
 newInterval.length == 2
 0 <= start <= end <= 10^5
 """
+
 from bisect import bisect_left
 from typing import List
 

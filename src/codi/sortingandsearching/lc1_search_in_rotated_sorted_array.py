@@ -31,6 +31,7 @@ Therefore check the sorted half to decide whether to search the left or right ha
 Time O(lg N)
 Space O(1)
 """
+
 from typing import List
 
 

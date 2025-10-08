@@ -25,6 +25,7 @@ Binary search in 2 steps
 Time O(lg M + lg N) = O(lg MN) by laws of logarithm
 Space O(1)
 """
+
 from typing import List
 
 

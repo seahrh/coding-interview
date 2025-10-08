@@ -42,6 +42,7 @@ then there is always a peak element on the left side.
 References
 - https://www.geeksforgeeks.org/find-a-peak-in-a-given-array/
 """
+
 from typing import List
 
 

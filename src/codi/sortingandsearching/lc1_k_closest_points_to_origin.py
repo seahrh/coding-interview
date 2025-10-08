@@ -21,6 +21,7 @@ Constraints:
 1 <= k <= points.length <= 10^4
 -10^4 <= xi, yi <= 10^4
 """
+
 import math
 from heapq import heappop, heappush, heapreplace
 from typing import List, Tuple

@@ -34,6 +34,7 @@ Rank = 4*5! + 4*4! + 3*3! + 1*2! + 1*1! + 0*0! + 1 = 598
 Time O(n^2)
 Space O(n)
 """
+
 from math import factorial
 
 from codi.sortingandsearching.binary_search import search

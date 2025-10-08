@@ -35,6 +35,7 @@ Space O(N): memo array
 References
 - https://www.youtube.com/watch?v=MJn3ogwsUbo
 """
+
 from bisect import bisect_right
 from typing import List, NamedTuple
 

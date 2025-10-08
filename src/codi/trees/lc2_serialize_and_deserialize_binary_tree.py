@@ -25,6 +25,7 @@ DFS preorder traversal
 References
 - https://leetcode.com/problems/serialize-and-deserialize-binary-tree/solutions/74259/recursive-preorder-python-and-c-o-n/
 """
+
 from typing import Optional
 
 from codi.trees import TreeNode
@@ -35,7 +36,7 @@ class Codec:
         vals = []
 
         def dfs(node: Optional[TreeNode]) -> None:
-            nonlocal vals
+            nonlocal vals  # noqa: F824
             if node is None:
                 vals.append("#")
                 return

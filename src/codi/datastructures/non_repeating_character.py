@@ -18,6 +18,7 @@ Whenever we hit a count of 1 we return that character, that’s the first unique
 Time O(N)
 Space O(N)
 """
+
 from collections import defaultdict
 from typing import DefaultDict
 

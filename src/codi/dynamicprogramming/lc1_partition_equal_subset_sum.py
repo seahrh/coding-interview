@@ -28,6 +28,7 @@ Time O(N^2)
 Space O(N^2): memo table
 See https://codeforces.com/blog/entry/70018
 """
+
 from typing import List
 
 

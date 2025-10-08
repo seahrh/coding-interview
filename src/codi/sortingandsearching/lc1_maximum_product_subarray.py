@@ -23,6 +23,7 @@ Space O(N)
 References
 - https://leetcode.com/problems/maximum-product-subarray/solutions/183483/javacpython-it-can-be-more-simple/
 """
+
 from typing import List
 
 

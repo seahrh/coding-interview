@@ -36,6 +36,7 @@ References
 - https://www.youtube.com/watch?v=Dq_ObZwTY_Q
 - https://liuzhenglaichn.gitbook.io/algorithm/monotonic-stack
 """
+
 from typing import Dict, List
 
 

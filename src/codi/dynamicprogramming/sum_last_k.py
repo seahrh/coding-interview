@@ -12,6 +12,7 @@ Recurrence: dp[i] = dp[i-1] + A[i] - A[i-k]
 Time O(N)
 Space O(1): we need only to store dp[i-1], so we do not need the entire dp array
 """
+
 from typing import List
 
 

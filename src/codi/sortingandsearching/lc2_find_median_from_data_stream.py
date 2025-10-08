@@ -40,6 +40,7 @@ The median takes O(1) time, by looking at the top element(s).
 Updates take O(lg n) time.
 The heaps take O(n) space.
 """
+
 from heapq import heappush, heapreplace
 from typing import List
 

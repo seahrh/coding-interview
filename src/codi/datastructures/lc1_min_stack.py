@@ -34,6 +34,7 @@ Use stack to keep track of min element.
 References
 - https://leetcode.com/problems/min-stack/solutions/4387183/neet-code-runtime-beats-98-99-memory-beats-92-96-of-users/
 """
+
 from typing import List
 
 
