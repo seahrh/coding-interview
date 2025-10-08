@@ -22,8 +22,7 @@ Only one valid answer exists.
 Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity?
 """
 
-from collections import defaultdict
-from typing import DefaultDict, List, Set, Tuple
+from typing import Dict, List, Tuple
 
 
 class Solution:
@@ -48,26 +47,20 @@ class Solution:
                 i += 1
         return [ar[i][1], ar[j][1]]
 
-
-def two_sum(arr: List[int], target: int) -> Set[Tuple[int, int]]:
-    """Returns a set of pairs (therefore no duplicate pairs).
-    Builds a hash table where key is a complement and value is the number of times
-    that this complement can be added to a valid pair.
-    Requires only one pass because addition is commutative
-    i.e. order of operands does not matter.
-
-    This takes O(n) time and O(n) space.
-    """
-    res: Set[Tuple[int, int]] = set()
-    unpaired_count: DefaultDict[int, int] = defaultdict(int)
-    for a in arr:
-        complement = target - a
-        if unpaired_count[a] > 0:  # current value matches the complement
-            if a < complement:
-                res.add((a, complement))
-            else:
-                res.add((complement, a))
-            unpaired_count[a] -= 1
-            continue
-        unpaired_count[complement] += 1
-    return res
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        """
+        Time O(N) 1 pass
+        Space O(N)
+        """
+        # Hash table where k is element value, v is element index.
+        seen: Dict[int, int] = {}
+        i1 = -1
+        i2 = -1
+        for i in range(len(nums)):
+            c = target - nums[i]
+            i1 = i
+            i2 = seen.get(c, -1)
+            if i2 != -1:
+                break
+            seen[nums[i]] = i
+        return [i1, i2]
