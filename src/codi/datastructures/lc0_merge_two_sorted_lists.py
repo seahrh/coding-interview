@@ -28,20 +28,14 @@ class Solution:
     def mergeTwoLists(
         self, list1: Optional[ListNode], list2: Optional[ListNode]
     ) -> Optional[ListNode]:
-        h = None
         if list1 is None and list2 is None:
             return None
-        if list1 is None:
-            h = list2
-            list2 = list2.next
-        elif list2 is None:
-            h = list1
-            list1 = list1.next
-        elif list2.val <= list1.val:
-            h = list2
-            list2 = list2.next
-        else:
-            h = list1
-            list1 = list1.next
-        h.next = self.mergeTwoLists(list1, list2)
-        return h
+        if list1 is None and list2 is not None:
+            return list2
+        if list1 is not None and list2 is None:
+            return list1
+        if list1.val < list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        list2.next = self.mergeTwoLists(list1, list2.next)
+        return list2
