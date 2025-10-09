@@ -5,7 +5,9 @@ def search(arr: List[int], key: int) -> int:
     lo = 0
     hi = len(arr) - 1
     while lo <= hi:
-        mid = int(lo / 2 + hi / 2)  # avoid integer overflow
+        # avoid integer overflow
+        # math equivalent of lo+(hi-lo)/2
+        mid = int(lo / 2 + hi / 2)
         if arr[mid] == key:
             return mid
         if key > arr[mid]:
