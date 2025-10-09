@@ -23,6 +23,7 @@ Constraints:
 s consists only of printable ASCII characters.
 
 SOLUTION
+Two pointers
 Time O(N)
 Space O(1): ignore storage for preprocessed string
 """
@@ -30,11 +31,11 @@ Space O(1): ignore storage for preprocessed string
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        a = [c.lower() for c in s if c.isalnum()]
+        ar = [c for c in s.lower() if c.isalnum()]
         i = 0
-        j = len(a) - 1
+        j = len(ar) - 1
         while i <= j:
-            if a[i] != a[j]:
+            if ar[i] != ar[j]:
                 return False
             i += 1
             j -= 1
