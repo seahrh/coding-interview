@@ -19,6 +19,8 @@ Constraints:
 0 <= prices[i] <= 10^4
 
 SOLUTION
+Time O(N)
+Space O(1)
 Make 1 pass and consider two things:
 1. Is this price cheaper than any other price I've seen before?
 2. If I subtract current price by the cheapest price I've found, does this yield a greater profit than what I've seen so far?
@@ -29,9 +31,9 @@ from typing import List
 
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        b = int(1e5)
+        mn = int(1e5)
         res = 0
         for i in range(len(prices)):
-            res = max(res, prices[i] - b)
-            b = min(b, prices[i])
+            res = max(res, prices[i] - mn)
+            mn = min(mn, prices[i])
         return res
