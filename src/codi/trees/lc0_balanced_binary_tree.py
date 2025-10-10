@@ -17,6 +17,11 @@ The number of nodes in the tree is in the range [0, 5000].
 -10^4 <= Node.val <= 10^4
 
 SOLUTION
+Time O(N)
+Space O(N)
+Space is dominated by the recursion call stack:
+In the worst case (a completely skewed tree), the recursion depth is O(n).
+In the best case (a balanced tree), recursion depth is O(log n).
 References
 - https://leetcode.com/problems/balanced-binary-tree/solutions/2428871/very-easy-100-fully-explained-c-java-python-javascript-python3/
 """
