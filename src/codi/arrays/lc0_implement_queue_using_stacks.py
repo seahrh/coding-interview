@@ -34,8 +34,15 @@ Follow-up: Can you implement the queue such that each operation is amortized O(1
 In other words, performing n operations will take overall O(n) time even if one of those operations may take longer.
 
 SOLUTION
-Pop items from input stack and append to output stack.
-e.g. inp = [1,2,3]    out = [3,2,1]
+How It Works (Amortized O(1)):
+Each element undergoes at most:
+1. One push into inp
+2. One move from inp → out
+3. One pop from out
+That’s three O(1) actions total per element, no matter how many total operations you do.
+So even if a single pop() triggers a big transfer (O(n)), it doesn’t happen often —
+each element contributes only once to that cost.
+So even if a pop() or peek() occasionally takes O(n), the average cost per operation across many calls is O(1).
 References
 - https://leetcode.com/problems/implement-queue-using-stacks/solutions/2513639/very-easy-100-fully-explained-java-c-python-python3/
 """
@@ -43,13 +50,14 @@ References
 
 class MyQueue:
     def __init__(self):
-        self.inp = []
-        self.out = []
+        self.inp = []  # stack for incoming elements
+        self.out = []  # stack for outgoing elements
 
     def push(self, x: int) -> None:
         self.inp.append(x)
 
     def pop(self) -> int:
+        # Transfer only if out is empty
         if len(self.out) == 0:
             while len(self.inp) != 0:
                 self.out.append(self.inp.pop())

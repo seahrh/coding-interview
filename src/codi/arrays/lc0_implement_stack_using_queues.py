@@ -42,8 +42,8 @@ class MyStack:
 
     def push(self, x: int) -> None:
         self.q.append(x)
-        # pop off all the items to the left, and re-insert to the right
-        # [1, 0, 2] becomes [2, 1, 0]
+        # pop off all the items to the left, and append to the right
+        # [2, 1, 3] becomes [3, 2, 1]
         for _ in range(len(self.q) - 1):
             self.q.append(self.q.popleft())
 
