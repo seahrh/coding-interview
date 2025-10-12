@@ -31,17 +31,17 @@ from codi.trees import TreeNode
 
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        mx = 0
+        res = 0
 
         def dfs(root: Optional[TreeNode]) -> int:
             """Find the max depth of the subtree."""
-            nonlocal mx
+            nonlocal res
             if root is None:
                 return 0
             lef = dfs(root.left)
             rig = dfs(root.right)
-            mx = max(mx, lef + rig)  # diameter of this subtree
+            res = max(res, lef + rig)  # diameter of this subtree
             return 1 + max(lef, rig)
 
         dfs(root)
-        return mx
+        return res
