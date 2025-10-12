@@ -24,6 +24,14 @@ The number of the nodes in the list is in the range [0, 104].
 -10^5 <= Node.val <= 10^5
 pos is -1 or a valid index in the linked-list.
 Follow up: Can you solve it using O(1) (i.e. constant) memory?
+
+SOLUTION
+Floyd’s Cycle Detection / Tortoise and Hare algorithm
+Time O(N)
+In the worst case (no cycle), both pointers traverse the list once — linear in the number of nodes.
+If a cycle exists, the fast pointer catches up to the slow pointer
+in at most one full traversal of the cycle — still O(n).
+Space O(1)
 """
 
 from typing import Optional
