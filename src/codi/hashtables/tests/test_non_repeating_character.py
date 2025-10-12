@@ -1,4 +1,4 @@
-from codi.datastructures.non_repeating_character import *
+from codi.hashtables.non_repeating_character import *
 
 
 class TestNonRepeatingCharacter:

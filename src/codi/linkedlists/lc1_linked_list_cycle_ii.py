@@ -41,7 +41,7 @@ References
 
 from typing import Optional
 
-from codi.datastructures import ListNode
+from codi.linkedlists import ListNode
 
 
 class Solution:

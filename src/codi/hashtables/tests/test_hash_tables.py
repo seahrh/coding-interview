@@ -1,4 +1,4 @@
-from codi.datastructures.hash_tables import *
+from codi.hashtables.hash_tables import *
 
 
 class TestStringHash:

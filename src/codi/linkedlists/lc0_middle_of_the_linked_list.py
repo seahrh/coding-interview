@@ -23,15 +23,14 @@ Space O(1)
 
 from typing import Optional
 
-from codi.datastructures import ListNode
+from codi.linkedlists import ListNode
 
 
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        p1, p2 = head, head
-        while p2 is not None:
-            if p2.next is None:
-                break
+        p1 = head
+        p2 = head
+        while p2 is not None and p2.next is not None:
             p1 = p1.next
             p2 = p2.next.next
         return p1

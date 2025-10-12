@@ -1,4 +1,4 @@
-from codi.datastructures.shortest_supersequence import *
+from codi.hashtables.shortest_supersequence import *
 
 
 class TestShortestSupersequence:

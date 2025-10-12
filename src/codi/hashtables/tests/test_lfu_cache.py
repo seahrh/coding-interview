@@ -1,6 +1,6 @@
 import pytest
 
-from codi.datastructures.lfu_cache import *
+from codi.hashtables.lfu_cache import *
 
 
 class TestLfuCache:

@@ -21,7 +21,7 @@ Both list1 and list2 are sorted in non-decreasing order.
 
 from typing import Optional
 
-from codi.datastructures import ListNode
+from codi.linkedlists import ListNode
 
 
 class Solution:

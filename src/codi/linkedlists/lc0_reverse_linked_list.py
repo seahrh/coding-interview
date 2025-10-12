@@ -19,7 +19,7 @@ Follow up: A linked list can be reversed either iteratively or recursively. Coul
 
 from typing import Optional
 
-from codi.datastructures import ListNode
+from codi.linkedlists import ListNode
 
 
 class Solution:
@@ -27,9 +27,9 @@ class Solution:
         if head is None or head.next is None:
             return head
         h2 = self.reverseList(head.next)
-        # head.next points to the tail of reversed LL
+        # `head.next` now points to the tail of reversed LL
+        # e.g. head=[1], h2=[3, 2]
         head.next.next = head
-        # head is now the tail of reversed LL
         head.next = None
         return h2
 

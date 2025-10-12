@@ -17,7 +17,7 @@ See https://leetcode.com/problems/lfu-cache/
 
 from typing import Dict, NamedTuple
 
-from codi.datastructures.linked_list import *
+from codi.hashtables.linked_list import *
 
 
 class Item(NamedTuple):
