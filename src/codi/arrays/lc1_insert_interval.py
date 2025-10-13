@@ -22,9 +22,13 @@ intervals[i].length == 2
 intervals is sorted by starti in ascending order.
 newInterval.length == 2
 0 <= start <= end <= 10^5
+
+SOLUTION
+Loop through intervals, add all intervals before newInterval, merge all that overlap, then add the remaining.
+Time O(N)
+Space O(1)
 """
 
-from bisect import bisect_left
 from typing import List
 
 
@@ -32,28 +36,24 @@ class Solution:
     def insert(
         self, intervals: List[List[int]], newInterval: List[int]
     ) -> List[List[int]]:
-        def is_overlap(a: List[int], b: List[int]) -> bool:
-            return a[0] <= b[1] and b[0] <= a[1]
+        res = []
+        i, n = 0, len(intervals)
 
-        def merge_intervals(a: List[int], b: List[int]) -> List[int]:
-            return [min(a[0], b[0]), max(a[1], b[1])]
+        # 1. Add all intervals that end before newInterval starts
+        while i < n and intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+            i += 1
 
-        i = bisect_left(intervals, newInterval)
-        j = i - 1
-        lef = []
-        while j >= 0 and is_overlap(intervals[j], newInterval):
-            lef.append(intervals[j])
-            j -= 1
-        x = j + 1
-        rig = []
-        j = i
-        while j < len(intervals) and is_overlap(intervals[j], newInterval):
-            rig.append(intervals[j])
-            j += 1
-        y = j
-        overlaps = lef + rig
-        # print(f"overlaps={overlaps}")
-        z = newInterval
-        for i in range(len(overlaps)):
-            z = merge_intervals(z, overlaps[i])
-        return intervals[:x] + [z] + intervals[y:]
+        # 2. Merge all overlapping intervals to newInterval
+        while i < n and intervals[i][0] <= newInterval[1]:
+            newInterval[0] = min(newInterval[0], intervals[i][0])
+            newInterval[1] = max(newInterval[1], intervals[i][1])
+            i += 1
+        res.append(newInterval)
+
+        # 3. Add the remaining intervals
+        while i < n:
+            res.append(intervals[i])
+            i += 1
+
+        return res
