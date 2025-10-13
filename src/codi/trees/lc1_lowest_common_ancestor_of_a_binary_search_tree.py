@@ -24,8 +24,13 @@ p != q
 p and q will exist in the BST.
 
 SOLUTION
-Time O(H)
-Space O(1)
+The algorithm is a recursive search down a BST.
+At each step, you move left or right depending on the relative values of p, q, and root.
+In the best case (balanced BST), the search goes down one branch—this takes O(h) time, where h is the tree height.
+For a balanced BST with n nodes, h = O(log n).
+In the worst case (highly skewed BST, e.g., a linked list), h = O(n).
+Time average O(lg N), worst O(N)
+Space average O(lg N), worst O(N), recursion stack depth
 References
 - https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/solutions/1347857/c-java-python-iterate-in-bst-picture-explain-time-o-h-space-o-1/
 """
@@ -37,13 +42,17 @@ class Solution:
     def lowestCommonAncestor(
         self, root: "TreeNode", p: "TreeNode", q: "TreeNode"
     ) -> "TreeNode":
-        small = min(p.val, q.val)
-        large = max(p.val, q.val)
-        while root is not None:
-            if root.val > large:  # p, q belong to the left subtree
-                root = root.left
-            elif root.val < small:  # p, q belong to the right subtree
-                root = root.right
-            else:  # Now, small <= root.val <= large -> This is the LCA between p and q
+        # Ensure p<q
+        if p.val > q.val:
+            p, q = q, p
+
+        def rec(root: "TreeNode", p: "TreeNode", q: "TreeNode") -> "TreeNode":
+            if root is None:
+                return None
+            if p.val <= root.val <= q.val:
                 return root
-        return None
+            if p.val > root.val:
+                return rec(root.right, p, q)
+            return rec(root.left, p, q)
+
+        return rec(root, p, q)
