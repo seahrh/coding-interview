@@ -23,23 +23,17 @@ Constraints:
 """
 
 import math
-from heapq import heappop, heappush, heapreplace
-from typing import List, Tuple
+from heapq import heappop, heappush
+from typing import List
 
 
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
-        h: List[Tuple[float, int, int]] = []
-        for x, y in points:
-            e = math.sqrt(math.pow(x, 2) + math.pow(y, 2))
-            if len(h) < k:
-                heappush(h, (-e, x, y))
-                continue
-            # max heap is full and next item has smaller distance than max
-            if -e > h[0][0]:
-                heapreplace(h, (-e, x, y))
+        h: List = []
+        for p in points:
+            d = math.sqrt(math.pow(p[0], 2) + math.pow(p[1], 2))
+            heappush(h, (d, p))
         res = []
-        while len(h) != 0:
-            _, x, y = heappop(h)
-            res.append([x, y])
+        for _ in range(k):
+            res.append(heappop(h)[1])
         return res
