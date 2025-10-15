@@ -20,27 +20,26 @@ Constraints:
 s consists of English letters, digits, symbols and spaces.
 
 SOLUTION
-Time O(N): each char in s is added or removed from set at most once.
+Optimised Sliding Window
+Use a dictionary to remember the last index of each character.
+When you see a duplicate, jump the left boundary i forward.
+Why is it better? Directly jumps i over duplicates, saving time.
+
+Time O(N)
 Space O(1): constant size of ASCII charset
 """
 
-from typing import Set
+from typing import Dict
 
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        see: Set[str] = set()
+        char_index: Dict[str, int] = {}  # Stores the last index of each character
+        max_len = 0
         i = 0
-        j = 0
-        res = 0
-        while j < len(s):
-            if s[j] in see:
-                while len(see) != 0 and i < j:
-                    see.remove(s[i])
-                    i += 1
-                    if s[i - 1] == s[j]:
-                        break
-            see.add(s[j])
-            res = max(res, j - i + 1)
-            j += 1
-        return res
+        for j, c in enumerate(s):
+            if c in char_index and char_index[c] >= i:
+                i = char_index[c] + 1  # Move start to one past the LAST occurrence
+            max_len = max(max_len, j - i + 1)
+            char_index[c] = j  # Update last seen index
+        return max_len
