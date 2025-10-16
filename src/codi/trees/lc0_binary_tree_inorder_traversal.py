@@ -35,3 +35,19 @@ class Solution:
 
         rec(root)
         return res
+
+    def inorderTraversalIterative(self, root: Optional[TreeNode]) -> List[int]:
+        stack: List[TreeNode] = []
+        res: List[int] = []
+        curr = root
+        while curr is not None or len(stack) != 0:
+            # Go as left as possible; this takes care of both the left subtree and the root
+            while curr is not None:
+                stack.append(curr)
+                curr = curr.left
+            # Visit leftmost node
+            curr = stack.pop()
+            res.append(curr.val)
+            # Move to right subtree
+            curr = curr.right
+        return res
