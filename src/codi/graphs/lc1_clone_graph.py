@@ -36,32 +36,44 @@ There are no repeated edges and no self-loops in the graph.
 The Graph is connected and all nodes can be visited starting from the given node.
 
 SOLUTION
-References
-- https://leetcode.com/problems/clone-graph/solutions/3391952/python3-solution/
+Cloning a graph involves creating new nodes that mirror the values and connections of the original graph,
+such that changing the clone won’t affect the original.
+The main challenges:
+Nodes may be referenced multiple times (by neighbors).
+To avoid creating duplicate nodes, we need a way to keep track of which nodes have already been cloned.
+The graph may contain cycles.
+This is commonly solved using DFS (Depth-First Search) or BFS (Breadth-First Search), tracking clones with a hashmap.
+Clone Mapping
+Use a dictionary (cloned) to map each original node to its cloned node, preventing duplicates and handling cycles.
+Depth-First Search (DFS)
+Start from the given node.
+If the current node has already been cloned, return it.
+Otherwise, create a new clone, store it in the dictionary, and recursively clone all its neighbors.
+Neighbor Handling
+Recursively add each neighbor's clone to the current node's neighbor list.
 """
 
 from typing import Dict, Optional
 
-
-# Definition for a Node.
-class Node:
-    def __init__(self, val: int = 0, neighbors=None):
-        self.val = val
-        self.neighbors = neighbors if neighbors is not None else []
+from codi.graphs import Node
 
 
 class Solution:
     def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
-        nodes: Dict[int, Node] = {}
+        if node is None:
+            return None
+        # Dictionary to save cloned nodes
+        cloned: Dict[Node, Node] = {}
 
-        def dfs(s: Optional["Node"]) -> Node:
-            nonlocal nodes  # noqa: F824
-            if s.val in nodes:
-                return nodes[s.val]
-            a = Node(s.val)
-            nodes[a.val] = a
-            for b in s.neighbors:
-                a.neighbors.append(dfs(b))
-            return a
+        def dfs(current):
+            if current in cloned:
+                return cloned[current]
+            # Create a new clone
+            copy = Node(current.val)
+            cloned[current] = copy
+            # Clone all neighbors recursively
+            for neighbor in current.neighbors:
+                copy.neighbors.append(dfs(neighbor))
+            return copy
 
-        return dfs(node) if node is not None else None
+        return dfs(node)
