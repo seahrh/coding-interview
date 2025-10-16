@@ -32,8 +32,7 @@ class Solution:
         res: List[List[int]] = []
         if root is None:
             return res
-        q: Deque = deque()  # bfs for level order traversal
-        q.append(root)
+        q: Deque = deque([root])  # bfs for level order traversal
         while len(q) != 0:
             lv = []
             n = len(q)  # at this point, all nodes in queue belong to same level
