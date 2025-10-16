@@ -28,6 +28,8 @@ Constraints:
 SOLUTION
 Sort the array and run through all indices of a possible first element of a triplet.
 For each possible first element, make a bi-directional sweep of the remaining part of the array.
+Sorting first lets you use efficient two-pointer scanning for each index.
+No set needed: Triplets are only collected after duplicates are skipped.
 Time O(N^2)
 Space O(1)
 """
@@ -37,26 +39,23 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        res = set()
+        res = []
         nums.sort()
         for i in range(len(nums) - 2):
+            # Skip duplicate values for i
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
             j = i + 1
             k = len(nums) - 1
             while j < k:
                 sm = nums[i] + nums[j] + nums[k]
                 if sm == 0:
-                    if nums[i] <= nums[j] <= nums[k]:
-                        res.add((nums[i], nums[j], nums[k]))
-                    elif nums[i] <= nums[k] <= nums[j]:
-                        res.add((nums[i], nums[k], nums[j]))
-                    elif nums[j] <= nums[i] <= nums[k]:
-                        res.add((nums[j], nums[i], nums[k]))
-                    elif nums[j] <= nums[k] <= nums[i]:
-                        res.add((nums[j], nums[k], nums[i]))
-                    elif nums[k] <= nums[i] <= nums[j]:
-                        res.add((nums[k], nums[i], nums[j]))
-                    elif nums[k] <= nums[j] <= nums[i]:
-                        res.add((nums[k], nums[j], nums[i]))
+                    res.append([nums[i], nums[j], nums[k]])
+                    # Skip duplicate values for left and right boundary pointers
+                    while j < k and nums[j] == nums[j + 1]:
+                        j += 1
+                    while j < k and nums[k] == nums[k - 1]:
+                        k -= 1
                     j += 1
                     k -= 1
                     continue
@@ -64,4 +63,4 @@ class Solution:
                     j += 1
                     continue
                 k -= 1
-        return list(res)  # type: ignore[arg-type]
+        return res
