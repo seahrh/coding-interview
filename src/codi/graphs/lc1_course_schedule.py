@@ -22,6 +22,28 @@ Constraints:
 prerequisites[i].length == 2
 0 <= ai, bi < numCourses
 All the pairs prerequisites[i] are unique.
+
+SOLUTION
+Approach
+Adjacency List: Each course points to the courses depending on it.
+State Tracking:
+0 = unvisited
+1 = visiting (on current recursion stack)
+2 = visited (fully explored, no cycles downstream)
+DFS (Depth-First Search):
+If visiting a node already on the recursion stack (vis == 1), a cycle exists.
+If fully processed (vis == 2), skip—safe branch.
+How It Works
+Detects any cycle during DFS in the dependency graph.
+If a cycle is found, returns False. Otherwise, True.
+Time Complexity
+Adjacency List Construction: O(prerequisites.length)
+DFS Search: Each node is visited once, and each edge is traversed once.
+Total: O(numCourses + prerequisites.length)
+Space Complexity
+Adjacency List: O(numCourses + prerequisites.length)
+State Array (vis): O(numCourses)
+Recursion Stack: O(numCourses) in worst case
 """
 
 from typing import List
@@ -29,12 +51,15 @@ from typing import List
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # Build adjacency list for dependency graph
         adj: List[List[int]] = [[] for _ in range(numCourses)]
-        vis: List[int] = [0] * numCourses
         for a, b in prerequisites:
             if a == b:
-                return False
+                return False  # Self-loop (not allowed), causes cycle immediately
             adj[b].append(a)
+
+        # States: 0=unvisited, 1=visiting, 2=visited
+        vis: List[int] = [0] * numCourses
 
         def cycle(s: int) -> bool:
             vis[s] = 1
