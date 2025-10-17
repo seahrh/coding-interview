@@ -24,6 +24,27 @@ m == grid.length
 n == grid[i].length
 1 <= m, n <= 10
 grid[i][j] is 0, 1, or 2.
+
+SOLUTION
+Steps
+1. Initialization
+    Count fresh oranges (fresh).
+    Enqueue all rotten oranges (grid[i][j] == 2) as starting points for BFS.
+2. BFS (Breadth-First Search)
+    For each rotten orange, in each minute, spread rotting to adjacent fresh oranges (up, down, left, right).
+    Mark newly rotten oranges (grid[a][b] = 2), decrement fresh, and enqueue them with the updated minute.
+3. Result
+    If after BFS, any fresh oranges remain, return -1 (not all can rot).
+    Otherwise, return the most recent minute a rot occurred (minutes).
+    If there were no fresh oranges to start, result is 0.
+
+Why BFS?
+BFS explores level-by-level—perfect for “minute-by-minute” problems where state spreads in waves.
+Every level corresponds to one minute, so you always get the minimal time.
+Time Complexity O(m × n):
+You visit every cell at most once. Each orange is processed once when it turns rotten.
+Space Complexity O(m × n):
+The queue in worst case will have all oranges. No big auxiliary structures; just counters.
 """
 
 from collections import deque
@@ -36,7 +57,7 @@ class Solution:
         fresh, mins = 0, 0
         directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
         q: Deque = deque()
-        # BFS: Initialize queue with rotting oranges
+        # Initialize: count fresh oranges and enqueue all rotten oranges
         for i in range(rows):
             for j in range(cols):
                 if grid[i][j] == 2:
@@ -44,6 +65,7 @@ class Solution:
                     continue
                 if grid[i][j] == 1:
                     fresh += 1
+        # BFS: Spread rot minute by minute
         while len(q) != 0:
             i, j, mins = q.popleft()
             for di, dj in directions:
