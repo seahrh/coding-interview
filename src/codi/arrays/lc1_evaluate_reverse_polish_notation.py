@@ -53,15 +53,14 @@ class Solution:
                 a = st.pop()
                 if t == "+":
                     st.append(a + b)
-                    continue
-                if t == "-":
+                elif t == "-":
                     st.append(a - b)
-                    continue
-                if t == "*":
+                elif t == "*":
                     st.append(a * b)
-                    continue
-                if t == "/":
+                elif t == "/":
+                    # int() function truncates the decimal part of a number, effectively "rounding towards zero."
+                    # This means for positive numbers, it rounds down, and for negative numbers, it rounds up.
                     st.append(int(a / b))
-                    continue
+                continue
             st.append(int(t))
         return st[0]
