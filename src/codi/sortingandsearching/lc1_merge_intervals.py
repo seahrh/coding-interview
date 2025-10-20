@@ -17,8 +17,11 @@ intervals[i].length == 2
 0 <= starti <= endi <= 10^4
 
 SOLUTION
-References
-- https://www.techinterviewhandbook.org/algorithms/interval/
+We are merging overlapping intervals — whenever two intervals overlap,
+we merge them into a single one that covers both ranges.
+If we sort by start time, any overlapping intervals must be adjacent.
+Time O(N lg N)
+Space O(1), if the result list is ignored.
 """
 
 from typing import List
@@ -26,24 +29,14 @@ from typing import List
 
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        def is_overlap(a: List[int], b: List[int]) -> bool:
-            return a[0] <= b[1] and b[0] <= a[1]
-
-        def merge_intervals(a: List[int], b: List[int]) -> List[int]:
-            return [min(a[0], b[0]), max(a[1], b[1])]
-
-        if len(intervals) == 1:
-            return intervals
-        intervals.sort()
-        st: List[List[int]] = []
-        for i in range(1, len(intervals)):
-            a = intervals[i - 1]
-            if len(st) != 0:
-                a = st.pop()
-            b = intervals[i]
-            if is_overlap(a, b):
-                st.append(merge_intervals(a, b))
-                continue
-            st.append(a)
-            st.append(b)
-        return st
+        # Step 1. Sort intervals by start time
+        intervals.sort(key=lambda x: x[0])
+        res = [intervals[0]]
+        # Step 2. Compare each interval with the last merged one
+        for a, b in intervals[1:]:
+            c, d = res[-1][0], res[-1][1]  # noqa: F841
+            if a <= d:
+                res[-1][1] = max(b, d)
+            else:
+                res.append([a, b])
+        return res
