@@ -26,10 +26,12 @@ nums is an ascending array that is possibly rotated.
 -10^4 <= target <= 10^4
 
 SOLUTION
-Modified version of binary search: one half of the array must be already sorted.
-Therefore check the sorted half to decide whether to search the left or right half.
-Time O(lg N)
-Space O(1)
+Idea:
+The array is rotated but still partially sorted.
+In any rotated sorted array, at least one half (left or right) is always sorted.
+Use binary search to decide which half to explore.
+Time O(lg N): Each iteration halves the search space.
+Space O(1): Uses only a few pointers, no extra memory.
 """
 
 from typing import List
@@ -37,22 +39,24 @@ from typing import List
 
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        lo = 0
-        hi = len(nums) - 1
+        lo, hi = 0, len(nums) - 1
         while lo <= hi:
-            mid = lo + (hi - lo) // 2
+            mid = (lo + hi) // 2
+            # Found the target
             if nums[mid] == target:
                 return mid
-            # left partition is sorted
+            # Left half is sorted
             if nums[lo] <= nums[mid]:
+                # Target is within the left sorted range
                 if nums[lo] <= target < nums[mid]:
                     hi = mid - 1
-                    continue
-                lo = mid + 1
-                continue
-            # right partition is sorted
-            if nums[mid] < target <= nums[hi]:
-                lo = mid + 1
-                continue
-            hi = mid - 1
+                else:
+                    lo = mid + 1
+            # Right half is sorted
+            else:
+                # Target is within the right sorted range
+                if nums[mid] < target <= nums[hi]:
+                    lo = mid + 1
+                else:
+                    hi = mid - 1
         return -1
