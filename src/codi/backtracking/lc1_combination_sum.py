@@ -1,0 +1,80 @@
+"""
+39. Combination Sum https://leetcode.com/problems/combination-sum/description/
+
+Given an array of distinct integers candidates and a target integer target,
+return a list of all unique combinations of candidates where the chosen numbers sum to target.
+You may return the combinations in any order.
+The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the
+frequency of at least one of the chosen numbers is different.
+The test cases are generated such that
+the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+Example 1:
+Input: candidates = [2,3,6,7], target = 7
+Output: [[2,2,3],[7]]
+Explanation:
+2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.
+7 is a candidate, and 7 = 7.
+These are the only two combinations.
+Example 2:
+Input: candidates = [2,3,5], target = 8
+Output: [[2,2,2,2],[2,3,3],[3,5]]
+Example 3:
+Input: candidates = [2], target = 1
+Output: []
+Constraints:
+1 <= candidates.length <= 30
+2 <= candidates[i] <= 40
+All elements of candidates are distinct.
+1 <= target <= 40
+
+SOLUTION
+This is a backtracking (depth-first search) problem:
+We build combinations incrementally.
+If the current sum exceeds target, we backtrack (undo the last choice).
+Each recursive call only considers candidates from start onward.
+That’s why [2,3,2] never appears — once we’ve picked 2, all future choices come from [2,3,6,7],
+and we don’t revisit earlier ones to avoid duplicates.
+Steps
+Recursive DFS:
+Keep track of:
+- start: where to begin picking numbers (avoids duplicates)
+- curr: current combination being built
+- total: current sum of numbers in curr
+Base cases:
+- If total == target: add a copy of curr to results.
+- If total > target: stop exploring that path (pruning).
+Recursive case:
+- Iterate over all candidates[i] starting from start.
+- Append the number, recurse with updated total.
+- After recursion, backtrack by removing the last element.
+
+Time O(2^N)
+Each candidate may be included/excluded multiple times
+Space O(target/min(candidates)) which amounts to O(1) because of problem constraints.
+Max recursion depth proportional to target sum path
+"""
+
+from typing import List
+
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+
+        def dfs(start: int, curr: List[int], total: int) -> None:
+            # Base cases
+            if total == target:
+                # Found a valid combination. Full slice to get a shallow copy of the list.
+                res.append(curr[:])
+                return
+            if total > target:
+                return  # Prune invalid paths
+
+            # Explore further choices
+            for i in range(start, len(candidates)):
+                curr.append(candidates[i])
+                dfs(i, curr, total + candidates[i])  # allow reuse of same element
+                curr.pop()  # backtrack
+
+        dfs(0, [], 0)
+        return res
