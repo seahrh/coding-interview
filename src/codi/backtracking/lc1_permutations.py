@@ -33,19 +33,19 @@ class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         res = []
 
-        def backtrack(path: List[int], used: Set[int]):
+        def backtrack(partial: List[int], used: Set[int]):
             # Base case: full-length permutation
-            if len(path) == len(nums):
-                res.append(path[:])  # make a copy
+            if len(partial) == len(nums):
+                res.append(partial[:])  # make a copy
                 return
             # Try each unused number
             for num in nums:
                 if num in used:
                     continue
-                path.append(num)
+                partial.append(num)
                 used.add(num)
-                backtrack(path, used)
-                path.pop()  # backtrack
+                backtrack(partial, used)
+                partial.pop()  # backtrack
                 used.remove(num)
 
         backtrack([], set())

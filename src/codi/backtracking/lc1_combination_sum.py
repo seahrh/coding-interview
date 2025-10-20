@@ -38,7 +38,7 @@ Steps
 Recursive DFS:
 Keep track of:
 - start: where to begin picking numbers (avoids duplicates)
-- curr: current combination being built
+- partial: current combination being built
 - total: current sum of numbers in curr
 Base cases:
 - If total == target: add a copy of curr to results.
@@ -61,20 +61,20 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []
 
-        def dfs(start: int, curr: List[int], total: int) -> None:
+        def dfs(start: int, partial: List[int], total: int) -> None:
             # Base cases
             if total == target:
                 # Found a valid combination. Full slice to get a shallow copy of the list.
-                res.append(curr[:])
+                res.append(partial[:])
                 return
             if total > target:
                 return  # Prune invalid paths
 
             # Explore further choices
             for i in range(start, len(candidates)):
-                curr.append(candidates[i])
-                dfs(i, curr, total + candidates[i])  # allow reuse of same element
-                curr.pop()  # backtrack
+                partial.append(candidates[i])
+                dfs(i, partial, total + candidates[i])  # allow reuse of same element
+                partial.pop()  # backtrack
 
         dfs(0, [], 0)
         return res
