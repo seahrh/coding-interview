@@ -24,6 +24,9 @@ p != q
 p and q will exist in the tree.
 
 SOLUTION
+Time O(N): Visit every node once
+Space O(H): Recursion stack depth (H is tree height)
+In a balanced tree, H=lg N. In a skewed tree, H=N
 References
 - https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solutions/4425847/clean-solution/
 """
@@ -35,7 +38,7 @@ class Solution:
     def lowestCommonAncestor(
         self, root: "TreeNode", p: "TreeNode", q: "TreeNode"
     ) -> "TreeNode":
-        # compare only the root of subtrees bec all node.val are unique
+        # compare only the root of subtrees because all node.val are unique
         if root is None or root.val == p.val or root.val == q.val:
             return root
         lef = self.lowestCommonAncestor(root.left, p, q)
