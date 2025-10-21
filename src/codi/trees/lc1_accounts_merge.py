@@ -29,7 +29,20 @@ accounts[i][0] consists of English letters.
 accounts[i][j] (for j > 0) is a valid email.
 
 SOLUTION
-Union-Find (disjoint sets or connected components)
+Union-Find (Disjoint Set Union)
+We treat each account as a node.
+If two accounts share an email → they are connected (i.e., part of the same set).
+So we’ll use Union-Find to merge connected components.
+Union-Find Concepts
+find(x) → finds the root parent of node x.
+union(x, y) → merges the groups of x and y.
+This helps us efficiently find all accounts that belong to the same user.
+
+Union-Find operations:	Time O(α(N)) ≈ O(1)	Amortized inverse Ackermann function
+Looping over all emails: Time O(E log E)	Sorting all emails in the final output
+Overall	Time O(E log E) where E=total number of emails
+Space O(E): For storing ownership maps and groups
+
 References
 - https://leetcode.com/problems/accounts-merge/solutions/1084738/python-the-clean-union-find-solution-you-are-looking-for/
 - https://youtu.be/wU6udHRIkcc?si=Ts-KinfVDaJwm1j9
@@ -39,35 +52,56 @@ from typing import Dict, List
 
 
 class UnionFind:
-    def __init__(self, N: int):
-        # root node of the connected component which the i-th node is in
-        self.parents: List[int] = list(range(N))
-
-    def union(self, child: int, parent: int) -> None:
-        # subordinate the child's cc to the parent's cc
-        self.parents[self.find(child)] = self.find(parent)
+    def __init__(self, n: int):
+        # Each account is its own parent at the start. Each node (account) is in its own disjoint set.
+        self.parent = list(range(n))
 
     def find(self, x: int) -> int:
-        if x != self.parents[x]:
-            self.parents[x] = self.find(self.parents[x])
-        return self.parents[x]
+        # The find(x) function returns the root (representative) of the set that element x belongs to.
+        # Every disjoint set (or connected component) is represented by one root node.
+        # If two nodes share the same root, they are in the same set.
+
+        # Path compression: make every node point directly to the root
+        # Without path compression:
+        # find() could take O(N) in the worst case (a long chain).
+        # With path compression:
+        # find() becomes almost constant time, formally amortized O(α(N)),
+        # where α(N) is the inverse Ackermann function — so small it’s < 5 for all realistic N.
+        if x != self.parent[x]:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    def union(self, x: int, y: int) -> None:
+        # Connect the components that x and y belong to
+        root_x = self.find(x)
+        root_y = self.find(y)
+        if root_x != root_y:
+            self.parent[root_x] = root_y
 
 
 class Solution:
     def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
         n = len(accounts)
         uf = UnionFind(n)
-        ownership: Dict[str, int] = {}
-        for i, emails in enumerate(accounts):
-            for email in emails[1:]:  # skip 1st item bec it is account name
-                if email in ownership:  # perform union if email has been seen before
-                    uf.union(i, ownership[email])
-                ownership[email] = i
-        ans: List[List[str]] = [[] for _ in range(n)]
-        for email, owner in ownership.items():
-            ans[uf.find(owner)].append(email)
-        res: List[List[str]] = []
-        for i, emails in enumerate(ans):
-            if len(emails) != 0:
-                res.append([accounts[i][0]] + sorted(emails))
-        return res
+        email_to_owner: Dict[str, int] = {}
+
+        # Step 1: Union accounts with shared emails
+        for i, acc in enumerate(accounts):
+            for email in acc[1:]:
+                if email in email_to_owner:
+                    uf.union(i, email_to_owner[email])
+                email_to_owner[email] = i
+
+        # Step 2: Group emails by their root account
+        merged: Dict[int, List[str]] = {}
+        for email, owner in email_to_owner.items():
+            root = uf.find(owner)
+            merged.setdefault(root, []).append(email)
+
+        # Step 3: Build the final result with sorted emails and account name
+        result = []
+        for root, emails in merged.items():
+            name = accounts[root][0]
+            result.append([name] + sorted(emails))
+
+        return result
