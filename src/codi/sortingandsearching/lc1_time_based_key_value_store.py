@@ -29,28 +29,40 @@ key and value consist of lowercase English letters and digits.
 1 <= timestamp <= 10^7
 All the timestamps timestamp of set are strictly increasing.
 At most 2 * 10^5 calls will be made to set and get.
+
+SOLUTION
+We must design a key-value store where:
+You can set(key, value, timestamp) — storing multiple versions of a key at different times.
+You can get(key, timestamp) — retrieving the latest value before or at that timestamp.
+The timestamps for each key are strictly increasing,
+which means we can store values in a sorted list and later use binary search for efficient retrieval.
+
+set() Time O(1)
+get() Time O(lg N)
+Space O(N)
 """
 
-from bisect import bisect_left
-from typing import Dict, List, Tuple
+from bisect import bisect_right
+from collections import defaultdict
 
 
 class TimeMap:
+
     def __init__(self):
-        self.ht: Dict[str, List[Tuple[int, str]]] = {}
+        # Hash map from key → list of (timestamp, value) pairs
+        self.ht = defaultdict(list)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        if key not in self.ht:
-            self.ht[key] = []
+        # Each key’s list is strictly sorted by timestamp (insertion order)
         self.ht[key].append((timestamp, value))
 
     def get(self, key: str, timestamp: int) -> str:
-        if key not in self.ht:
-            return ""
-        ar = self.ht[key]
-        i = bisect_left(ar, (timestamp, ""))
-        if i < len(ar) and ar[i][0] == timestamp:
-            return ar[i][1]
-        if i - 1 >= 0:
-            return ar[i - 1][1]
+        # chr(127) (the DEL ASCII character)
+        # ensures we treat all possible value strings as "smaller" in sorting order.
+        # This works because contraints allow up to z.
+        dummy = chr(127)
+        # Find the rightmost timestamp <= target timestamp
+        i = bisect_right(self.ht[key], (timestamp, dummy)) - 1
+        if i >= 0:
+            return self.ht[key][i][1]
         return ""
