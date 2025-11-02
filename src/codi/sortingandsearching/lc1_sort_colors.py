@@ -31,18 +31,22 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        i, head, tail = 0, 0, len(nums) - 1
-        while i <= tail:
+        n = len(nums)
+        i = 0
+        # 2 pointers pointing to head and tail of middle partition
+        h = 0
+        t = n - 1
+        # check all elements stopping at the tail of middle partition!
+        while i <= t:
             # shrink middle partition from the left, head cannot be to the right of i
             if nums[i] == 0:
-                nums[head], nums[i] = nums[i], nums[head]
-                head += 1
-                i += 1
-                continue
-            if nums[i] == 1:
+                nums[i], nums[h] = nums[h], nums[i]
+                h += 1
                 i += 1
                 continue
             # shrink middle partition from the right, do not advance i
             if nums[i] == 2:
-                nums[i], nums[tail] = nums[tail], nums[i]
-                tail -= 1
+                nums[i], nums[t] = nums[t], nums[i]
+                t -= 1
+                continue
+            i += 1
