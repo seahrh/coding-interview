@@ -15,33 +15,34 @@ Output: []
 Constraints:
 The number of nodes in the tree is in the range [0, 100].
 -100 <= Node.val <= 100
+
+SOLUTION
+Level order (or breadth-first search) is a different approach
+that visits nodes level by level from left to right, using a queue instead of recursion.
 """
 
 from collections import deque
-from typing import Deque, List, Optional
+from typing import List, Optional
 
 from codi.trees import TreeNode
 
 
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        res: List[List[int]] = []
-        if root is None:
-            return res
-        q: Deque = deque()  # bfs for level order traversal
-        q.append(root)
-        while len(q) != 0:
-            lv = []
-            n = len(q)  # at this point, all nodes in queue belong to same level
-            for _ in range(n):
-                c = q.popleft()
-                if c.left is not None:
-                    q.append(c.left)
-                if c.right is not None:
-                    q.append(c.right)
-                lv.append(c.val)
-            res.append(lv)
-        return res
-
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        return [lv[-1] for lv in self.levelOrder(root)]
+        if not root:
+            return []
+        view: List[int] = []
+        queue = deque([root])
+        while queue:
+            level_length = len(queue)
+            for i in range(level_length):
+                node = queue.popleft()
+                # Enqueue left and right children (for next level)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+                # If it's the last node in this level, add to the view
+                if i == level_length - 1:
+                    view.append(node.val)
+        return view
