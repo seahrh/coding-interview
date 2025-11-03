@@ -14,40 +14,47 @@ Constraints:
 s consist of only digits and English letters.
 
 SOLUTION
-To enumerate all palindromic substrings of a given string,
-we first expand a given string at each possible starting position of a palindrome
-and also at each possible ending position of a palindrome and
-keep track of the length of the longest palindrome we found so far.
-We observe that a palindrome mirrors around its center.
-Therefore, a palindrome can be expanded from its center, and there are only 2n - 1 such centers.
-You might be asking why there are 2n - 1 but not n centers?
-The reason is the center of a palindrome can be in between two letters.
-Such palindromes have even number of letters (such as "abba") and its center are between the two 'b's.'
-Time O(N^2)
-Space O(1)
-References
-- https://leetcode.com/problems/longest-palindromic-substring/solutions/4212564/beats-96-49-5-different-approaches-brute-force-eac-dp-ma-recursion/
+The core trick: Any palindrome is mirrored around its center.
+There are 2n - 1 possible centers in a string of length n:
+n for single-character centers (odd-length palindromes)
+n - 1 for between-character centers (even-length palindromes)
+Expand around each center, keep track of the longest found.
+
+How It Works
+Iterate through all possible centers:
+For each index, check for both odd and even-length palindromes.
+Expand from center:
+Grow the window left/right as long as the substring is symmetric.
+Keep track of the longest palindrome found.
+At the end, return the longest one.
+Complexity
+Time: O(N²) — Each center is expanded at most N times.
+Space: O(1), excluding input/output.
 """
 
 
 class Solution:
-    def expand_from_center(self, s: str, i: int, j: int) -> str:
-        while i >= 0 and j < len(s) and s[i] == s[j]:
-            i -= 1
-            j += 1
-        # from index i+1 up to but not including j
-        # if i+1>=j then slice is empty string
-        return s[i + 1 : j]
-
     def longestPalindrome(self, s: str) -> str:
-        if len(s) == 1:
-            return s
-        max_str = s[0]
-        for i in range(len(s) - 1):
-            odd = self.expand_from_center(s, i, i)
-            even = self.expand_from_center(s, i, i + 1)
-            if len(odd) > len(max_str):
-                max_str = odd
-            if len(even) > len(max_str):
-                max_str = even
-        return max_str
+        def expand_from_center(left: int, right: int) -> str:
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            # Return palindrome found; slice ends at right (exclusive)
+            return s[left + 1 : right]
+
+        if not s:
+            return ""
+        longest = ""
+        for i in range(len(s)):
+            # Expanding from (i, i) covers palindromes with a single center.
+            # Odd length palindrome (center at s[i])
+            p1 = expand_from_center(i, i)
+            # Expanding from (i, i+1) covers palindromes with a center between two characters.
+            # Even length palindrome (center between s[i] and s[i+1])
+            p2 = expand_from_center(i, i + 1)
+            # Update answer if longer palindrome found
+            if len(p1) > len(longest):
+                longest = p1
+            if len(p2) > len(longest):
+                longest = p2
+        return longest
