@@ -23,11 +23,24 @@ Constraints:
 s and p consist of lowercase English letters.
 
 SOLUTION
-For 2 strings to be anagrams of each other, they should have the same elements with the same frequency.
-Time O(N): sliding window
-Space O(1): array representing 26 letters
-References
-- https://leetcode.com/problems/find-all-anagrams-in-a-string/solutions/1738073/short-and-simple-c-sliding-window-solution/
+Anagrams have the same letter counts.
+Slide a window of length len(p) along s and compare letter counts.
+How It Works
+Frequency Arrays:
+freq_p: Counts each letter in p
+window: Counts letters in current window in s
+Initialization: Set up both arrays for the first window (the first len(p) letters of s)
+Sliding Window:
+For every next character in s, update the window counts:
+Remove the leftmost letter (exiting window)
+Add the new rightmost letter (entering window)
+Compare the arrays: If equal, the window is an anagram, so add the start index.
+
+Time: O(N), with N = len(s)
+Each window move: O(1) (since fixed 26 letters)
+Array comparison: O(26)
+Space: O(1)
+Always 26 elements, regardless of input size.
 """
 
 from typing import List
@@ -35,21 +48,26 @@ from typing import List
 
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        if len(s) < len(p):
+        len_s, len_p = len(s), len(p)
+        if len_s < len_p:
             return []
-        fre = [0] * 26
-        win = [0] * 26
-        bas = ord("a")
-        # first window
-        for i in range(len(p)):
-            fre[ord(p[i]) - bas] += 1
-            win[ord(s[i]) - bas] += 1
-        res = []
-        if fre == win:
+        # Frequency arrays for 'a' to 'z'
+        freq_p: List[int] = [0] * 26
+        window: List[int] = [0] * 26
+        base = ord("a")
+        # Initialize frequency arrays with first window
+        for i in range(len_p):
+            freq_p[ord(p[i]) - base] += 1
+            window[ord(s[i]) - base] += 1
+        res: List[int] = []
+        if freq_p == window:
             res.append(0)
-        for i in range(len(p), len(s)):  # advancing the tail of window
-            win[ord(s[i - len(p)]) - bas] -= 1  # remove 1 char from the left
-            win[ord(s[i]) - bas] += 1  # add 1 char to the right
-            if fre == win:
-                res.append(i - len(p) + 1)
+        # Slide the window across s
+        for i in range(len_p, len_s):
+            left_idx = ord(s[i - len_p]) - base
+            right_idx = ord(s[i]) - base
+            window[left_idx] -= 1  # Remove char leaving the window
+            window[right_idx] += 1  # Add char entering the window
+            if freq_p == window:
+                res.append(i - len_p + 1)
         return res
