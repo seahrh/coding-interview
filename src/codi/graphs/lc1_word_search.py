@@ -20,36 +20,80 @@ n = board[i].length
 1 <= word.length <= 15
 board and word consists of only lowercase and uppercase English letters.
 Follow up: Could you use search pruning to make your solution faster with a larger board?
+
+SOLUTION
+Search pruning means stopping the search as soon as it's clear that no valid solution can be found down a particular path.
+In the context of word search, it helps avoid exploring unnecessary paths, saving time.
+
+High-Level Approach
+Use DFS (depth-first search) to try to build the word starting from each cell.
+Only consider cells that match the correct character at that step.
+Mark cells as visited to prevent reusing them.
+Pruning Mechanisms in the Solution
+Character mismatch: If current cell doesn't match word[k], stop immediately — don't explore further from here.
+Out of bounds: If the cell is out of bounds, prune the search.
+Visited Cell: Use an in-place mark (temporarily set the cell to '#') so the DFS won't revisit the same cell during one path.
+Early exit: As soon as all characters match (i.e., we reach k == len(word) - 1), return True.
+Early character count pruning:
+Before starting the DFS, count the required characters in word and what's available in the board.
+If the board doesn't have enough of any required character, skip DFS entirely.
+
+Why Is This Efficient?
+Avoids unnecessary paths: DFS only follows paths that match the next letter of word.
+Early escapes: If a path can't possibly match the word, don't explore neighbors further.
+No extra space for visited grid: In-place marking saves memory.
+Quick rejection for impossible cases: Character count pre-check can save huge effort for long or impossible words.
+
+Time O(MN * 4^L), where L is the word length
+Each cell in the board can be a starting point.
+For each starting cell, you potentially search up to four directions at every step (but never revisit the same cell).
+Each path can visit up to word.length cells.
+From each cell, at each position in the word, you branch to up to 4 directions (except blocked/visited cells).
+
+Space O(L): Only recursion stack and temporary marking for visited cells are used (no extra grid).
 """
 
+from collections import Counter
 from typing import List
 
 
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
+        if not board or not board[0]:
+            return False
         m, n = len(board), len(board[0])
-        directions = ((0, 1), (0, -1), (1, 0), (-1, 0))
-        vis: List[List[int]] = [[0] * n for _ in range(m)]
 
-        def dfs(i: int, j: int, k: int) -> bool:
-            nonlocal vis  # noqa: F824
-            if k == len(word) - 1 and board[i][j] == word[k]:
-                return True
+        def dfs(i, j, k):
+            # Prune invalid position and character mismatch
+            if not (0 <= i < m and 0 <= j < n):
+                return False
             if board[i][j] != word[k]:
                 return False
-            vis[i][j] = 1
-            for d in directions:
-                a, b = i + d[0], j + d[1]
-                if 0 <= a < m and 0 <= b < n:
-                    if vis[a][b] == 1:
-                        continue
-                    if dfs(a, b, k + 1):
-                        return True
-            vis[i][j] = 0  # release the node so that it can be reused!
-            return False
+            # Found all characters in the word
+            if k == len(word) - 1:
+                return True
+            # Prune: check if the current cell is already visited using in-place marking
+            tmp = board[i][j]
+            board[i][j] = "#"  # Mark as visited
+            # Explore neighbors
+            found = (
+                dfs(i + 1, j, k + 1)
+                or dfs(i - 1, j, k + 1)
+                or dfs(i, j + 1, k + 1)
+                or dfs(i, j - 1, k + 1)
+            )
+            board[i][j] = tmp  # Unmark (restore original value)
+            return found
+
+        # Optimization: Early pruning based on character counts
+        word_count = Counter(word)
+        board_count = Counter(c for row in board for c in row)
+        for c in word_count:
+            if word_count[c] > board_count[c]:
+                return False
 
         for i in range(m):
             for j in range(n):
-                if word[0] == board[i][j] and dfs(i, j, k=0):
+                if dfs(i, j, 0):
                     return True
         return False
