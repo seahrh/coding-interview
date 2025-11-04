@@ -1,4 +1,4 @@
-from codi.backtracking.string_permutations import *
+from codi.recursion.string_permutations import *
 
 
 class TestStringPermutations:

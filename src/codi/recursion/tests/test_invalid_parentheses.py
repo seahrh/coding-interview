@@ -1,4 +1,4 @@
-from codi.backtracking.invalid_parentheses import *
+from codi.recursion.invalid_parentheses import *
 
 
 class TestRemoveInvalidParentheses:

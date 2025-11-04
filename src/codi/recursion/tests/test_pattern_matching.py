@@ -1,6 +1,6 @@
 import pytest
 
-from codi.backtracking.pattern_matching import *
+from codi.recursion.pattern_matching import *
 
 
 class TestPatternMatching:

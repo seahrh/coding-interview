@@ -1,4 +1,4 @@
-from codi.backtracking.vertex_coloring import *
+from codi.recursion.vertex_coloring import *
 
 
 class TestVertexColoring:

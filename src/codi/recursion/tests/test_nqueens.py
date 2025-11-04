@@ -1,4 +1,4 @@
-from codi.backtracking.nqueens import *
+from codi.recursion.nqueens import *
 
 
 class TestNQueens:

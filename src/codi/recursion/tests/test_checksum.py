@@ -1,4 +1,4 @@
-from codi.backtracking.checksum import *
+from codi.recursion.checksum import *
 
 
 class TestChecksum:

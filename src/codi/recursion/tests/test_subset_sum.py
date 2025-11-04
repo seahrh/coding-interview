@@ -1,4 +1,4 @@
-from codi.backtracking.subset_sum import *
+from codi.recursion.subset_sum import *
 
 
 class TestSubsetSum:
