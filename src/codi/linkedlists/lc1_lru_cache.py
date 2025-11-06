@@ -79,6 +79,7 @@ class Node:
 
 
 class LRUCache:
+
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.dic: Dict[int, Node] = {}
@@ -90,31 +91,37 @@ class LRUCache:
     def remove(self, node: Node) -> None:
         p = node.prev
         n = node.next
-        p.next = n  # type: ignore[union-attr]
-        n.prev = p  # type: ignore[union-attr]
+        if p is not None:
+            p.next = n
+        if n is not None:
+            n.prev = p
 
-    def appendleft(self, node: Node) -> None:
-        h = self.head.next
-        h.prev = node  # type: ignore[union-attr]
+    def appendleft(self, node: Node):
+        p = self.head
+        n = self.head.next
+        node.prev = p
+        node.next = n
+        n.prev = node
         self.head.next = node
-        node.next = h
-        node.prev = self.head
 
-    def get(self, key: int):
-        if key in self.dic:
-            n = self.dic[key]
-            self.remove(n)
-            self.appendleft(n)
-            return n.v
-        return -1
+    def get(self, key: int) -> int:
+        if key not in self.dic:
+            return -1
+        node = self.dic[key]
+        self.remove(node)
+        self.appendleft(node)
+        return node.v
 
-    def put(self, key: int, value: int):
+    def put(self, key: int, value: int) -> None:
         if key in self.dic:
-            self.remove(self.dic[key])
-        n = Node(key, value)
-        self.appendleft(n)
-        self.dic[key] = n
+            node = self.dic[key]
+            node.v = value
+        else:
+            node = Node(k=key, v=value)
+            self.dic[key] = node
+        self.remove(node)
+        self.appendleft(node)
         if len(self.dic) > self.capacity:
-            n = self.tail.prev  # type: ignore[assignment]
-            self.remove(n)
-            del self.dic[n.k]
+            node = self.tail.prev  # type: ignore[assignment]
+            self.remove(node)
+            del self.dic[node.k]
