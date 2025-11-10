@@ -34,42 +34,51 @@ SOLUTION
 2 heaps: a max heap for the values below the median and a min heap for the values above the median.
 When a new value arrives, it is placed in the maxHeap if the value is less than or equal to the median,
 otherwise it is placed into the minHeap.
-The heap sizes can be equal, or the maxHeap may have one extra element.
+**The heap sizes can be equal, or the maxHeap may have one extra element.
 Maintain this invariant by shifting an element from one heap to the other.
-The median takes O(1) time, by looking at the top element(s).
+Find median takes O(1) time, by looking at the top element(s).
 Updates take O(lg n) time.
 The heaps take O(n) space.
 """
 
+# heapq.heapreplace(heap, item)
+# Pop and return the smallest item from the heap, and also push the new item.
+# The heap size doesn’t change. If the heap is empty, IndexError is raised.
+# This one step operation is more efficient than a heappop() followed by heappush()
+# and can be more appropriate when using a fixed-size heap.
+# The pop/push combination always returns an element from the heap and replaces it with item.
 from heapq import heappush, heapreplace
 from typing import List
 
 
 class MedianFinder:
+
     def __init__(self):
-        self.mnh: List[int] = []
         self.mxh: List[int] = []
+        self.mnh: List[int] = []
 
     def addNum(self, num: int) -> None:
-        # Maintain invariant: len(mnh)<=len(mxh)
         if len(self.mnh) == len(self.mxh):
+            # If new element needs to go into minHeap, then transfer min-element to maxHeap.
             if len(self.mnh) != 0 and num > self.mnh[0]:
-                heappush(self.mxh, heapreplace(self.mnh, num) * -1)
+                heappush(self.mxh, -heapreplace(self.mnh, num))
             else:
                 heappush(self.mxh, -num)
         else:
-            if -num > self.mxh[0]:
-                heappush(self.mnh, heapreplace(self.mxh, -num) * -1)
+            # maxHeap is one element larger than minHeap
+            # If new element needs to go into maxHeap, then transfer max-element to minHeap.
+            if num <= -self.mxh[0]:
+                heappush(self.mnh, -heapreplace(self.mxh, -num))
             else:
                 heappush(self.mnh, num)
 
     def findMedian(self) -> float:
-        # maxHeap is always at least as big as minHeap.
-        # So if maxHeap is empty, then minHeap is also empty.
-        if len(self.mxh) == 0:
-            return 0
         if len(self.mxh) == len(self.mnh):
-            return float(self.mnh[0] / 2) + float(-self.mxh[0] / 2)
-        # If maxHeap and minHeap are of different sizes,
-        # then maxHeap must have one extra element. Return maxHeap's top element.
+            return float(-self.mxh[0] / 2) + float(self.mnh[0] / 2)
         return -self.mxh[0]
+
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
