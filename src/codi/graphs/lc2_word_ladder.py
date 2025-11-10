@@ -27,9 +27,34 @@ beginWord != endWord
 All the words in wordList are unique.
 
 SOLUTION
-Shortest transformation seq is actually BFS shortest path.
-Time O(NL): N is the size of word list and L is the length of longest word.
-Space O(N+L): BFS queue, visited set, string slice
+1. Problem Restatement
+You need the shortest sequence of valid transformations from beginWord to endWord, where:
+Each transformation changes exactly one letter.
+Every intermediate word must exist in wordList.
+Return the number of words (not edges) in the sequence.
+So the goal is essentially to find the shortest path in an unweighted graph, where:
+Each node = a valid word
+Each edge = one-letter difference between words
+This naturally maps to a Breadth-First Search (BFS) problem.
+
+2. Algorithm: BFS
+BFS explores all words reachable in 1 step, then 2 steps, etc.
+The first time we encounter endWord, we’ve found the shortest path.
+Steps:
+Put beginWord into a queue.
+For each word in the queue:
+Generate all possible words differing by one letter.
+If the new word is in the dictionary and not yet visited:
+Mark it visited.
+Add it to the queue for the next BFS level.
+Count BFS levels — each level = +1 step in transformation.
+Return the level when we reach endWord.
+
+Time O(N * L^2)
+For each of N words, we may check up to 26L possible transformations (L = word length). Efficient with set lookups.
+Space O(N * L)
+BFS queue, visited set, and temporary strings.
+
 References
 - https://leetcode.com/problems/word-ladder/solutions/1764371/a-very-highly-detailed-explanation/
 """
@@ -40,23 +65,24 @@ from typing import Deque, List, Set
 
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        words: Set[str] = set(wordList)
-        if endWord not in words:
-            return 0
-        q: Deque[str] = deque([beginWord])
-        vis = set()
-        res = 1
-        while len(q) != 0:
-            qn = len(q)
-            for _ in range(qn):  # process level by level
-                a = q.popleft()
-                vis.add(a)
-                if a == endWord:
-                    return res
-                for i in range(len(a)):
-                    for j in range(26):
-                        b = a[:i] + chr(ord("a") + j) + a[i + 1 :]
-                        if b in words and b not in vis:
-                            q.append(b)
-            res += 1
-        return 0
+        word_set: Set[str] = set(wordList)
+        if endWord not in word_set:
+            return 0  # No valid transformation if endWord not in list
+        queue: Deque = deque([(beginWord, 1)])  # (current_word, current_level)
+        visited: Set[str] = {beginWord}
+        while len(queue) != 0:
+            word, level = queue.popleft()
+            if word == endWord:
+                return level  # Found shortest transformation path
+            for i in range(len(word)):
+                # Try replacing one letter at each position
+                for c in "abcdefghijklmnopqrstuvwxyz":
+                    if c == word[i]:
+                        continue  # Skip replacing with same character
+                    # Creating this string by slicing costs O(L) time!
+                    # You do that for each position (L) and each letter (26).
+                    next_word = word[:i] + c + word[i + 1 :]
+                    if next_word in word_set and next_word not in visited:
+                        visited.add(next_word)
+                        queue.append((next_word, level + 1))
+        return 0  # No transformation sequence found
