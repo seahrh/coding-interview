@@ -25,44 +25,45 @@ Constraints:
 1 <= profit[i] <= 104
 
 SOLUTION
-Bottom-up DP, dp[i] = max reward for considering the first i projects
-Two choices: either do project i or give it up
-Recurring relation: dp[i] = max(dp[i - 1], take project i)
-Take project i = reward_i + dp[j]
-where j is the nearest project on the left that ends <= start of project i
-Time O(N lg N): sort projects, binary search in the loop
+Sort jobs by their ending time.
+This makes it easier to identify compatible (non-overlapping) jobs, as earlier-ending jobs will be considered before later ones.
+Bottom-up dynamic programming.
+dp[i] tracks the maximum profit possible after considering the first i jobs.
+Binary search with bisect_right.
+For each job, find the last job that doesn't conflict with the current one.
+
+Time O(N lg N): Sorting and binary search enable fast lookup of non-overlapping jobs
 Space O(N): memo array
 References
 - https://www.youtube.com/watch?v=MJn3ogwsUbo
 """
 
 from bisect import bisect_right
-from typing import List, NamedTuple
-
-
-class Job(NamedTuple):
-    end: int
-    start: int
-    profit: int
+from typing import List, Tuple
 
 
 class Solution:
     def jobScheduling(
         self, startTime: List[int], endTime: List[int], profit: List[int]
     ) -> int:
-        n = len(startTime)
-        jobs: List[Job] = []
-        for i in range(n):
-            jobs.append(Job(end=endTime[i], start=startTime[i], profit=profit[i]))
-        jobs.sort()
+        # Combine the jobs into a single list of tuples and sort by end time.
+        # (start, end, profit)
+        jobs: List[Tuple] = sorted(zip(startTime, endTime, profit), key=lambda x: x[1])
+        n = len(jobs)
+        # dp[i] will hold the max profit for the first i jobs.
         dp = [0] * (n + 1)
+        # For binary search, we want a list of all end times
+        ends = [job[1] for job in jobs]
         for i in range(1, n + 1):
-            ith = jobs[i - 1].profit
-            start = jobs[i - 1].start
-            # bisect_right or upper_bound: ar[lo:i]<=x
-            # minus 1 bec we want the last job that ends <= start of job i
-            # add 1 bec dp is one-indexed
-            j = bisect_right(jobs, Job(end=start, start=start, profit=1)) - 1 + 1
-            ith += dp[j]
-            dp[i] = max(dp[i - 1], ith)
+            # Profits if we take the current job
+            current_start, current_end, current_profit = jobs[i - 1]
+            # Find the rightmost job that doesn't overlap using bisect_right.
+            # bisect_right returns the insertion point to maintain sorted order.
+            # It searches for current_start in the ends list.
+            # The result j is the index where jobs[j].end <= current_start.
+            # So the jobs before 'j' are compatible.
+            j = bisect_right(ends, current_start)
+            # Option 1: Don't take this job (dp[i - 1])
+            # Option 2: Take this job: profit + best previous non-overlapping dp[j]
+            dp[i] = max(dp[i - 1], current_profit + dp[j])
         return dp[n]
