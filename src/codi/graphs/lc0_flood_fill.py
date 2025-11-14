@@ -49,8 +49,7 @@ class Solution:
             if visited[i][j] == 1:
                 return
             visited[i][j] = 1
-            if image[i][j] == ori:
-                image[i][j] = color
+            image[i][j] = color
             for d in directions:
                 a, b = i + d[0], j + d[1]
                 if 0 <= a < m and 0 <= b < n and image[a][b] == ori:
