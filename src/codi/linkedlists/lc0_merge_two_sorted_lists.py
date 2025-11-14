@@ -17,6 +17,18 @@ Constraints:
 The number of nodes in both lists is in the range [0, 50].
 -100 <= Node.val <= 100
 Both list1 and list2 are sorted in non-decreasing order.
+
+SOLUTION
+Time Complexity
+Both solutions must visit every node in both lists: each comparison and merge takes constant time.
+So: O(m + n) for both.
+Space Complexity
+Recursive Solution: Each recursive call takes stack space.
+In the worst case, you recurse through every node: O(m + n) additional space on the call stack.
+Plus: the output list reuses existing nodes, so no extra heap allocation for nodes.
+Iterative Solution
+No recursion—just a few pointers (dummy, current, etc.).
+You only use constant extra space: O(1), aside from the actual nodes of the final merged list.
 """
 
 from typing import Optional
@@ -25,7 +37,30 @@ from codi.linkedlists import ListNode
 
 
 class Solution:
+
     def mergeTwoLists(
+        self, list1: Optional[ListNode], list2: Optional[ListNode]
+    ) -> Optional[ListNode]:
+        """Iterative solution that has better space complexity O(1) vs. recursion."""
+        dummy = ListNode()
+        n1 = list1
+        n2 = list2
+        curr = dummy
+        while n1 is not None and n2 is not None:
+            if n1.val <= n2.val:
+                curr.next = n1
+                n1 = n1.next
+            else:
+                curr.next = n2
+                n2 = n2.next
+            curr = curr.next
+        if n1 is None and n2 is not None:
+            curr.next = n2
+        if n2 is None and n1 is not None:
+            curr.next = n1
+        return dummy.next
+
+    def mergeTwoListsRecursion(
         self, list1: Optional[ListNode], list2: Optional[ListNode]
     ) -> Optional[ListNode]:
         if list1 is None and list2 is None:
