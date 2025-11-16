@@ -51,6 +51,11 @@ If the current node has already been cloned, return it.
 Otherwise, create a new clone, store it in the dictionary, and recursively clone all its neighbors.
 Neighbor Handling
 Recursively add each neighbor's clone to the current node's neighbor list.
+
+Time Complexity — O(V + E) Where V = number of nodes, E = number of edges
+Each node is visited exactly once due to the cloned dictionary.
+This is optimal because cloning inherently requires reading the entire graph.
+Space O(V): auxiliary (visited/cloned map + recursion stack).
 """
 
 from typing import Dict, Optional
