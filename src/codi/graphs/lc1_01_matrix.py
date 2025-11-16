@@ -25,14 +25,11 @@ Solution Approach: Multi-source Breadth-First Search (BFS)
 Instead of searching from every cell with a 1 (which would be slow),
 we start BFS from all cells containing 0.
 This way, each cell’s answer is found as soon as it’s reached for the first time by BFS.
-
-Key Insights
 Multi-source BFS:
-By processing all zeroes first, every cell’s shortest path is naturally discovered in waves—cells closest to zeroes get filled first.
-In-place Update:
-The matrix mat is reused to store results—saves space.
-Efficient Search:
-Each cell is processed at most once. No wasted work.
+By processing all zeroes first, every cell’s shortest path is naturally discovered in waves;
+cells closest to zeroes get filled first.
+In-place Update: The matrix mat is reused to store results—saves space.
+Efficient Search: Each cell is processed at most once. No wasted work.
 Time & Space Complexity
 Time: O(m × n). Each cell is enqueued and processed once.
 Space: O(m × n). For the queue at worst, plus the matrix itself.
