@@ -40,7 +40,8 @@ class Solution:
                 return 0
             lef = dfs(root.left)
             rig = dfs(root.right)
-            res = max(res, lef + rig)  # diameter of this subtree
+            # diameter of this subtree; path passes through the root of this subtree
+            res = max(res, lef + rig)
             return 1 + max(lef, rig)
 
         dfs(root)
